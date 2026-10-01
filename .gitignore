@@ -15,3 +15,4 @@ suite/dev/vendor/
 
 # local reports of real-machine runs (kept as untracked working notes)
 reports/local/
+dist-artifacts-*.tar.gz
