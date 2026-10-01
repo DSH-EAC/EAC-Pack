@@ -7,11 +7,17 @@
  * Serves the whole `suite/` package directory (client.js, dev/preview.html,
  * dev/boot.mjs, dev/vendor/…) so the preview exercises the exact client file
  * that ships — no build step, no copy.
+ *
+ * Also answers GET /api/plugin-suite/asset/previews/<id>/<theme>.png with a
+ * generated SVG placeholder: <img> loads bypass the boot.mjs fetch shim, so
+ * the server itself must stand in for the host half's asset route (404 for
+ * skins whose gallery entry has no previews).
  */
 import http from 'node:http'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { GALLERY, previewSvg } from './mock-data.mjs'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.dirname(here) // suite/
@@ -32,11 +38,27 @@ if (!fs.existsSync(path.join(here, 'vendor', 'react.iife.js'))) {
   console.warn('[serve] dev/vendor/react.iife.js is missing — run: npm i -D react react-dom esbuild --prefix suite && node suite/dev/build-deps.mjs')
 }
 
+const ASSET_RE = /^\/api\/plugin-suite\/asset\/previews\/([^/]+)\/(light|dark)\.(?:png|svg)$/
+
 const server = http.createServer((req, res) => {
   try {
     const url = new URL(req.url ?? '/', 'http://127.0.0.1')
     let pathname = decodeURIComponent(url.pathname)
     if (pathname === '/') pathname = '/dev/preview.html'
+
+    // dev stand-in for the host half's preview asset route
+    const asset = pathname.match(ASSET_RE)
+    if (asset) {
+      const skin = GALLERY.skins.find((s) => s.id === asset[1])
+      if (!skin || !skin.previews) {
+        res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' })
+        res.end(JSON.stringify({ error: 'no preview' }))
+        return
+      }
+      res.writeHead(200, { 'Content-Type': 'image/svg+xml; charset=utf-8', 'Cache-Control': 'no-store' })
+      res.end(previewSvg(skin.id, asset[2]))
+      return
+    }
 
     const file = path.normalize(path.join(ROOT, pathname))
     if (!file.startsWith(ROOT)) {

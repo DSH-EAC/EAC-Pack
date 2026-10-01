@@ -6,12 +6,15 @@
  *    mock ctx (slots / locale / effect).
  *  - require('react') resolves to the esbuild vendor bundle.
  *  - window.EventSource and window.fetch are mocked against the simulated
- *    backend in mock-data.mjs (job engine + SSE broadcast).
+ *    backend in mock-data.mjs (job engine + SSE broadcast + channel sim).
  *  - A small dev panel (plain DOM, not part of the plugin UI) switches
- *    scenario (ready/loading/error/empty), theme and language, so every UI
- *    state can be screenshotted deterministically.
+ *    scenario (ready/loading/error/empty, channel online/offline/checking,
+ *    updates yes/no), theme and language, and can pop the skin drawer, so
+ *    every UI state can be screenshotted deterministically.
  */
-import { createSuiteStore, SCRIPTED } from './mock-data.mjs'
+import {
+  createSuiteStore, SCRIPTED, GALLERY, promptTextFor, manifestFor, previewSvg,
+} from './mock-data.mjs'
 
 const { createElement: h } = window.__DEV_REACT__
 const { createRoot } = window.__DEV_REACT_DOM__
@@ -25,6 +28,17 @@ const scenario = {
   lang: params.get('lang') === 'en' ? 'en' : 'zh',
   theme: params.get('theme') ?? 'system', // light | dark | system
   speed: params.get('speed') === 'slow' ? 1400 : 150,
+  channel: params.get('channel') ?? 'online', // online | offline | checking
+  updates: params.get('updates') !== 'no', // yes | no
+}
+applyChannelScenario()
+
+function applyChannelScenario() {
+  store.setChannelScenario({
+    online: scenario.channel !== 'offline',
+    hasUpdates: scenario.updates,
+    hold: scenario.channel === 'checking',
+  })
 }
 
 // ---------------------------------------------------------------------------
@@ -34,10 +48,13 @@ class MockEventSource {
   constructor(url) {
     this.url = url
     this.onmessage = null
+    this.onerror = null
+    this.onopen = null
     this._open = true
     MockEventSource._all.add(this)
     queueMicrotask(() => {
       if (!this._open) return
+      this.onopen?.()
       for (const e of store.ring()) this._deliver(e)
     })
   }
@@ -70,7 +87,7 @@ const jsonResp = (status, payload) =>
   Promise.resolve(
     new Response(JSON.stringify(payload), {
       status,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
     }),
   )
 
@@ -100,9 +117,60 @@ window.fetch = async (input, init = {}) => {
     })
     return jsonResp(202, { jobId: job.id })
   }
+  if (method === 'POST' && route === '/enable') {
+    const body = JSON.parse(init.body ?? '{}')
+    return jsonResp(200, { ok: true, id: body.id, enabled: body.enabled !== false })
+  }
   if (method === 'POST' && route === '/snapshot') {
     return jsonResp(200, { name: '20261001T130000-manual', files: ['package.json', 'pnpm-lock.yaml'] })
   }
+
+  // ── channel (API-v2 §4) ──────────────────────────────────────────────────
+  if (method === 'GET' && route === '/channel/status') {
+    if (scenario.mode === 'error') return jsonResp(502, { error: 'simulated: suite backend offline' })
+    if (scenario.channel === 'checking') await sleep(10 * 60 * 1000) // hold the spinner
+    if (scenario.channel === 'offline') return jsonResp(200, store.channelStatus())
+    return jsonResp(200, store.channelStatus())
+  }
+  if (method === 'POST' && route === '/channel/check') {
+    if (scenario.channel === 'checking') await sleep(10 * 60 * 1000)
+    return jsonResp(200, await store.checkChannel())
+  }
+  if (method === 'POST' && route === '/channel/config') {
+    const body = JSON.parse(init.body ?? '{}')
+    return jsonResp(200, store.saveConfig(body))
+  }
+  if (method === 'POST' && route === '/channel/apply') {
+    const body = JSON.parse(init.body ?? '{}')
+    const job = store.enqueueApply({ ids: body.ids ?? [], includeHeavy: !!body.includeHeavy, stepDelay: Math.min(scenario.speed, 300) })
+    return jsonResp(202, { jobId: job.id })
+  }
+
+  // ── skin gallery (API-v2 §4) ─────────────────────────────────────────────
+  if (method === 'GET' && route === '/skins/gallery') return jsonResp(200, GALLERY)
+  if (method === 'GET' && route === '/prompts') {
+    return jsonResp(200, GALLERY.skins.map((s) => ({ id: s.id, name: s.name, hasPrompt: Boolean(s.prompt) })))
+  }
+  const promptMatch = route.match(/^\/prompts\/([^/]+)$/)
+  if (method === 'GET' && promptMatch) {
+    const skin = GALLERY.skins.find((s) => s.id === decodeURIComponent(promptMatch[1]))
+    if (!skin) return jsonResp(404, { error: `unknown prompt id ${promptMatch[1]}` })
+    return jsonResp(200, { id: skin.id, manifest: manifestFor(skin), prompt: promptTextFor(skin) })
+  }
+  const assetMatch = route.match(/^\/asset\/previews\/([^/]+)\/(light|dark)\.(png|svg)$/)
+  if (method === 'GET' && assetMatch) {
+    const skin = GALLERY.skins.find((s) => s.id === decodeURIComponent(assetMatch[1]))
+    // honour the "no preview" entries so the placeholder path is exercised
+    if (!skin || !skin.previews) return jsonResp(404, { error: 'no preview' })
+    await sleep(120) // simulate disk read
+    return Promise.resolve(
+      new Response(previewSvg(skin.id, assetMatch[2]), {
+        status: 200,
+        headers: { 'Content-Type': 'image/svg+xml; charset=utf-8' },
+      }),
+    )
+  }
+
   return jsonResp(404, { error: `[dev] no mock route ${method} ${route}` })
 }
 
@@ -207,6 +275,39 @@ const GROUPS = [
     },
   },
   {
+    label: '渠道',
+    options: [
+      ['online', '在线'],
+      ['offline', '离线'],
+      ['checking', '检查中'],
+    ],
+    get: () => scenario.channel,
+    set: (v) => {
+      scenario.channel = v
+      applyChannelScenario()
+      remount()
+    },
+  },
+  {
+    label: '更新',
+    options: [
+      ['yes', '有更新'],
+      ['no', '无更新'],
+    ],
+    get: () => (scenario.updates ? 'yes' : 'no'),
+    set: (v) => {
+      scenario.updates = v === 'yes'
+      applyChannelScenario()
+      remount()
+    },
+  },
+  {
+    label: '抽屉',
+    options: [['open', '打开 miku']],
+    get: () => '',
+    set: () => openDrawer(),
+  },
+  {
     label: '语言',
     options: [
       ['zh', '中文'],
@@ -244,6 +345,17 @@ const GROUPS = [
     },
   },
 ]
+
+/** Dev-panel helper: open the gallery tab, then click the miku card. */
+function openDrawer() {
+  const tabBtn = document.querySelector('[data-tab="gallery"]')
+  if (tabBtn) tabBtn.click()
+  setTimeout(() => {
+    const card = document.querySelector('[data-skin-id="miku"]')
+    if (card) card.click()
+  }, 90)
+}
+window.__DEV_OPEN_DRAWER = openDrawer
 
 function applyTheme() {
   const t = scenario.theme
