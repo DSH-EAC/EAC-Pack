@@ -40,8 +40,8 @@
   - 直连：`https://github.com/zouyuxuan122/EAC-Plugin-Integration-Pack/releases/download/channel/<file>`
   - 镜像：`<mirror>/https://github.com/zouyuxuan122/EAC-Plugin-Integration-Pack/releases/download/channel/<file>`（mirror 为用户配置的 gh-proxy 风格前缀，可带或不带尾斜杠）
 - 渠道索引 URL 探测顺序（首个成功者生效）：
-  1. `https://raw.githubusercontent.com/zouyuxuan122/EAC-Plugin-Integration-Pack/main/channel/channel.json`
-  2. `https://cdn.jsdelivr.net/gh/zouyuxuan122/EAC-Plugin-Integration-Pack@main/channel/channel.json`
+  1. `https://cdn.jsdelivr.net/gh/zouyuxuan122/EAC-Plugin-Integration-Pack@main/channel/channel.json`
+  2. `https://raw.githubusercontent.com/zouyuxuan122/EAC-Plugin-Integration-Pack/main/channel/channel.json`
   3. 若配置了 mirror：`<mirror>/https://raw.githubusercontent.com/zouyuxuan122/EAC-Plugin-Integration-Pack/main/channel/channel.json`
 
 ## 2. 皮肤馆 gallery.json（随包 `suite/assets/gallery.json`，sync-assets 生成）

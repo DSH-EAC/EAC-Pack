@@ -531,8 +531,10 @@ async function buildStatus() {
 // ---------------------------------------------------------------------------
 
 const CHANNEL_INDEX_URLS = [
-  'https://raw.githubusercontent.com/zouyuxuan122/EAC-Plugin-Integration-Pack/main/channel/channel.json',
+  // jsDelivr first: it serves the same repo file and is reachable from more
+  // networks (raw.githubusercontent TLS fails on some CN setups).
   'https://cdn.jsdelivr.net/gh/zouyuxuan122/EAC-Plugin-Integration-Pack@main/channel/channel.json',
+  'https://raw.githubusercontent.com/zouyuxuan122/EAC-Plugin-Integration-Pack/main/channel/channel.json',
 ]
 const CHANNEL_ASSET_BASE = 'https://github.com/zouyuxuan122/EAC-Plugin-Integration-Pack/releases/download/channel'
 const PROBE_TIMEOUT_MS = 8000
