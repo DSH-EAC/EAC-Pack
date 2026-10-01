@@ -1,7 +1,7 @@
 {
-  "channelVersion": 3,
+  "channelVersion": 4,
   "suiteVersion": "0.2.0",
-  "generatedAt": "2026-10-01T09:49:16.192Z",
+  "generatedAt": "2026-10-01T09:52:38.896Z",
   "notesZh": "v0.2.0「完全体」首版在线渠道：全量 74 个插件离线 tgz + 在线更新通道。\n新增 6 套社区皮肤（deep-whale-manager / maid-atelier / orca-link / liang / deep-whale-day-night / endfield），内置 9 套皮肤升级皮肤馆（预览图 + Prompt 创作包）。\n注意：client-ui 皮肤之间互斥，请勿叠装；已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版。",
   "notesEn": "First online channel of v0.2.0 \"Complete Edition\": 74 offline plugin tarballs + online update pipeline.\nAdds 6 community skins (deep-whale-manager / maid-atelier / orca-link / liang / deep-whale-day-night / endfield) and the skin gallery for the 9 built-in skins (previews + prompt packs).\nNote: client-ui skins are mutually exclusive — do not stack them. On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build.",
   "items": [
@@ -905,7 +905,7 @@
   "suite": {
     "version": "0.2.0",
     "file": "dsh-plugin-suite-0.2.0.tgz",
-    "sha256": "28681957fb8a0429347aa0c237372eaf8c40529ec5f8038645886ec73763f4c7",
-    "bytes": 178195020
+    "sha256": "5265526cdcbe04fa4024c1a0144324f261cc2e6382baf1af3908c920d9c0dd2c",
+    "bytes": 178195084
   }
 }
