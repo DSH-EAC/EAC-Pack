@@ -10,6 +10,8 @@
 | `source: npm` | npm registry 存在 EAC/AIO 锁定的精确版本。spec = `name@version`（精确锁定，不追新）。 |
 | `source: eac-tag` | 从 EAC 仓库 tag v5.3.6（或 aio-v1 分支 / 本机 AIO 离线包）资产目录提取，重打包为本地 tgz。spec = `file:dist/<tgz>`。 |
 | `source: github` | 仅 EAC 作者独立 GitHub 分发的插件。spec = `git+https://…`。 |
+| `source: github-tgz` | （v0.2.0 社区皮肤）社区作者经 GitHub Release 分发的 npm-pack 形态 tgz。下载锁定 release 资产 URL 到 `.cache/community-tgz/` 后解包规范化重打包。spec = `file:dist/<tgz>`。 |
+| `source: github-repo` | （v0.2.0 社区皮肤）npm 不可达（如已 unpublish）的插件，从 GitHub 仓库浅克隆重打包。spec = `file:dist/<tgz>`。 |
 | `packs` | 条目归属包：`eac`（EAC 全量包）/ `aio`（AIO 包）/ `skins`（皮肤包）。共享条目（如 balance）在 eac.json 为版本主记录，aio.json 内为镜像条目，两处 version/spec 一致，重打包脚本按包名去重。 |
 
 `file:dist/...` 相对路径**由整合包 Host 在安装前半解析为绝对路径**（catalog 保存包内相对路径，Host 拼接整合包根目录后传给 `dsh plugin add`）。tgz 文件名约定：npm 包名 `/` → `_`（如 `@deepseek-ai/dsh-balance` → `@deepseek-ai_dsh-balance-0.1.0.tgz`）。
@@ -111,15 +113,16 @@
 | status-rotator | dsh-status-rotator@0.9.1 | npm 精确版 | dsh-status-rotator@0.9.1 | visual | seed ^0.9.1（背景清单版本有误，以 seed 为准） |
 | whale-widget | dsh-whale-widget@0.2.10 | npm 精确版 | dsh-whale-widget@0.2.10 | visual | 共享；EAC 默认关、AIO seed 列入 bundles |
 
-## 4. 皮肤包分发映射（catalog/skins.json，10 项）
+## 4. 皮肤包分发映射（catalog/skins.json，9 项 + catalog/community.json，6 项）
 
-皮肤是完整 dsh client 插件包（package.json + lib/ + skin.json + cordis.patch.yml），默认全部 **disabled**，由「设置 → 皮肤」或 skin-switch 切换。包名与目录名不同（9 款为 `@linxin666/dsh-client-ui-skin-*`）。
+皮肤是完整 dsh client 插件包（package.json + lib/ + skin.json + cordis.patch.yml），默认全部 **disabled**，由「设置 → 皮肤」或 skin-switch 切换。包名与目录名不同（内置 9 款为 `@linxin666/dsh-client-ui-skin-*`）。
+
+### 4.1 内置皮肤（catalog/skins.json，9 项）
 
 | id | 包名@锁定版本 | 来源 | 许可证 |
 | --- | --- | --- | --- |
 | blue-fantasy | @linxin666/dsh-client-ui-skin-blue-fantasy@0.1.11 | npm 精确版 | BSD-3-Clause |
 | dragon-heir | @linxin666/dsh-client-ui-skin-dragon-heir@0.1.11 | npm 精确版 | BSD-3-Clause |
-| maid-atelier | @dsh-external/dsh-client-ui-skin-maid-atelier@0.0.1 | eac-tag（aio-v1 assets/skins） | **CC-BY-NC-SA-4.0**（非商业，署名保留） |
 | miku | @linxin666/dsh-client-ui-skin-miku@0.1.11 | npm 精确版 | BSD-3-Clause |
 | minecraft | @linxin666/dsh-client-ui-skin-minecraft@0.1.11 | npm 精确版 | BSD-3-Clause |
 | qq98 | @linxin666/dsh-client-ui-skin-qq98@0.1.11 | npm 精确版 | BSD-3-Clause |
@@ -127,6 +130,26 @@
 | trading | @linxin666/dsh-client-ui-skin-trading@0.1.11 | npm 精确版 | BSD-3-Clause |
 | whale-song | @linxin666/dsh-client-ui-skin-whale-song@0.1.11 | npm 精确版 | BSD-3-Clause |
 | xp | @linxin666/dsh-client-ui-skin-xp@0.1.11 | npm 精确版 | BSD-3-Clause |
+
+### 4.2 社区皮肤（catalog/community.json，6 项，v0.2.0 新增）
+
+统一 `packs: ["skins"]`、`tier: "visual"`、默认 disabled；随包携带可生效的自引用 `dsh.bundle.patch`。npm 源 spec = `name@version`；github-tgz / github-repo 源 spec = `file:dist/<tgz>`。
+
+| id | 包名@锁定版本 | 来源 | 许可证 |
+| --- | --- | --- | --- |
+| deep-whale-manager | @smalltailqwq/dsh-client-ui-skin-deep-whale-manager@0.1.6 | npm 精确版 | MIT |
+| maid-atelier | @smalltailqwq/dsh-client-ui-skin-maid-atelier@0.1.7 | npm 精确版 | CC-BY-NC-SA-4.0（鲸鱼娘美术，非商业） |
+| orca-link | @smalltailqwq/dsh-client-ui-skin-orca-link@0.1.7 | npm 精确版 | CC-BY-NC-SA-4.0（鲸鱼娘美术，非商业） |
+| liang | dsh-client-liang-intensity-skin@0.1.7 | github-tgz（kingOfSoySauce/dsh-liang-skin release v0.1.7） | NOASSERTION（仓库未声明） |
+| deep-whale-day-night | @dsh-external/dsh-client-ui-skin-deep-whale-day-night@0.1.12 | github-tgz（GGBond2424648901/deep-whale-day-night-theme release v0.1.12） | CC-BY-NC-SA-4.0（包内声明；GitHub 仓库级识别为 NOASSERTION） |
+| endfield | dsh-theme-endfield@1.1.5 | github-repo（ymh0000123/dsh-theme-endfield，npm 已 unpublish） | MIT |
+
+社区皮肤注意事项：
+
+- **互斥**：client-ui 皮肤之间互斥；deep-whale-manager 是切换管理器，经其统一切换，不可与其他皮肤 standalone 版叠装。
+- **dsh-web-all 环境**：已装 `@linxin666/dsh-web-all` 的环境应使用其皮肤中心适配版，不能叠装 standalone 版。
+- **maid-atelier 新旧两版**：社区 @smalltailqwq 0.1.7 取代旧 @dsh-external 0.0.1（已移入退役台账，见 §6），两版勿同装。
+- **包名 ≠ 仓库名**：deep-whale-day-night 的实际包名 `@dsh-external/dsh-client-ui-skin-deep-whale-day-night` 与仓库名 `deep-whale-day-night-theme` 不同，以 release tgz 内 package.json 为准。
 
 ## 5. 共享插件版本冲突说明
 
@@ -143,12 +166,13 @@ EAC 与 AIO 随包版本不一致的共享条目，**一律以 EAC 包为准**�
 
 ## 6. 退役排除说明
 
-见 `catalog/retired.json`（15 条台账）。要点：
+见 `catalog/retired.json`（16 条台账）。要点：
 
 - EAC main 线退役 8 条（HEAD 注册表 RETIRED_BUILTIN_PLUGINS：auto-compact、plugin-marketplace、webui-market、zat-dsh-engine、third-party-thinking、tool-vision、settings-nav-custom、**dsh-stt**；另 file-drop 旧版被 file-drop-eac 取代）。
 - **dsh-stt 修正**：背景清单列为在役（默认禁用），实测 5.3.0 已退役（1.1GB sherpa-onnx ASR 模型不再随包），归入退役台账。
 - AIO v1.2.0 移除 6 条（dsh-market、dsh-offpeak、dsh-plugin-marketplace、dsh-skin-switch、dsh-webui-market、dsh-usage-skill；出处 aio-v1 CHANGELOG。其中 skin-switch 现分支已恢复，仅作历史记录）。
 - 退役项**不打包、不安装**；老 profile 若有残留 patch 行/包副本，由 EAC 宿主的退役清理逻辑（或 Host 安装器）兜底清除。
+- **suite-skins 退役 1 条（v0.2.0）**：maid-atelier-legacy（@dsh-external/dsh-client-ui-skin-maid-atelier 0.0.1，eac-tag 提取占位版）由社区 @smalltailqwq/dsh-client-ui-skin-maid-atelier 0.1.7 正式版取代（见 §4.2），同皮肤新旧两版勿同装。
 
 ## 7. 校验与复现
 
