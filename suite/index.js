@@ -360,19 +360,24 @@ async function executeJob(job) {
   }
   // Verification pass: back-to-back pnpm operations can silently drop one
   // operation's manifest effect (observed on the real kernel). Re-check every
-  // claimed-ok install against listBundles and retry the missing once.
-  if (job.type === 'install') {
-    let names = new Set()
+  // claimed-ok install against listBundles and retry the missing once. Update
+  // jobs must verify the version actually moved, not just that the name exists.
+  if (job.type === 'install' || job.type === 'channel-update') {
+    let installed = new Map()
     try {
       const bundles = await pmCall(job.pm ?? state.pm, 'listBundles')
-      names = new Set(bundles.map((b) => normalizeBundle(b)).filter(Boolean).map((b) => b.name))
+      installed = new Map(bundles.map((b) => normalizeBundle(b)).filter(Boolean).map((b) => [b.name, b.version]))
     } catch {
       /* no verification possible this round */
     }
+    const persisted = (entry) =>
+      job.type === 'channel-update'
+        ? installed.get(entry.name) === entry.version
+        : installed.has(entry.name)
     for (let i = 0; i < results.length; i++) {
       if (!results[i].ok) continue
       const entry = entries[i]
-      if (names.size && names.has(entry.name)) continue
+      if (installed.size && persisted(entry)) continue
       emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: 'install did not persist, retrying once' })
       results[i] = await runStep(job, entry)
     }

@@ -59,8 +59,9 @@ function mockCtx({ pluginManager }) {
   return { ctx, registered }
 }
 
-function fakePm({ bundles = [] } = {}) {
+function fakePm({ bundles = [], bundlesFor = null } = {}) {
   const installs = []
+  let listCalls = 0
   return {
     installs,
     async installBundle(target, options) {
@@ -74,7 +75,8 @@ function fakePm({ bundles = [] } = {}) {
       return { ok: true }
     },
     async listBundles() {
-      return bundles
+      listCalls++
+      return bundlesFor ? bundlesFor(listCalls) : bundles
     },
   }
 }
@@ -191,7 +193,13 @@ test('channel apply downloads, verifies sha256 and preserves disabled state', as
   const home = fs.mkdtempSync(path.join(os.tmpdir(), 'suite-chan-'))
   process.env.DSH_HOME = home
   state.fetchImpl = mockFetch(manifestFixture())
-  const pm = fakePm({ bundles: [{ pkg: { name: SKIN_NAME, version: '0.1.11' }, enabled: false }] })
+  // listBundles call #1 feeds the enabledMap (disabled skin); call #2 is the
+  // post-install verification — simulate the kernel persisting the new version.
+  const pm = fakePm({
+    bundlesFor: (n) => (n === 1
+      ? [{ pkg: { name: SKIN_NAME, version: '0.1.11' }, enabled: false }]
+      : [{ pkg: { name: SKIN_NAME, version: '9.9.9' }, enabled: false }]),
+  })
   const { ctx, registered } = mockCtx({ pluginManager: pm })
   apply(ctx, {})
   state.catalog = __test.loadCatalog()
@@ -262,5 +270,32 @@ test('channel/apply without a loaded channel answers 409', async () => {
   const res = makeRes()
   await registered[0].handler(makeReq('http://localhost/api/plugin-suite/channel/apply', 'POST', JSON.stringify({ ids: ['miku'] })), res)
   assert.equal(res.statusCode, 409)
+  delete process.env.DSH_HOME
+})
+
+test('channel update verification retries a silently dropped install', async () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'suite-chan-'))
+  process.env.DSH_HOME = home
+  state.fetchImpl = mockFetch(manifestFixture())
+  // The kernel keeps reporting the old version even after installBundle —
+  // the engine must notice the version did not move and retry once.
+  const pm = fakePm({
+    bundlesFor: () => [{ pkg: { name: SKIN_NAME, version: '0.1.11' }, enabled: false }],
+  })
+  const { ctx, registered } = mockCtx({ pluginManager: pm })
+  apply(ctx, {})
+  state.catalog = __test.loadCatalog()
+
+  await registered[0].handler(makeReq('http://localhost/api/plugin-suite/channel/check', 'POST', '{}'), makeRes())
+  const applyRes = makeRes()
+  await registered[0].handler(makeReq('http://localhost/api/plugin-suite/channel/apply', 'POST', JSON.stringify({ ids: ['miku'] })), applyRes)
+  assert.equal(applyRes.statusCode, 202)
+  await new Promise((r) => setTimeout(r, 50))
+
+  assert.equal(pm.installs.length, 2, 'dropped install is retried exactly once')
+  const warn = state.events.find((e) => e.type === 'step-warn' && /did not persist/.test(e.message ?? ''))
+  assert.ok(warn, 'retry warning emitted')
+  const done = state.events.find((e) => e.type === 'job-done')
+  assert.equal(done.ok, 1)
   delete process.env.DSH_HOME
 })
