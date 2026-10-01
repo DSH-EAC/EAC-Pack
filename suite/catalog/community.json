@@ -1,0 +1,116 @@
+[
+  {
+    "id": "deep-whale-manager",
+    "name": "@smalltailqwq/dsh-client-ui-skin-deep-whale-manager",
+    "version": "0.1.6",
+    "source": "npm",
+    "spec": "@smalltailqwq/dsh-client-ui-skin-deep-whale-manager@0.1.6",
+    "packs": [
+      "skins"
+    ],
+    "tier": "visual",
+    "defaultEnabled": false,
+    "titleZh": "皮肤：深鲸管理器",
+    "titleEn": "Skin: Deep Whale Manager",
+    "descZh": "深鲸系列皮肤切换管理器（社区 @smalltailqwq 版），提供皮肤面板与统一切换入口。",
+    "descEn": "Deep-whale series skin manager (community edition by @smalltailqwq) providing a skin panel and unified switcher.",
+    "license": "MIT",
+    "upstream": "https://www.npmjs.com/package/@smalltailqwq/dsh-client-ui-skin-deep-whale-manager",
+    "notes": "切换管理器：client-ui 皮肤之间互斥，经本管理器统一切换，请勿与其他皮肤 standalone 版叠装。已装 @linxin666/dsh-web-all 的环境应使用其皮肤中心适配版，不能叠装本 standalone 版。npm 锁定 0.1.6。"
+  },
+  {
+    "id": "maid-atelier",
+    "name": "@smalltailqwq/dsh-client-ui-skin-maid-atelier",
+    "version": "0.1.7",
+    "source": "npm",
+    "spec": "@smalltailqwq/dsh-client-ui-skin-maid-atelier@0.1.7",
+    "packs": [
+      "skins"
+    ],
+    "tier": "visual",
+    "defaultEnabled": false,
+    "titleZh": "皮肤：女仆工坊（社区版）",
+    "titleEn": "Skin: Maid Atelier (Community)",
+    "descZh": "女仆工坊风格 DSH Web UI 皮肤（鲸鱼娘美术系列社区版，取代旧 @dsh-external 0.0.1 提取版）。",
+    "descEn": "Maid-atelier themed DSH Web UI skin (community whale-art series, superseding the old @dsh-external 0.0.1 extraction).",
+    "license": "CC-BY-NC-SA-4.0",
+    "upstream": "https://www.npmjs.com/package/@smalltailqwq/dsh-client-ui-skin-maid-atelier",
+    "notes": "鲸鱼娘美术素材 CC-BY-NC-SA-4.0（非商业、署名保留），随包分发 LICENSE/NOTICE。与 deep-whale-manager 等皮肤互斥；已装 @linxin666/dsh-web-all 的环境应使用其皮肤中心适配版。取代 catalog/retired.json 中旧 @dsh-external/dsh-client-ui-skin-maid-atelier 0.0.1（同皮肤新旧两版，勿同装）。"
+  },
+  {
+    "id": "orca-link",
+    "name": "@smalltailqwq/dsh-client-ui-skin-orca-link",
+    "version": "0.1.7",
+    "source": "npm",
+    "spec": "@smalltailqwq/dsh-client-ui-skin-orca-link@0.1.7",
+    "packs": [
+      "skins"
+    ],
+    "tier": "visual",
+    "defaultEnabled": false,
+    "titleZh": "皮肤：虎鲸之链",
+    "titleEn": "Skin: Orca Link",
+    "descZh": "虎鲸主题 DSH Web UI 皮肤（鲸鱼娘美术系列社区版）。",
+    "descEn": "Orca-themed DSH Web UI skin (community whale-art series).",
+    "license": "CC-BY-NC-SA-4.0",
+    "upstream": "https://www.npmjs.com/package/@smalltailqwq/dsh-client-ui-skin-orca-link",
+    "notes": "鲸鱼娘美术素材 CC-BY-NC-SA-4.0（非商业、署名保留）。与 deep-whale-manager 等皮肤互斥；已装 @linxin666/dsh-web-all 的环境应使用其皮肤中心适配版，不能叠装本 standalone 版。npm 锁定 0.1.7。"
+  },
+  {
+    "id": "liang",
+    "name": "dsh-client-liang-intensity-skin",
+    "version": "0.1.7",
+    "source": "github-tgz",
+    "spec": "file:dist/dsh-client-liang-intensity-skin-0.1.7.tgz",
+    "packs": [
+      "skins"
+    ],
+    "tier": "visual",
+    "defaultEnabled": false,
+    "titleZh": "皮肤：滑动变阻器",
+    "titleEn": "Skin: Sliding Rheostat (Liang)",
+    "descZh": "「滑动变阻器」强度可调主题皮肤，kingOfSoySauce 经 GitHub Release 分发 tgz（v0.1.7 起包体从 ~45MB 瘦身至 ~1.3MB）。",
+    "descEn": "Intensity-adjustable 'sliding rheostat' theme skin, distributed as a release tarball by kingOfSoySauce (~45MB before v0.1.7, ~1.3MB since).",
+    "license": "NOASSERTION",
+    "upstream": "https://github.com/kingOfSoySauce/dsh-liang-skin",
+    "notes": "仓库未声明许可证（NOASSERTION），按 Release 资产原样再分发。锁定 release tag v0.1.7。与 deep-whale-manager 等皮肤互斥；已装 @linxin666/dsh-web-all 的环境应使用其皮肤中心适配版，不能叠装本 standalone 版。"
+  },
+  {
+    "id": "deep-whale-day-night",
+    "name": "@dsh-external/dsh-client-ui-skin-deep-whale-day-night",
+    "version": "0.1.12",
+    "source": "github-tgz",
+    "spec": "file:dist/@dsh-external_dsh-client-ui-skin-deep-whale-day-night-0.1.12.tgz",
+    "packs": [
+      "skins"
+    ],
+    "tier": "visual",
+    "defaultEnabled": false,
+    "titleZh": "皮肤：昼夜工坊",
+    "titleEn": "Skin: Deep Whale Day-Night",
+    "descZh": "昼夜双主题工坊皮肤（GGBond2424648901 经 GitHub Release 分发 tgz，随包附 SHA256SUMS；npm 包名与仓库名不同）。",
+    "descEn": "Day/night dual-theme workshop skin (tgz from GGBond2424648901's GitHub releases, ships with SHA256SUMS; npm package name differs from repo name).",
+    "license": "CC-BY-NC-SA-4.0",
+    "upstream": "https://github.com/GGBond2424648901/deep-whale-day-night-theme",
+    "notes": "包内 package.json 声明 CC-BY-NC-SA-4.0（GitHub 仓库级识别为 NOASSERTION/非标准，以包内声明为准），鲸鱼娘美术素材、非商业署名保留。实际包名 @dsh-external/dsh-client-ui-skin-deep-whale-day-night ≠ 仓库名 deep-whale-day-night-theme。锁定 release tag v0.1.12。与 deep-whale-manager 等皮肤互斥；已装 @linxin666/dsh-web-all 的环境应使用其皮肤中心适配版，不能叠装本 standalone 版。"
+  },
+  {
+    "id": "endfield",
+    "name": "dsh-theme-endfield",
+    "version": "1.1.5",
+    "source": "github-repo",
+    "spec": "file:dist/dsh-theme-endfield-1.1.5.tgz",
+    "packs": [
+      "skins"
+    ],
+    "tier": "visual",
+    "defaultEnabled": false,
+    "titleZh": "皮肤：终末地",
+    "titleEn": "Skin: Endfield",
+    "descZh": "明日方舟：终末地风格主题 —— 奶油纸面、墨色文字、信号黄点缀、零圆角工业排版；设置项经 DSH 0.1.7 volatile Config + configForms 持久化。npm 版已 unpublish，改从 GitHub 仓库打包。",
+    "descEn": "Arknights: Endfield styled theme — cream paper, ink text, signal-yellow accents, zero-radius industrial typography; settings persist via DSH 0.1.7 volatile Config + configForms. npm version unpublished; packaged from the GitHub repo.",
+    "license": "MIT",
+    "upstream": "https://github.com/ymh0000123/dsh-theme-endfield",
+    "notes": "npm 已 unpublish → 浅克隆仓库打包（源码含自带 dsh.bundle.patch/cordis.patch.yml）。与 deep-whale-manager 等皮肤互斥；已装 @linxin666/dsh-web-all 的环境应使用其皮肤中心适配版，不能叠装本 standalone 版。"
+  }
+]

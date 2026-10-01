@@ -38,25 +38,6 @@
     "notes": "npm 锁定 0.1.11。默认 disabled。"
   },
   {
-    "id": "maid-atelier",
-    "name": "@dsh-external/dsh-client-ui-skin-maid-atelier",
-    "version": "0.0.1",
-    "source": "eac-tag",
-    "spec": "file:dist/@dsh-external_dsh-client-ui-skin-maid-atelier-0.0.1.tgz",
-    "packs": [
-      "skins"
-    ],
-    "tier": "visual",
-    "defaultEnabled": false,
-    "titleZh": "皮肤：女仆工坊",
-    "titleEn": "Skin: Maid Atelier",
-    "descZh": "女仆工坊风格 DSH Web UI 皮肤（dsh-deep-whale 系）。",
-    "descEn": "Maid-atelier themed DSH Web UI skin (dsh-deep-whale series).",
-    "license": "CC-BY-NC-SA-4.0",
-    "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC (branch aio-v1, assets/skins/maid-atelier)",
-    "notes": "npm 无此包（404）→ 从 aio-v1 assets/skins 提取重打包。CC-BY-NC-SA-4.0：非商业性共用，保留署名（随包 LICENSE/NOTICE 一并分发）。peer @deepseek-ai/cordis ^4.0.1，重打包时放宽。"
-  },
-  {
     "id": "miku",
     "name": "@linxin666/dsh-client-ui-skin-miku",
     "version": "0.1.11",

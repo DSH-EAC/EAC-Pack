@@ -105,6 +105,13 @@
       "retiredFrom": "aio",
       "evidence": "同上 AIO v1.2.0 CHANGELOG：「WebUI 自有 usage host 取代退役的 dsh-usage-skill 动态导入」。",
       "reason": "被 WebUI 自有 usage host 取代。"
+    },
+    {
+      "id": "maid-atelier-legacy",
+      "name": "@dsh-external/dsh-client-ui-skin-maid-atelier",
+      "retiredFrom": "suite-skins",
+      "evidence": "catalog/skins.json 0.1.6 期条目（eac-tag 从 aio-v1 assets/skins/maid-atelier 提取重打包的 0.0.1 占位版）。T1 实测社区 @smalltailqwq/dsh-client-ui-skin-maid-atelier 已在 npm 发布正式版至 0.1.7，故移入本台账。",
+      "reason": "由社区 @smalltailqwq/dsh-client-ui-skin-maid-atelier 0.1.7 取代（同皮肤新旧两版，见 catalog/community.json maid-atelier；勿同装）。"
     }
   ]
 }
