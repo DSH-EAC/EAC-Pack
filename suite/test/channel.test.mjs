@@ -295,7 +295,12 @@ test('channel update verification retries a silently dropped install', async () 
   assert.equal(pm.installs.length, 2, 'dropped install is retried exactly once')
   const warn = state.events.find((e) => e.type === 'step-warn' && /did not persist/.test(e.message ?? ''))
   assert.ok(warn, 'retry warning emitted')
+  // The kernel still reports the old version after the retry — the engine must
+  // surface an honest failure instead of an optimistic ok.
   const done = state.events.find((e) => e.type === 'job-done')
-  assert.equal(done.ok, 1)
+  assert.equal(done.ok, 0)
+  assert.equal(done.failed, 1)
+  const fail = state.events.find((e) => e.type === 'step-fail' && /still not persisted/.test(e.message ?? ''))
+  assert.ok(fail, 'honest failure emitted with restart advice')
   delete process.env.DSH_HOME
 })
