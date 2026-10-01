@@ -1,0 +1,391 @@
+{
+  "generatedAt": "2026-10-01T09:37:41.070Z",
+  "skins": [
+    {
+      "id": "blue-fantasy",
+      "name": "蓝色幻想",
+      "nameEn": "Blue Fantasy",
+      "author": "powerdog996（DreamSkin 社区）· dsh-web-ui 适配",
+      "tags": [
+        "dreamskin",
+        "whale",
+        "indigo",
+        "art",
+        "translucent"
+      ],
+      "license": "BSD-3-Clause",
+      "origin": "builtin",
+      "pkgName": "@linxin666/dsh-client-ui-skin-blue-fantasy",
+      "pkgVersion": "0.1.11",
+      "previews": {
+        "light": "previews/blue-fantasy/light.png",
+        "dark": "previews/blue-fantasy/dark.png"
+      },
+      "prompt": "prompts/blue-fantasy/prompt.md",
+      "mutexZh": null,
+      "mutexEn": null,
+      "notesZh": "青蓝幻想风格 DSH Web UI 皮肤（出自 @linxin666/dsh-skins 打包分发）。",
+      "notesEn": "Blue fantasy themed DSH Web UI skin (bundled from @linxin666/dsh-skins)."
+    },
+    {
+      "id": "dragon-heir",
+      "name": "龙的传人",
+      "nameEn": "Dragon Heir",
+      "author": "dsh-web-ui",
+      "tags": [
+        "dragon",
+        "loong",
+        "chinese",
+        "ink-wash",
+        "great-wall",
+        "dual-theme"
+      ],
+      "license": "BSD-3-Clause",
+      "origin": "builtin",
+      "pkgName": "@linxin666/dsh-client-ui-skin-dragon-heir",
+      "pkgVersion": "0.1.11",
+      "previews": {
+        "light": "previews/dragon-heir/light.png",
+        "dark": "previews/dragon-heir/dark.png"
+      },
+      "prompt": "prompts/dragon-heir/prompt.md",
+      "mutexZh": null,
+      "mutexEn": null,
+      "notesZh": "龙裔风格 DSH Web UI 皮肤。",
+      "notesEn": "Dragon-heir themed DSH Web UI skin."
+    },
+    {
+      "id": "miku",
+      "name": "初音未来 · 电子歌姬",
+      "nameEn": "Hatsune Miku",
+      "author": "涂山苏苏",
+      "tags": [
+        "miku",
+        "vocaloid",
+        "blue",
+        "music",
+        "idol",
+        "waveform"
+      ],
+      "license": "BSD-3-Clause",
+      "origin": "builtin",
+      "pkgName": "@linxin666/dsh-client-ui-skin-miku",
+      "pkgVersion": "0.1.11",
+      "previews": {
+        "light": "previews/miku/light.png",
+        "dark": "previews/miku/dark.png"
+      },
+      "prompt": "prompts/miku/prompt.md",
+      "mutexZh": null,
+      "mutexEn": null,
+      "notesZh": "初音未来主题 DSH Web UI 皮肤。",
+      "notesEn": "Hatsune Miku themed DSH Web UI skin."
+    },
+    {
+      "id": "minecraft",
+      "name": "Minecraft 方块世界",
+      "nameEn": "Minecraft Voxel",
+      "author": "dsh-web-ui",
+      "tags": [
+        "minecraft",
+        "voxel",
+        "pixel",
+        "game",
+        "panorama",
+        "skybox"
+      ],
+      "license": "BSD-3-Clause",
+      "origin": "builtin",
+      "pkgName": "@linxin666/dsh-client-ui-skin-minecraft",
+      "pkgVersion": "0.1.11",
+      "previews": {
+        "light": "previews/minecraft/light.png",
+        "dark": "previews/minecraft/dark.png"
+      },
+      "prompt": "prompts/minecraft/prompt.md",
+      "mutexZh": null,
+      "mutexEn": null,
+      "notesZh": "Minecraft 像素主题 DSH Web UI 皮肤。",
+      "notesEn": "Minecraft pixel themed DSH Web UI skin."
+    },
+    {
+      "id": "qq98",
+      "name": "QQ2008 怀旧版",
+      "nameEn": "QQ2008 Retro",
+      "author": "dsh-web-ui",
+      "tags": [
+        "retro",
+        "qq",
+        "2008",
+        "crystal-blue",
+        "nostalgia"
+      ],
+      "license": "BSD-3-Clause",
+      "origin": "builtin",
+      "pkgName": "@linxin666/dsh-client-ui-skin-qq98",
+      "pkgVersion": "0.1.11",
+      "previews": {
+        "light": "previews/qq98/light.png",
+        "dark": "previews/qq98/dark.png"
+      },
+      "prompt": "prompts/qq98/prompt.md",
+      "mutexZh": null,
+      "mutexEn": null,
+      "notesZh": "QQ98 复古 Windows 主题 DSH Web UI 皮肤。",
+      "notesEn": "QQ98 retro Windows themed DSH Web UI skin."
+    },
+    {
+      "id": "ths",
+      "name": "同花顺风格",
+      "nameEn": "Tonghuashun Trading",
+      "author": "dsh-web-ui",
+      "tags": [
+        "stock",
+        "trading",
+        "terminal",
+        "red"
+      ],
+      "license": "BSD-3-Clause",
+      "origin": "builtin",
+      "pkgName": "@linxin666/dsh-client-ui-skin-ths",
+      "pkgVersion": "0.1.11",
+      "previews": {
+        "light": "previews/ths/light.png",
+        "dark": "previews/ths/dark.png"
+      },
+      "prompt": "prompts/ths/prompt.md",
+      "mutexZh": null,
+      "mutexEn": null,
+      "notesZh": "THS 主题 DSH Web UI 皮肤。",
+      "notesEn": "THS themed DSH Web UI skin."
+    },
+    {
+      "id": "trading",
+      "name": "交易终端",
+      "nameEn": "Trading Terminal",
+      "author": "dsh-web-ui",
+      "tags": [
+        "stock",
+        "trading",
+        "ticker",
+        "live",
+        "terminal",
+        "longbridge"
+      ],
+      "license": "BSD-3-Clause",
+      "origin": "builtin",
+      "pkgName": "@linxin666/dsh-client-ui-skin-trading",
+      "pkgVersion": "0.1.11",
+      "previews": {
+        "light": "previews/trading/light.png",
+        "dark": "previews/trading/dark.png"
+      },
+      "prompt": "prompts/trading/prompt.md",
+      "mutexZh": null,
+      "mutexEn": null,
+      "notesZh": "交易终端风格 DSH Web UI 皮肤。",
+      "notesEn": "Trading-terminal styled DSH Web UI skin."
+    },
+    {
+      "id": "whale-song",
+      "name": "鲸吟",
+      "nameEn": "Whale Song",
+      "author": "dsh-web-ui",
+      "tags": [
+        "whale",
+        "ocean",
+        "ice-blue",
+        "goddess",
+        "art",
+        "translucent"
+      ],
+      "license": "BSD-3-Clause",
+      "origin": "builtin",
+      "pkgName": "@linxin666/dsh-client-ui-skin-whale-song",
+      "pkgVersion": "0.1.11",
+      "previews": {
+        "light": "previews/whale-song/light.png",
+        "dark": "previews/whale-song/dark.png"
+      },
+      "prompt": "prompts/whale-song/prompt.md",
+      "mutexZh": null,
+      "mutexEn": null,
+      "notesZh": "鲸歌主题 DSH Web UI 皮肤。",
+      "notesEn": "Whale-song themed DSH Web UI skin."
+    },
+    {
+      "id": "xp",
+      "name": "Windows XP (Luna)",
+      "nameEn": "Windows XP Luna",
+      "author": "dsh-web-ui",
+      "tags": [
+        "retro",
+        "xp",
+        "luna",
+        "windows",
+        "start-button"
+      ],
+      "license": "BSD-3-Clause",
+      "origin": "builtin",
+      "pkgName": "@linxin666/dsh-client-ui-skin-xp",
+      "pkgVersion": "0.1.11",
+      "previews": {
+        "light": "previews/xp/light.png",
+        "dark": "previews/xp/dark.png"
+      },
+      "prompt": "prompts/xp/prompt.md",
+      "mutexZh": null,
+      "mutexEn": null,
+      "notesZh": "Windows XP 复古主题 DSH Web UI 皮肤。",
+      "notesEn": "Windows XP retro themed DSH Web UI skin."
+    },
+    {
+      "id": "deep-whale-manager",
+      "name": "深鲸管理器",
+      "nameEn": "Deep Whale Manager",
+      "author": "Small-tailqwq",
+      "tags": [
+        "whale",
+        "manager",
+        "community"
+      ],
+      "license": "MIT",
+      "origin": "community",
+      "pkgName": "@smalltailqwq/dsh-client-ui-skin-deep-whale-manager",
+      "pkgVersion": "0.1.6",
+      "previews": {
+        "light": "previews/deep-whale-manager/light.png",
+        "dark": "previews/deep-whale-manager/dark.png"
+      },
+      "prompt": null,
+      "mutexZh": "本条目为皮肤切换管理器：client-ui 皮肤之间互斥，经管理器统一切换，请勿叠装多个皮肤。已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版，不能叠装 standalone 版。",
+      "mutexEn": "This entry is the skin switch manager: client-ui skins are mutually exclusive and switched via the manager; do not stack multiple skins. On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.",
+      "notesZh": "深鲸系列皮肤切换管理器（社区 @smalltailqwq 版），提供皮肤面板与统一切换入口。",
+      "notesEn": "Deep-whale series skin manager (community edition by @smalltailqwq) providing a skin panel and unified switcher."
+    },
+    {
+      "id": "maid-atelier",
+      "name": "深海女仆工坊",
+      "nameEn": "Abyssal Maid Atelier",
+      "author": "Small-tailqwq",
+      "tags": [
+        "anime",
+        "maid",
+        "whale",
+        "navy",
+        "ornate",
+        "glass"
+      ],
+      "license": "CC-BY-NC-SA-4.0",
+      "origin": "community",
+      "pkgName": "@smalltailqwq/dsh-client-ui-skin-maid-atelier",
+      "pkgVersion": "0.1.7",
+      "previews": {
+        "light": "previews/maid-atelier/light.png",
+        "dark": "previews/maid-atelier/dark.png"
+      },
+      "prompt": "prompts/maid-atelier/prompt.md",
+      "mutexZh": "同皮肤新旧两版互斥（旧 @dsh-external 0.0.1 已退役）：不可与旧版叠装。client-ui 皮肤之间互斥，不可叠装（deep-whale-manager 为统一切换管理器）。已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版，不能叠装 standalone 版。",
+      "mutexEn": "Old and new builds of this skin are mutually exclusive (legacy @dsh-external 0.0.1 is retired); do not stack them. client-ui skins are mutually exclusive and must not be stacked (deep-whale-manager is the unified switcher). On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.",
+      "notesZh": "女仆工坊风格 DSH Web UI 皮肤（鲸鱼娘美术系列社区版，取代旧 @dsh-external 0.0.1 提取版）。",
+      "notesEn": "Maid-atelier themed DSH Web UI skin (community whale-art series, superseding the old @dsh-external 0.0.1 extraction)."
+    },
+    {
+      "id": "orca-link",
+      "name": "虎鲸之链",
+      "nameEn": "Orca Link",
+      "author": "Small-tailqwq",
+      "tags": [
+        "whale",
+        "orca",
+        "anime",
+        "community"
+      ],
+      "license": "CC-BY-NC-SA-4.0",
+      "origin": "community",
+      "pkgName": "@smalltailqwq/dsh-client-ui-skin-orca-link",
+      "pkgVersion": "0.1.7",
+      "previews": {
+        "light": "previews/orca-link/light.png",
+        "dark": "previews/orca-link/dark.png"
+      },
+      "prompt": null,
+      "mutexZh": "同皮肤新旧两版互斥（旧 @dsh-external 0.0.1 已退役）：不可与旧版叠装。client-ui 皮肤之间互斥，不可叠装（deep-whale-manager 为统一切换管理器）。已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版，不能叠装 standalone 版。",
+      "mutexEn": "Old and new builds of this skin are mutually exclusive (legacy @dsh-external 0.0.1 is retired); do not stack them. client-ui skins are mutually exclusive and must not be stacked (deep-whale-manager is the unified switcher). On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.",
+      "notesZh": "虎鲸主题 DSH Web UI 皮肤（鲸鱼娘美术系列社区版）。",
+      "notesEn": "Orca-themed DSH Web UI skin (community whale-art series)."
+    },
+    {
+      "id": "liang",
+      "name": "滑动变阻器",
+      "nameEn": "Sliding Rheostat (Liang)",
+      "author": "kingOfSoySauce",
+      "tags": [
+        "rheostat",
+        "intensity",
+        "community"
+      ],
+      "license": "NOASSERTION",
+      "origin": "community",
+      "pkgName": "dsh-client-liang-intensity-skin",
+      "pkgVersion": "0.1.7",
+      "previews": {
+        "light": "previews/liang/light.png",
+        "dark": "previews/liang/dark.png"
+      },
+      "prompt": null,
+      "mutexZh": "同皮肤新旧两版互斥（旧 @dsh-external 0.0.1 已退役）：不可与旧版叠装。client-ui 皮肤之间互斥，不可叠装（deep-whale-manager 为统一切换管理器）。已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版，不能叠装 standalone 版。",
+      "mutexEn": "Old and new builds of this skin are mutually exclusive (legacy @dsh-external 0.0.1 is retired); do not stack them. client-ui skins are mutually exclusive and must not be stacked (deep-whale-manager is the unified switcher). On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.",
+      "notesZh": "「滑动变阻器」强度可调主题皮肤，kingOfSoySauce 经 GitHub Release 分发 tgz（v0.1.7 起包体从 ~45MB 瘦身至 ~1.3MB）。",
+      "notesEn": "Intensity-adjustable 'sliding rheostat' theme skin, distributed as a release tarball by kingOfSoySauce (~45MB before v0.1.7, ~1.3MB since)."
+    },
+    {
+      "id": "deep-whale-day-night",
+      "name": "昼夜工坊",
+      "nameEn": "Deep Whale Day-Night",
+      "author": "GGBond2424648901",
+      "tags": [
+        "whale",
+        "day-night",
+        "community"
+      ],
+      "license": "CC-BY-NC-SA-4.0",
+      "origin": "community",
+      "pkgName": "@dsh-external/dsh-client-ui-skin-deep-whale-day-night",
+      "pkgVersion": "0.1.12",
+      "previews": {
+        "light": "previews/deep-whale-day-night/light.png",
+        "dark": "previews/deep-whale-day-night/dark.png"
+      },
+      "prompt": null,
+      "mutexZh": "同皮肤新旧两版互斥（旧 @dsh-external 0.0.1 已退役）：不可与旧版叠装。client-ui 皮肤之间互斥，不可叠装（deep-whale-manager 为统一切换管理器）。已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版，不能叠装 standalone 版。",
+      "mutexEn": "Old and new builds of this skin are mutually exclusive (legacy @dsh-external 0.0.1 is retired); do not stack them. client-ui skins are mutually exclusive and must not be stacked (deep-whale-manager is the unified switcher). On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.",
+      "notesZh": "昼夜双主题工坊皮肤（GGBond2424648901 经 GitHub Release 分发 tgz，随包附 SHA256SUMS；npm 包名与仓库名不同）。",
+      "notesEn": "Day/night dual-theme workshop skin (tgz from GGBond2424648901's GitHub releases, ships with SHA256SUMS; npm package name differs from repo name)."
+    },
+    {
+      "id": "endfield",
+      "name": "终末地",
+      "nameEn": "Endfield",
+      "author": "ymh0000123",
+      "tags": [
+        "endfield",
+        "industrial",
+        "community"
+      ],
+      "license": "MIT",
+      "origin": "community",
+      "pkgName": "dsh-theme-endfield",
+      "pkgVersion": "1.1.5",
+      "previews": {
+        "light": "previews/endfield/light.png",
+        "dark": "previews/endfield/dark.png"
+      },
+      "prompt": null,
+      "mutexZh": "同皮肤新旧两版互斥（旧 @dsh-external 0.0.1 已退役）：不可与旧版叠装。client-ui 皮肤之间互斥，不可叠装（deep-whale-manager 为统一切换管理器）。已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版，不能叠装 standalone 版。",
+      "mutexEn": "Old and new builds of this skin are mutually exclusive (legacy @dsh-external 0.0.1 is retired); do not stack them. client-ui skins are mutually exclusive and must not be stacked (deep-whale-manager is the unified switcher). On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.",
+      "notesZh": "明日方舟：终末地风格主题 —— 奶油纸面、墨色文字、信号黄点缀、零圆角工业排版；设置项经 DSH 0.1.7 volatile Config + configForms 持久化。npm 版已 unpublish，改从 GitHub 仓库打包。",
+      "notesEn": "Arknights: Endfield styled theme — cream paper, ink text, signal-yellow accents, zero-radius industrial typography; settings persist via DSH 0.1.7 volatile Config + configForms. npm version unpublished; packaged from the GitHub repo."
+    }
+  ]
+}
