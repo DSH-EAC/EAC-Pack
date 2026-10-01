@@ -252,9 +252,9 @@
   {
     "id": "picturereader",
     "name": "picturereader",
-    "version": "3.3.3",
+    "version": "3.3.1",
     "source": "npm",
-    "spec": "picturereader@3.3.3",
+    "spec": "picturereader@3.3.1",
     "packs": [
       "eac"
     ],
@@ -266,7 +266,7 @@
     "descEn": "Unified image understanding: visual twin adapter for native thumbnails, auto-analysis on text-only models, local tools (scan/OCR x4/crop/palette/compare/batch), document-to-image, local photo editing, optional external VLM bridge.",
     "license": "MIT",
     "upstream": "https://github.com/jing-hy/picturereader",
-    "notes": "npm 锁定 EAC 随包版本 3.3.1（上游 npm latest 已到 3.3.3，整合包不追新）。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
+    "notes": "目录名 picturereader。D10 实测：3.3.3 在官方 RC2 上等待 EAC 分叉版专有 settingsScope 服务 → web boot 门禁拒绝启动（1 entry did not activate）；3.3.1 在 RC2 稳定（D9/D10 验证）。锁定 3.3.1，等上游出 RC2 版再直升。"
   },
   {
     "id": "computer-user",
