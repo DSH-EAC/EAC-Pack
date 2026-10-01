@@ -2,9 +2,9 @@
   {
     "id": "blue-fantasy",
     "name": "@linxin666/dsh-client-ui-skin-blue-fantasy",
-    "version": "0.1.11",
+    "version": "0.2.0",
     "source": "npm",
-    "spec": "file:dist/@linxin666_dsh-client-ui-skin-blue-fantasy-0.1.11.tgz",
+    "spec": "file:dist/@linxin666_dsh-client-ui-skin-blue-fantasy-0.2.0.tgz",
     "packs": [
       "skins"
     ],
@@ -16,7 +16,7 @@
     "descEn": "Blue fantasy themed DSH Web UI skin (bundled from @linxin666/dsh-skins).",
     "license": "BSD-3-Clause",
     "upstream": "https://github.com/zhu1090093659/dsh-web-ui",
-    "notes": "目录名 blue-fantasy ≠ npm 包名。npm 锁定 0.1.11（存在；npm latest 已到 0.2.0，不追新）。AIO 内置皮肤默认全部 disabled，由「设置 → 皮肤」切换。"
+    "notes": "目录名 blue-fantasy ≠ npm 包名。D10 起锁定 npm latest 0.2.0（渠道二阶段更新演练项：随包 0.1.11 → 渠道 0.2.0）。AIO 内置皮肤默认全部 disabled，由「设置 → 皮肤」切换。"
   },
   {
     "id": "dragon-heir",
