@@ -42,7 +42,13 @@ function untar(file, destDir) {
 function pack(dir, outFile) {
   fs.rmSync(outFile, { force: true })
   fs.mkdirSync(path.dirname(outFile), { recursive: true })
-  execFileSync('npm', ['pack', dir, '--pack-destination', path.dirname(outFile)], { stdio: 'pipe', shell: true })
+  // npm renames scoped packages to dash-form filenames; ask --json for the
+  // actual filename so the result always lands on the canonical path.
+  const out = execFileSync('npm', ['pack', dir, '--json', '--pack-destination', path.dirname(outFile)], { stdio: 'pipe', shell: true, encoding: 'utf8' })
+  const packed = JSON.parse(out)[0]?.filename
+  if (!packed) throw new Error('npm pack produced no filename')
+  const from = path.join(path.dirname(outFile), packed)
+  if (path.resolve(from) !== path.resolve(outFile)) fs.copyFileSync(from, outFile)
 }
 
 let changed = 0

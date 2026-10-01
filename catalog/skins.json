@@ -4,8 +4,10 @@
     "name": "@linxin666/dsh-client-ui-skin-blue-fantasy",
     "version": "0.1.11",
     "source": "npm",
-    "spec": "@linxin666/dsh-client-ui-skin-blue-fantasy@0.1.11",
-    "packs": ["skins"],
+    "spec": "file:dist/@linxin666_dsh-client-ui-skin-blue-fantasy-0.1.11.tgz",
+    "packs": [
+      "skins"
+    ],
     "tier": "visual",
     "defaultEnabled": false,
     "titleZh": "皮肤：青玄幻境",
@@ -21,8 +23,10 @@
     "name": "@linxin666/dsh-client-ui-skin-dragon-heir",
     "version": "0.1.11",
     "source": "npm",
-    "spec": "@linxin666/dsh-client-ui-skin-dragon-heir@0.1.11",
-    "packs": ["skins"],
+    "spec": "file:dist/@linxin666_dsh-client-ui-skin-dragon-heir-0.1.11.tgz",
+    "packs": [
+      "skins"
+    ],
     "tier": "visual",
     "defaultEnabled": false,
     "titleZh": "皮肤：龙裔",
@@ -39,7 +43,9 @@
     "version": "0.0.1",
     "source": "eac-tag",
     "spec": "file:dist/@dsh-external_dsh-client-ui-skin-maid-atelier-0.0.1.tgz",
-    "packs": ["skins"],
+    "packs": [
+      "skins"
+    ],
     "tier": "visual",
     "defaultEnabled": false,
     "titleZh": "皮肤：女仆工坊",
@@ -55,8 +61,10 @@
     "name": "@linxin666/dsh-client-ui-skin-miku",
     "version": "0.1.11",
     "source": "npm",
-    "spec": "@linxin666/dsh-client-ui-skin-miku@0.1.11",
-    "packs": ["skins"],
+    "spec": "file:dist/@linxin666_dsh-client-ui-skin-miku-0.1.11.tgz",
+    "packs": [
+      "skins"
+    ],
     "tier": "visual",
     "defaultEnabled": false,
     "titleZh": "皮肤：初音未来",
@@ -72,8 +80,10 @@
     "name": "@linxin666/dsh-client-ui-skin-minecraft",
     "version": "0.1.11",
     "source": "npm",
-    "spec": "@linxin666/dsh-client-ui-skin-minecraft@0.1.11",
-    "packs": ["skins"],
+    "spec": "file:dist/@linxin666_dsh-client-ui-skin-minecraft-0.1.11.tgz",
+    "packs": [
+      "skins"
+    ],
     "tier": "visual",
     "defaultEnabled": false,
     "titleZh": "皮肤：我的世界",
@@ -89,8 +99,10 @@
     "name": "@linxin666/dsh-client-ui-skin-qq98",
     "version": "0.1.11",
     "source": "npm",
-    "spec": "@linxin666/dsh-client-ui-skin-qq98@0.1.11",
-    "packs": ["skins"],
+    "spec": "file:dist/@linxin666_dsh-client-ui-skin-qq98-0.1.11.tgz",
+    "packs": [
+      "skins"
+    ],
     "tier": "visual",
     "defaultEnabled": false,
     "titleZh": "皮肤：QQ98 复古",
@@ -106,8 +118,10 @@
     "name": "@linxin666/dsh-client-ui-skin-ths",
     "version": "0.1.11",
     "source": "npm",
-    "spec": "@linxin666/dsh-client-ui-skin-ths@0.1.11",
-    "packs": ["skins"],
+    "spec": "file:dist/@linxin666_dsh-client-ui-skin-ths-0.1.11.tgz",
+    "packs": [
+      "skins"
+    ],
     "tier": "visual",
     "defaultEnabled": false,
     "titleZh": "皮肤：同人社",
@@ -123,8 +137,10 @@
     "name": "@linxin666/dsh-client-ui-skin-trading",
     "version": "0.1.11",
     "source": "npm",
-    "spec": "@linxin666/dsh-client-ui-skin-trading@0.1.11",
-    "packs": ["skins"],
+    "spec": "file:dist/@linxin666_dsh-client-ui-skin-trading-0.1.11.tgz",
+    "packs": [
+      "skins"
+    ],
     "tier": "visual",
     "defaultEnabled": false,
     "titleZh": "皮肤：交易终端",
@@ -140,8 +156,10 @@
     "name": "@linxin666/dsh-client-ui-skin-whale-song",
     "version": "0.1.11",
     "source": "npm",
-    "spec": "@linxin666/dsh-client-ui-skin-whale-song@0.1.11",
-    "packs": ["skins"],
+    "spec": "file:dist/@linxin666_dsh-client-ui-skin-whale-song-0.1.11.tgz",
+    "packs": [
+      "skins"
+    ],
     "tier": "visual",
     "defaultEnabled": false,
     "titleZh": "皮肤：鲸歌",
@@ -157,8 +175,10 @@
     "name": "@linxin666/dsh-client-ui-skin-xp",
     "version": "0.1.11",
     "source": "npm",
-    "spec": "@linxin666/dsh-client-ui-skin-xp@0.1.11",
-    "packs": ["skins"],
+    "spec": "file:dist/@linxin666_dsh-client-ui-skin-xp-0.1.11.tgz",
+    "packs": [
+      "skins"
+    ],
     "tier": "visual",
     "defaultEnabled": false,
     "titleZh": "皮肤：Windows XP",

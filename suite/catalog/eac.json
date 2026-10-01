@@ -5,7 +5,10 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/@deepseek-ai_dsh-balance-0.1.0.tgz",
-    "packs": ["eac", "aio"],
+    "packs": [
+      "eac",
+      "aio"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "余额与费用估算",
@@ -22,7 +25,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/@deepseek-ai_dsh-file-changes-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "会话文件更改投影",
@@ -39,7 +44,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/@deepseek-ai_dsh-client-file-changes-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "文件视图与一键还原",
@@ -56,16 +63,18 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/@deepseek-ai_dsh-terminal-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
-    "defaultEnabled": true,
+    "defaultEnabled": false,
     "titleZh": "会话内终端",
     "titleEn": "In-session Terminal",
     "descZh": "与对话/轨迹/文件并列的会话内交互式命令行（SSE 流式，非 PTY）。",
     "descEn": "In-session interactive terminal alongside chat/trajectory/files (SSE streaming, not PTY).",
     "license": "MIT",
     "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC (tag v5.3.6)",
-    "notes": "EAC 随包 private 包，npm 无发布；在 HEAD 树。"
+    "notes": "RC2 内核已内置官方 dsh-terminal（比 EAC 0.1.0 新），整合包跳过重复安装。"
   },
   {
     "id": "plugin-manager",
@@ -73,16 +82,19 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/@deepseek-ai_dsh-plugin-manager-0.1.0.tgz",
-    "packs": ["eac", "aio"],
+    "packs": [
+      "eac",
+      "aio"
+    ],
     "tier": "core",
-    "defaultEnabled": true,
+    "defaultEnabled": false,
     "titleZh": "插件启停管理",
     "titleEn": "Plugin Manager",
     "descZh": "设置页「插件」栏：列出全部内置插件及其作用，配套插件可一键关闭（写 cordis.patch.yml disabled 条目，重启生效）。",
     "descEn": "Settings plugins tab: list all bundled plugins and toggle companion plugins off via cordis.patch.yml disabled rows.",
     "license": "MIT",
     "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC (tag v5.3.6)",
-    "notes": "npm 有同名包但 0.1.0 未上架（仅 0.1.6-alpha.2 等），锁定 EAC 随包 0.1.0。AIO(aio-v1) 同版本 0.1.0 共享，版本以 EAC 包为准。"
+    "notes": "RC2 内核已内置官方 dsh-plugin-manager（npm 0.1.6-alpha.2），整合包跳过重复安装。"
   },
   {
     "id": "float-window",
@@ -90,7 +102,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/@deepseek-ai_dsh-float-window-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "会话浮窗（分屏）",
@@ -107,7 +121,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/@deepseek-ai_dsh-conversation-tweaks-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "对话界面微调",
@@ -124,7 +140,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/@deepseek-ai_dsh-prompt-custom-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "自定义注入提示词",
@@ -141,7 +159,9 @@
     "version": "0.7.0",
     "source": "eac-tag",
     "spec": "file:dist/@deepseek-ai_dsh-openclaw-bridge-0.7.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "heavy",
     "defaultEnabled": true,
     "titleZh": "微信 ClawBot / OpenClaw 桥",
@@ -158,7 +178,10 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/@deepseek-ai_dsh-skin-switch-0.1.0.tgz",
-    "packs": ["eac", "aio"],
+    "packs": [
+      "eac",
+      "aio"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "皮肤切换",
@@ -167,7 +190,7 @@
     "descEn": "Settings skins tab: list and switch bundled skins by rewriting ui-skin-* activation rows in cordis.patch.yml.",
     "license": "MIT",
     "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC (tag v5.3.6)",
-    "notes": "EAC 随包 private 包，npm 无发布；在 HEAD 树。AIO(aio-v1) 同版本 0.1.0 共享（AIO v1.2.0 曾移除、现分支恢复），版本以 EAC 包为准。需与 catalog/skins.json 皮肤包配合。"
+    "notes": "EAC 随包 private 包，npm 无发布；在 HEAD 树。AIO(aio-v1) 同版本 0.1.0 共享（AIO v1.2.0 曾移除、现分支恢复），版本以 EAC 包为准。需与 catalog/skins.json 皮肤包配合。 D8 实测：RC2 上 remote face mount 失败（typert strict codec 无 create 工厂），皮肤管理 tab 可能不可用，但不阻塞启动。"
   },
   {
     "id": "easy-setup",
@@ -175,16 +198,18 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/@deepseek-ai_dsh-easy-setup-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
-    "defaultEnabled": true,
+    "defaultEnabled": false,
     "titleZh": "快速配置向导",
     "titleEn": "Easy Setup",
     "descZh": "设置页快速配置：视觉模型提供商/模型一键选择、soul.md 人设可视化编辑、从 Codex/Claude Code 一键迁移 skills+MCP+记忆。",
     "descEn": "Quick setup: one-click vision provider/model pick, visual soul.md editor, one-click migration of skills+MCP+memory from Codex/Claude Code.",
     "license": "MIT",
     "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC (tag v5.3.6)",
-    "notes": "EAC 随包 private 包，npm 无发布；在 HEAD 树。"
+    "notes": "D8 实测：依赖 EAC 分叉版专有服务 settingsScope，官方 RC2 不提供，启用会阻塞 web boot（应用拒绝启动）。默认关闭。"
   },
   {
     "id": "eac-locale-compat",
@@ -192,7 +217,9 @@
     "version": "1.0.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-eac-locale-compat-1.0.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "英文界面兼容层",
@@ -209,7 +236,9 @@
     "version": "1.0.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-eac-core-bridge-1.0.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "EAC 核心桥",
@@ -225,8 +254,10 @@
     "name": "picturereader",
     "version": "3.3.1",
     "source": "npm",
-    "spec": "picturereader@3.3.1",
-    "packs": ["eac"],
+    "spec": "file:dist/picturereader-3.3.1.tgz",
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "读图 / 图像理解",
@@ -242,8 +273,10 @@
     "name": "computer-user",
     "version": "0.3.6",
     "source": "npm",
-    "spec": "computer-user@0.3.6",
-    "packs": ["eac"],
+    "spec": "file:dist/computer-user-0.3.6.tgz",
+    "packs": [
+      "eac"
+    ],
     "tier": "heavy",
     "defaultEnabled": true,
     "titleZh": "电脑操作自动化",
@@ -259,8 +292,10 @@
     "name": "dsh-soul-md",
     "version": "0.2.8",
     "source": "npm",
-    "spec": "dsh-soul-md@0.2.8",
-    "packs": ["eac"],
+    "spec": "file:dist/dsh-soul-md-0.2.8.tgz",
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "soul.md 人设卡",
@@ -276,8 +311,10 @@
     "name": "dsh-web-mobile-fix",
     "version": "1.0.1",
     "source": "npm",
-    "spec": "dsh-web-mobile-fix@1.0.1",
-    "packs": ["eac"],
+    "spec": "file:dist/dsh-web-mobile-fix-1.0.1.tgz",
+    "packs": [
+      "eac"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "移动端布局修复",
@@ -294,7 +331,9 @@
     "version": "1.0.1",
     "source": "eac-tag",
     "spec": "file:dist/dsh-viewport-lock-1.0.1.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "视口钳制",
@@ -310,8 +349,10 @@
     "name": "meow-smooth",
     "version": "0.5.0",
     "source": "npm",
-    "spec": "meow-smooth@0.5.0",
-    "packs": ["eac"],
+    "spec": "file:dist/meow-smooth-0.5.0.tgz",
+    "packs": [
+      "eac"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "喵丝滑（移动端增强）",
@@ -328,7 +369,10 @@
     "version": "0.15.3-eac.1",
     "source": "eac-tag",
     "spec": "file:dist/dsh-better-sidebar-0.15.3-eac.1.tgz",
-    "packs": ["eac", "aio"],
+    "packs": [
+      "eac",
+      "aio"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "VSCode 风格右侧边栏",
@@ -345,7 +389,9 @@
     "version": "0.6.2",
     "source": "eac-tag",
     "spec": "file:dist/dsh-raw-html-0.6.2.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "VCP 视觉通感（HTML 渲染）",
@@ -362,7 +408,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-message-rewind-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "消息编辑回退",
@@ -378,8 +426,10 @@
     "name": "dsh-pet",
     "version": "0.1.3",
     "source": "npm",
-    "spec": "dsh-pet@0.1.3",
-    "packs": ["eac"],
+    "spec": "file:dist/dsh-pet-0.1.3.tgz",
+    "packs": [
+      "eac"
+    ],
     "tier": "visual",
     "defaultEnabled": false,
     "titleZh": "页面桌宠",
@@ -396,7 +446,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-dock-settings-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "Skills 与 MCP 管理",
@@ -413,7 +465,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-font-custom-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "字体外观自定义",
@@ -430,7 +484,9 @@
     "version": "1.0.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-compact-1.0.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "请求路径自动压缩",
@@ -447,7 +503,10 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-plugin-shield-0.1.0.tgz",
-    "packs": ["eac", "aio"],
+    "packs": [
+      "eac",
+      "aio"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "插件保护中心",
@@ -464,7 +523,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-change-review-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "AI 变更审核",
@@ -480,8 +541,10 @@
     "name": "@vlln/dsh-navbar",
     "version": "0.3.0",
     "source": "npm",
-    "spec": "@vlln/dsh-navbar@0.3.0",
-    "packs": ["eac"],
+    "spec": "file:dist/@vlln_dsh-navbar-0.3.0.tgz",
+    "packs": [
+      "eac"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "对话节点导航条",
@@ -497,8 +560,10 @@
     "name": "dsh-session-manager",
     "version": "0.1.0",
     "source": "npm",
-    "spec": "dsh-session-manager@0.1.0",
-    "packs": ["eac"],
+    "spec": "file:dist/dsh-session-manager-0.1.0.tgz",
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "对话删除与归档",
@@ -515,16 +580,18 @@
     "version": "0.2.8",
     "source": "eac-tag",
     "spec": "file:dist/@dsh-external_dsh-side-session-0.2.8.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "visual",
-    "defaultEnabled": true,
+    "defaultEnabled": false,
     "titleZh": "侧边临时会话",
     "titleEn": "Side Session",
     "descZh": "独立悬浮窗临时追问：自动导入当前主对话上下文，不污染主会话（Ctrl+Shift+S），多种回答引擎。",
     "descEn": "Floating side-session panel that imports current conversation context for throwaway follow-ups without polluting the main session.",
     "license": "MIT",
     "upstream": "https://github.com/myYangyunfan/dsh_desktop",
-    "notes": "自 myYangyunfan/dsh_desktop 移植（@dsh-external scope），EAC 随包 private，npm 无发布。"
+    "notes": "D8 实测：同 easy-setup，等待 settingsScope 服务，官方 RC2 上阻塞 web boot。默认关闭。"
   },
   {
     "id": "phone",
@@ -532,7 +599,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-phone-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "heavy",
     "defaultEnabled": true,
     "titleZh": "手机连接",
@@ -549,7 +618,9 @@
     "version": "0.1.1",
     "source": "eac-tag",
     "spec": "file:dist/dsh-feature-toggles-0.1.1.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "增强功能开关",
@@ -565,8 +636,11 @@
     "name": "dsh-whale-widget",
     "version": "0.2.10",
     "source": "npm",
-    "spec": "dsh-whale-widget@0.2.10",
-    "packs": ["eac", "aio"],
+    "spec": "file:dist/dsh-whale-widget-0.2.10.tgz",
+    "packs": [
+      "eac",
+      "aio"
+    ],
     "tier": "visual",
     "defaultEnabled": false,
     "titleZh": "余额小鲸鱼挂件",
@@ -583,7 +657,9 @@
     "version": "0.1.13-eac.3",
     "source": "eac-tag",
     "spec": "file:dist/@nanmicoder_dsh-agent-teams-0.1.13-eac.3.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "heavy",
     "defaultEnabled": true,
     "titleZh": "多智能体团队协作",
@@ -600,7 +676,10 @@
     "version": "2.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-composer-dynamic-island-2.1.0.tgz",
-    "packs": ["eac", "aio"],
+    "packs": [
+      "eac",
+      "aio"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "输入灵动岛",
@@ -617,7 +696,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-plugin-wizard-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "插件选择向导",
@@ -634,7 +715,10 @@
     "version": "0.3.4",
     "source": "eac-tag",
     "spec": "file:dist/dsh-undo-savepoint-0.3.4.tgz",
-    "packs": ["eac", "aio"],
+    "packs": [
+      "eac",
+      "aio"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "崩溃急救/撤销回退",
@@ -650,8 +734,10 @@
     "name": "dsh-dafeiyu",
     "version": "0.1.0-alpha.6",
     "source": "npm",
-    "spec": "dsh-dafeiyu@0.1.0-alpha.6",
-    "packs": ["eac"],
+    "spec": "file:dist/dsh-dafeiyu-0.1.0-alpha.6.tgz",
+    "packs": [
+      "eac"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "大肥鱼桌面伴侣",
@@ -668,7 +754,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-pet-settings-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "桌宠设置分区",
@@ -685,7 +773,9 @@
     "version": "9.9.9",
     "source": "eac-tag",
     "spec": "file:dist/dsh-offpeak-9.9.9.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "峰谷价格卫士",
@@ -702,7 +792,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-file-drop-eac-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "拖入文件/文件夹（EAC 版）",
@@ -719,7 +811,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-settings-groups-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "设置高级选项折叠",
@@ -736,7 +830,9 @@
     "version": "2.0.2",
     "source": "eac-tag",
     "spec": "file:dist/dsh-settings-scroll-fix-2.0.2.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "visual",
     "defaultEnabled": true,
     "titleZh": "设置面板滚轮修复",
@@ -753,7 +849,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-image-paste-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": false,
     "titleZh": "图片粘贴发送",
@@ -770,7 +868,9 @@
     "version": "0.1.0",
     "source": "eac-tag",
     "spec": "file:dist/dsh-webui-prompt-optimizer-0.1.0.tgz",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "提示词优化",
@@ -786,8 +886,10 @@
     "name": "dsh-unified-market",
     "version": "0.3.1",
     "source": "npm",
-    "spec": "dsh-unified-market@0.3.1",
-    "packs": ["eac"],
+    "spec": "file:dist/dsh-unified-market-0.3.1.tgz",
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "统一插件市场",
@@ -804,7 +906,9 @@
     "version": "1.0.1",
     "source": "github",
     "spec": "git+https://github.com/jing-hy/dsh-think-zh-expand-eac.git",
-    "packs": ["eac"],
+    "packs": [
+      "eac"
+    ],
     "tier": "core",
     "defaultEnabled": true,
     "titleZh": "思考中文增强（EAC 版）",
