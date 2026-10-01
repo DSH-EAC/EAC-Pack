@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-suite",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "EAC/AIO 插件整合包 — one-click install and update for the full EAC and AIO plugin suites on DeepSeek Harness desktop.",
@@ -19,6 +19,9 @@
     "locale",
     "catalog",
     "assets/dist",
+    "assets/gallery.json",
+    "assets/previews",
+    "assets/prompts",
     "icon.svg",
     "LICENSE",
     "README.md"
