@@ -1,0 +1,110 @@
+{
+  "description": "退役/移除插件台账：记录出处与退役原因，一律不进 EAC/AIO 整合包。条目 evidence 字段标注核实来源。",
+  "items": [
+    {
+      "id": "auto-compact",
+      "name": "dsh-auto-compact",
+      "retiredFrom": "eac-main",
+      "evidence": "EAC 仓库 companion-sync.ts RETIRED_BUILTIN_PLUGINS（v5.3.6 与 HEAD 均在列）：启动时清理 profile patch 行/包副本/依赖。AIO(aio-v1) 中该插件仍为内置 9 插件之一（见 catalog/aio.json），故本条仅约束 EAC 包。",
+      "reason": "main 线退役：请求路径压缩职责由 dsh-compact（EAC 随包）与内核原生压缩引擎接管。"
+    },
+    {
+      "id": "plugin-marketplace",
+      "name": "@deepseek-ai/dsh-plugin-marketplace",
+      "retiredFrom": "eac-main",
+      "evidence": "companion-sync.ts RETIRED_BUILTIN_PLUGINS（两代注册表均在列）；旧市场会与 dsh-unified-market 重复注册 /api/dsh-market 导致 dsh web 退出码 1。",
+      "reason": "被 dsh-unified-market 取代。"
+    },
+    {
+      "id": "dsh-market-plugin",
+      "name": "@sanqi-normal/dsh-webui-market-plugin",
+      "retiredFrom": "eac-main",
+      "evidence": "companion-sync.ts RETIRED_BUILTIN_PLUGINS：zat-market / 旧 npm 市场 / webui-market 各自 profile 定位错误或重复，已从清单移除。",
+      "reason": "被 dsh-unified-market 取代。"
+    },
+    {
+      "id": "zat-market",
+      "name": "zat-dsh-engine",
+      "retiredFrom": "eac-main",
+      "evidence": "companion-sync.ts RETIRED_BUILTIN_PLUGINS（两代注册表均在列）。",
+      "reason": "被 dsh-unified-market 取代。"
+    },
+    {
+      "id": "third-party-thinking",
+      "name": "@deepseek-ai/dsh-third-party-thinking",
+      "retiredFrom": "eac-main",
+      "evidence": "companion-sync.ts RETIRED_BUILTIN_PLUGINS 注释：5.1.1 按用户要求移除内置「第三方模型思考强度」插件（reasoning_effort 控件）。",
+      "reason": "按用户要求移除；内核后续自带 reasoning_effort 控件。"
+    },
+    {
+      "id": "tool-vision",
+      "name": "dsh-tool-vision",
+      "retiredFrom": "eac-main",
+      "evidence": "companion-sync.ts RETIRED_BUILTIN_PLUGINS 注释：自 4.5.0 起被 picturereader 取代但曾漏列退役清单；残留包会在设置页注册「视觉模型」卡，其 settings 命名空间在新内核失效点开即空白。",
+      "reason": "被 picturereader 取代。"
+    },
+    {
+      "id": "settings-nav-custom",
+      "name": "dsh-settings-nav-custom",
+      "retiredFrom": "eac-main",
+      "evidence": "companion-sync.ts RETIRED_BUILTIN_PLUGINS 注释：按用户要求移除「普通/高级」分栏（nav-custom 是该分栏唯一写入者，见 settings-groups-standdown 契约改判）。",
+      "reason": "功能并入 dsh-settings-groups 的页内折叠 + 单一写者约束。"
+    },
+    {
+      "id": "dsh-stt",
+      "name": "@deepseek-ai/dsh-stt",
+      "retiredFrom": "eac-main",
+      "evidence": "重要修正：背景任务清单把 dsh-stt 列为「官方配套（默认禁用）在役项」，但实测 —— ① v5.3.6 的 COMPANION_PLUGINS 注册表与 assets/plugins 均无 dsh-stt；② HEAD（v6.0.0-beta.1 期）companion-sync.ts 的 RETIRED_BUILTIN_PLUGINS 明确在列并注释：5.3.0 按用户要求移除内置语音转文字插件（本地 sherpa-onnx ASR 模型 ~1.1G 不再随包分发/安装）。",
+      "reason": "5.3.0 退役：1.1GB 本地 ASR 模型不随包分发；已下载的 ~/.dsh/models/dsh-stt/ 缓存属用户数据由用户自行清理。"
+    },
+    {
+      "id": "file-drop",
+      "name": "dsh-file-drop",
+      "retiredFrom": "eac-main",
+      "evidence": "companion-sync.ts file-drop-eac 条目注释：「拖入文件/文件夹到对话（EAC 特化版，取代原 dsh-file-drop）」。",
+      "reason": "被 dsh-file-drop-eac 取代（EAC 版去掉图片接管避免与 picturereader 冲突，新增文件夹识别）。"
+    },
+    {
+      "id": "aio-dsh-market",
+      "name": "dsh-market",
+      "retiredFrom": "aio",
+      "evidence": "aio-v1 CHANGELOG.md [AIO v1.2.0]（2026-09-09）：「按确认停用清单删除插件（dsh-market、dsh-offpeak、dsh-plugin-marketplace、dsh-skin-switch、dsh-webui-market）与九个未使用皮肤」。",
+      "reason": "AIO v1.2.0 按确认停用清单删除（市场职责归 dsh-unified-market / WebUI 内置市场）。"
+    },
+    {
+      "id": "aio-offpeak",
+      "name": "dsh-offpeak",
+      "retiredFrom": "aio",
+      "evidence": "同上 AIO v1.2.0 CHANGELOG。注意：EAC 主线在役（见 catalog/eac.json offpeak 条目），本条仅约束 AIO 包。",
+      "reason": "AIO v1.2.0 移除；峰谷拦截职责由 WebUI 自有实现承接。"
+    },
+    {
+      "id": "aio-plugin-marketplace",
+      "name": "dsh-plugin-marketplace",
+      "retiredFrom": "aio",
+      "evidence": "同上 AIO v1.2.0 CHANGELOG（AIO 侧非 scoped 同名包）。",
+      "reason": "AIO v1.2.0 移除。"
+    },
+    {
+      "id": "aio-skin-switch",
+      "name": "dsh-skin-switch",
+      "retiredFrom": "aio-history",
+      "evidence": "同上 AIO v1.2.0 CHANGELOG；但 aio-v1 分支（v9.6.3 期）assets/plugins 已恢复 dsh-skin-switch。本条仅作历史记录，当前 AIO 包含该插件（见 catalog/aio.json）。",
+      "reason": "AIO v1.2.0 曾移除，现分支已恢复 —— 不再构成排除依据。"
+    },
+    {
+      "id": "aio-webui-market",
+      "name": "dsh-webui-market",
+      "retiredFrom": "aio",
+      "evidence": "同上 AIO v1.2.0 CHANGELOG。",
+      "reason": "AIO v1.2.0 移除（与 @sanqi-normal/dsh-webui-market-plugin 同源的 WebUI 市场）。"
+    },
+    {
+      "id": "aio-usage-skill",
+      "name": "dsh-usage-skill",
+      "retiredFrom": "aio",
+      "evidence": "同上 AIO v1.2.0 CHANGELOG：「WebUI 自有 usage host 取代退役的 dsh-usage-skill 动态导入」。",
+      "reason": "被 WebUI 自有 usage host 取代。"
+    }
+  ]
+}

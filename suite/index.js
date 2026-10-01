@@ -352,10 +352,12 @@ async function runStep(job, entry) {
         // unless told otherwise, so pass the intent explicitly.
         options.enabled = entry.defaultEnabled !== false
       }
-      const result = await pmCall(pm, 'installBundle', target, options)
+      let result = await pmCall(pm, 'installBundle', target, options)
+      // pnpm blocked build scripts: approve exactly what was reported and retry once
       const pending = result?.pendingBuilds ?? []
       if (pending.length) {
-        emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: `build scripts pending approval: ${pending.join(', ')}` })
+        emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: `approving build scripts: ${pending.join(', ')}` })
+        result = await pmCall(pm, 'installBundle', target, { ...options, approvedBuilds: pending })
       }
       if (job.type !== 'install' && typeof entry.defaultEnabled === 'boolean') {
         await syncEnabled(pm, entry, job.setEnabled !== false && entry.defaultEnabled !== false, job.id)
@@ -365,12 +367,35 @@ async function runStep(job, entry) {
     appendJobLog(job.id, `ok ${entry.name}@${entry.version}`)
     return { id: entry.id, ok: true }
   } catch (err) {
+    // Incompatible peer on this kernel: grant an exact-version exemption
+    // (acceptRisk) and retry once — matches the kernel's own escape hatch.
     const message = String(err?.message ?? err)
+    if (job.type !== 'uninstall' && job.exempt !== false && /incompat|peer|version/i.test(message)) {
+      const runtime = (message.match(/\d+\.\d+\.\d+-(?:rc|alpha|beta)[.\w]*/) ?? [SUITE_RUNTIME])[0]
+      try {
+        emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: `granting version exemption for ${entry.name}@${entry.version} on ${runtime}` })
+        await pmCall(pm, 'setVersionExemption', `${entry.name}@${entry.version}`, runtime, true, true)
+        const target = resolveTarget(entry, state.distIndex)
+        const options = job.setEnabled !== false && job.type === 'install' ? { enabled: entry.defaultEnabled !== false } : {}
+        await pmCall(pm, 'installBundle', target, options)
+        emit({ type: 'step-ok', jobId: job.id, id: entry.id, message: 'installed with version exemption' })
+        appendJobLog(job.id, `ok(exempt) ${entry.name}@${entry.version}`)
+        return { id: entry.id, ok: true, exempt: true }
+      } catch (err2) {
+        const message2 = String(err2?.message ?? err2)
+        emit({ type: 'step-fail', jobId: job.id, id: entry.id, message: message2 })
+        appendJobLog(job.id, `FAIL ${entry.name}@${entry.version}: ${message2}`)
+        return { id: entry.id, ok: false, error: message2 }
+      }
+    }
     emit({ type: 'step-fail', jobId: job.id, id: entry.id, message })
     appendJobLog(job.id, `FAIL ${entry.name}@${entry.version}: ${message}`)
     return { id: entry.id, ok: false, error: message }
   }
 }
+
+/** Kernel runtime the catalog targets; used as the exemption fallback. */
+const SUITE_RUNTIME = '0.2.0-rc.2'
 
 async function syncEnabled(pm, entry, enabled, jobId = 'n/a') {
   try {
