@@ -213,7 +213,7 @@
     "descEn": "Rich visualization rendering for tool calls.",
     "license": "BSD-3-Clause",
     "upstream": "https://github.com/Nagi-ovo/dsh-visualize",
-    "notes": "aio-v1 seed 以 git+https 引用，写名为 @dsh-external/dsh-visualize；上游仓库已改名 @nagi-ovo/dsh-visualize（HEAD 0.1.4；本机 AIO 6.9.3 旧副本为 @dsh-external 0.1.2）。Host 写 bundles/patch 行须用新名 @nagi-ovo/dsh-visualize。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。"
+    "notes": "aio-v1 seed 以 git+https 引用，写名为 @dsh-external/dsh-visualize；上游仓库已改名 @nagi-ovo/dsh-visualize（HEAD 0.1.4；本机 AIO 6.9.3 旧副本为 @dsh-external 0.1.2）。Host 写 bundles/patch 行须用新名 @nagi-ovo/dsh-visualize。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。 上游已由 @dsh-external 改名 @nagi-ovo；整合包带 0.1.4（新于 AIO 6.9.3 内置的 0.1.2）。"
   },
   {
     "id": "client-ui-custom",
