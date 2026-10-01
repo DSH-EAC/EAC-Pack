@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>dsh-plugin-suite · dev preview</title>
+  <!-- dev-only react vendor bundle (built by dev/build-deps.mjs) -->
+  <script src="/dev/vendor/react.iife.js"></script>
+  <style>
+    /* ── shell theme variable shim ─────────────────────────────────────────
+       The real shell defines these; the preview mirrors them for light/dark
+       so the plugin UI is exercised against the same names it ships with. */
+    :root {
+      --dsw-alias-bg-layer-1: #ffffff;
+      --dsw-alias-bg-layer-2: #f6f7f9;
+      --dsw-alias-bg-layer-3: #ecedf1;
+      --dsw-alias-border-l1: #e6e8ee;
+      --dsw-alias-border-l2: #d3d7e0;
+      --dsw-alias-label-primary: #1b1f27;
+      --dsw-alias-label-secondary: #59616e;
+      --dsw-alias-label-tertiary: #8b93a2;
+      --dsw-alias-label-on-accent: #ffffff;
+      --dsw-alias-state-business-primary: #4d6bfe;
+      --dsw-alias-state-success-primary: #16a34a;
+      --dsw-alias-state-warning-primary: #d97706;
+      --dsw-alias-state-error-primary: #dc2626;
+      --gap: 10px;
+      color-scheme: light;
+    }
+    [data-theme='dark'] {
+      --dsw-alias-bg-layer-1: #1b1e25;
+      --dsw-alias-bg-layer-2: #232730;
+      --dsw-alias-bg-layer-3: #2c313c;
+      --dsw-alias-border-l1: #2e3440;
+      --dsw-alias-border-l2: #3c4352;
+      --dsw-alias-label-primary: #e9edf4;
+      --dsw-alias-label-secondary: #a9b2c0;
+      --dsw-alias-label-tertiary: #6e7787;
+      --dsw-alias-label-on-accent: #ffffff;
+      --dsw-alias-state-business-primary: #6d86ff;
+      --dsw-alias-state-success-primary: #3fce8f;
+      --dsw-alias-state-warning-primary: #e6a23c;
+      --dsw-alias-state-error-primary: #f0705f;
+      --gap: 10px;
+      color-scheme: dark;
+    }
+    @media (prefers-color-scheme: dark) {
+      html:not([data-theme]) {
+        --dsw-alias-bg-layer-1: #1b1e25;
+        --dsw-alias-bg-layer-2: #232730;
+        --dsw-alias-bg-layer-3: #2c313c;
+        --dsw-alias-border-l1: #2e3440;
+        --dsw-alias-border-l2: #3c4352;
+        --dsw-alias-label-primary: #e9edf4;
+        --dsw-alias-label-secondary: #a9b2c0;
+        --dsw-alias-label-tertiary: #6e7787;
+        --dsw-alias-label-on-accent: #ffffff;
+        --dsw-alias-state-business-primary: #6d86ff;
+        --dsw-alias-state-success-primary: #3fce8f;
+        --dsw-alias-state-warning-primary: #e6a23c;
+        --dsw-alias-state-error-primary: #f0705f;
+        color-scheme: dark;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--dsw-alias-bg-layer-2);
+      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    }
+    .stage { max-width: 920px; margin: 0 auto; padding: 28px 20px 60px; }
+
+    /* ── dev control panel (not part of the plugin UI) ── */
+    #dev-panel {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      padding: 8px 16px;
+      background: #14161c; color: #cdd3de;
+      border-bottom: 1px solid #2a2f3a;
+      font-size: 12px;
+    }
+    #dev-panel .dp-title { color: #7c8494; margin-right: auto; }
+    #dev-panel .dp-group { display: inline-flex; align-items: center; gap: 4px; }
+    #dev-panel .dp-label { color: #7c8494; margin-right: 2px; }
+    #dev-panel .dp-btn {
+      appearance: none; border: 1px solid #333a48; background: #1d212a; color: #cdd3de;
+      border-radius: 6px; padding: 3px 10px; font-size: 12px; cursor: pointer;
+    }
+    #dev-panel .dp-btn:hover { background: #262c38; }
+    #dev-panel .dp-btn.on { background: #4d6bfe; border-color: #4d6bfe; color: #fff; }
+  </style>
+</head>
+<body>
+  <header id="dev-panel"></header>
+  <main id="app" class="stage"></main>
+  <script type="module" src="/dev/boot.mjs"></script>
+</body>
+</html>

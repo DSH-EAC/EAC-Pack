@@ -1,0 +1,14 @@
+{
+  "name": "dsh-bundle-repack-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Repack pipeline for the DSH plugin bundle (catalog/*.json -> dist/*.tgz). Dependencies live here only, never at the repo root.",
+  "type": "module",
+  "scripts": {
+    "repack": "node repack.mjs",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "semver": "7.7.2"
+  }
+}
