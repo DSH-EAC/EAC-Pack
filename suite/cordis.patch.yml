@@ -1,0 +1,9 @@
+# dsh-plugin-suite bundle patch.
+#
+# One insert mounts the Host half; the browser half is declared by
+# package.json `dsh.client` and binds to the row whose `name` is the bare
+# package name (sub-path rows carry no halves).
+- insert:
+    - id: plugin-suite
+      name: 'dsh-plugin-suite'
+      config: {}

@@ -1,0 +1,52 @@
+{
+  "name": "dsh-plugin-suite",
+  "version": "0.1.1",
+  "private": true,
+  "type": "module",
+  "description": "EAC/AIO 插件整合包 — one-click install and update for the full EAC and AIO plugin suites on DeepSeek Harness desktop.",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./catalog/*.json": "./catalog/*.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale",
+    "catalog",
+    "assets/dist",
+    "icon.svg",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "eac",
+    "aio",
+    "plugin-suite"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": []
+    }
+  },
+  "scripts": {
+    "build:client": "node scripts/build-client.mjs",
+    "sync": "node scripts/sync-assets.mjs",
+    "test": "node --test test/"
+  },
+  "license": "MIT"
+}

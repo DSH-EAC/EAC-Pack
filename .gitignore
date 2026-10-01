@@ -1,0 +1,14 @@
+# build artifacts
+dist/
+suite/assets/dist/
+suite/*.tgz
+*.tgz
+
+# deps
+node_modules/
+
+# caches
+.cache/
+
+# local reports of real-machine runs (kept as untracked working notes)
+reports/local/
