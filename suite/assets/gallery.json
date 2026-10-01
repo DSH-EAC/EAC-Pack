@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-01T09:37:41.070Z",
+  "generatedAt": "2026-10-01T11:50:35.031Z",
   "skins": [
     {
       "id": "blue-fantasy",
@@ -16,7 +16,7 @@
       "license": "BSD-3-Clause",
       "origin": "builtin",
       "pkgName": "@linxin666/dsh-client-ui-skin-blue-fantasy",
-      "pkgVersion": "0.1.11",
+      "pkgVersion": "0.2.0",
       "previews": {
         "light": "previews/blue-fantasy/light.png",
         "dark": "previews/blue-fantasy/dark.png"
@@ -25,7 +25,10 @@
       "mutexZh": null,
       "mutexEn": null,
       "notesZh": "青蓝幻想风格 DSH Web UI 皮肤（出自 @linxin666/dsh-skins 打包分发）。",
-      "notesEn": "Blue fantasy themed DSH Web UI skin (bundled from @linxin666/dsh-skins)."
+      "notesEn": "Blue fantasy themed DSH Web UI skin (bundled from @linxin666/dsh-skins).",
+      "compatZh": "⚠️ 中度错位：主区域（输入框花框/分隔线）正常，但侧栏会话列表上会浮现装饰气泡、遮挡会话文字（上游装饰层选择器在 RC2 上打偏）。可正常使用，介意者等上游适配。",
+      "compatEn": "⚠️ Moderate: main area is fine, but decorative bubbles float over sidebar session text (upstream decoration selectors drift on RC2). Usable; wait for upstream fix if it bothers you.",
+      "unsafe": false
     },
     {
       "id": "dragon-heir",
@@ -52,7 +55,10 @@
       "mutexZh": null,
       "mutexEn": null,
       "notesZh": "龙裔风格 DSH Web UI 皮肤。",
-      "notesEn": "Dragon-heir themed DSH Web UI skin."
+      "notesEn": "Dragon-heir themed DSH Web UI skin.",
+      "compatZh": "✅ 适配良好：长城巨龙壁纸 + 淡雅红色点缀，布局干净无错位。",
+      "compatEn": "✅ Good: Great-Wall dragon wallpaper with subtle red accents; clean layout, no misplacement.",
+      "unsafe": false
     },
     {
       "id": "miku",
@@ -79,7 +85,10 @@
       "mutexZh": null,
       "mutexEn": null,
       "notesZh": "初音未来主题 DSH Web UI 皮肤。",
-      "notesEn": "Hatsune Miku themed DSH Web UI skin."
+      "notesEn": "Hatsune Miku themed DSH Web UI skin.",
+      "compatZh": "✅ 适配良好：整壳换肤完整（标题栏/壁纸/状态栏），无错位。",
+      "compatEn": "✅ Good: full-shell reskin (title bar / wallpaper / status bar) with no misplacement.",
+      "unsafe": false
     },
     {
       "id": "minecraft",
@@ -106,7 +115,10 @@
       "mutexZh": null,
       "mutexEn": null,
       "notesZh": "Minecraft 像素主题 DSH Web UI 皮肤。",
-      "notesEn": "Minecraft pixel themed DSH Web UI skin."
+      "notesEn": "Minecraft pixel themed DSH Web UI skin.",
+      "compatZh": "✅ 适配良好：像素主题完整（像素按钮/像素字体），文字清晰。",
+      "compatEn": "✅ Good: pixel theme applies fully (pixel buttons / pixel font); text stays crisp.",
+      "unsafe": false
     },
     {
       "id": "qq98",
@@ -132,7 +144,10 @@
       "mutexZh": null,
       "mutexEn": null,
       "notesZh": "QQ98 复古 Windows 主题 DSH Web UI 皮肤。",
-      "notesEn": "QQ98 retro Windows themed DSH Web UI skin."
+      "notesEn": "QQ98 retro Windows themed DSH Web UI skin.",
+      "compatZh": "⚠️ 轻度问题：QQ2008 复古风格完整，但蓝色侧栏上的次要文字（会话时间戳、「展开其余」项）对比度偏低、不易读。",
+      "compatEn": "⚠️ Minor: the QQ2008 retro style applies, but secondary text on the blue sidebar (session timestamps, \"show more\") has low contrast.",
+      "unsafe": false
     },
     {
       "id": "ths",
@@ -157,7 +172,10 @@
       "mutexZh": null,
       "mutexEn": null,
       "notesZh": "THS 主题 DSH Web UI 皮肤。",
-      "notesEn": "THS themed DSH Web UI skin."
+      "notesEn": "THS themed DSH Web UI skin.",
+      "compatZh": "❌ 明显问题：同花顺红金标题栏/行情条正常，但深色侧栏上的会话文字与工作区名称几乎不可见（文字颜色被主题覆盖）。当前版本不建议启用。",
+      "compatEn": "❌ Notable: the THS red title bar and tickers render, but sidebar session/workspace text is nearly invisible (text color overridden by the theme). Not recommended for now.",
+      "unsafe": false
     },
     {
       "id": "trading",
@@ -184,7 +202,10 @@
       "mutexZh": null,
       "mutexEn": null,
       "notesZh": "交易终端风格 DSH Web UI 皮肤。",
-      "notesEn": "Trading-terminal styled DSH Web UI skin."
+      "notesEn": "Trading-terminal styled DSH Web UI skin.",
+      "compatZh": "✅ 适配良好：行情顶栏/底栏 + 侧栏文字清晰，无错位。",
+      "compatEn": "✅ Good: market ticker bars render; sidebar text crisp; no misplacement.",
+      "unsafe": false
     },
     {
       "id": "whale-song",
@@ -211,7 +232,10 @@
       "mutexZh": null,
       "mutexEn": null,
       "notesZh": "鲸歌主题 DSH Web UI 皮肤。",
-      "notesEn": "Whale-song themed DSH Web UI skin."
+      "notesEn": "Whale-song themed DSH Web UI skin.",
+      "compatZh": "✅ 适配良好：浅蓝鲸歌主题，布局干净无错位。",
+      "compatEn": "✅ Good: light-blue whale theme; clean layout, no misplacement.",
+      "unsafe": false
     },
     {
       "id": "xp",
@@ -237,7 +261,10 @@
       "mutexZh": null,
       "mutexEn": null,
       "notesZh": "Windows XP 复古主题 DSH Web UI 皮肤。",
-      "notesEn": "Windows XP retro themed DSH Web UI skin."
+      "notesEn": "Windows XP retro themed DSH Web UI skin.",
+      "compatZh": "✅ 适配良好：Luna 蓝标题栏 + 底部任务栏复刻完整，无错位。",
+      "compatEn": "✅ Good: Luna title bar and bottom task bar reproduced; no misplacement.",
+      "unsafe": false
     },
     {
       "id": "deep-whale-manager",
@@ -261,7 +288,10 @@
       "mutexZh": "本条目为皮肤切换管理器：client-ui 皮肤之间互斥，经管理器统一切换，请勿叠装多个皮肤。已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版，不能叠装 standalone 版。",
       "mutexEn": "This entry is the skin switch manager: client-ui skins are mutually exclusive and switched via the manager; do not stack multiple skins. On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.",
       "notesZh": "深鲸系列皮肤切换管理器（社区 @smalltailqwq 版），提供皮肤面板与统一切换入口。",
-      "notesEn": "Deep-whale series skin manager (community edition by @smalltailqwq) providing a skin panel and unified switcher."
+      "notesEn": "Deep-whale series skin manager (community edition by @smalltailqwq) providing a skin panel and unified switcher.",
+      "compatZh": "未逐项目录化：本皮肤面向 AIO/EAC 分叉版 Web UI 制作，在官方 RC2 上可能存在不同程度的装饰层错位（选择器漂移），属上游适配问题，不影响安装与启用。",
+      "compatEn": "Not itemized: this skin targets the AIO/EAC fork web UI and may show varying degrees of decoration misplacement on official RC2 (selector drift) — an upstream issue that does not affect install/enable.",
+      "unsafe": false
     },
     {
       "id": "maid-atelier",
@@ -288,7 +318,10 @@
       "mutexZh": "同皮肤新旧两版互斥（旧 @dsh-external 0.0.1 已退役）：不可与旧版叠装。client-ui 皮肤之间互斥，不可叠装（deep-whale-manager 为统一切换管理器）。已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版，不能叠装 standalone 版。",
       "mutexEn": "Old and new builds of this skin are mutually exclusive (legacy @dsh-external 0.0.1 is retired); do not stack them. client-ui skins are mutually exclusive and must not be stacked (deep-whale-manager is the unified switcher). On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.",
       "notesZh": "女仆工坊风格 DSH Web UI 皮肤（鲸鱼娘美术系列社区版，取代旧 @dsh-external 0.0.1 提取版）。",
-      "notesEn": "Maid-atelier themed DSH Web UI skin (community whale-art series, superseding the old @dsh-external 0.0.1 extraction)."
+      "notesEn": "Maid-atelier themed DSH Web UI skin (community whale-art series, superseding the old @dsh-external 0.0.1 extraction).",
+      "compatZh": "💥 禁用启用按钮：真机实测启用本皮肤会导致官方 v0.2.0-rc.2 Web UI 渲染进程崩溃循环（主进程内存膨胀、CDP 失联），需从 profile 清单摘除才能恢复。等上游适配 RC2 后再启用。",
+      "compatEn": "💥 Enable disabled: enabling this skin crashed the official v0.2.0-rc.2 web UI in real-machine testing (renderer crash loop, main-process memory balloon). Wait for an upstream RC2-compatible build.",
+      "unsafe": true
     },
     {
       "id": "orca-link",
@@ -313,7 +346,10 @@
       "mutexZh": "同皮肤新旧两版互斥（旧 @dsh-external 0.0.1 已退役）：不可与旧版叠装。client-ui 皮肤之间互斥，不可叠装（deep-whale-manager 为统一切换管理器）。已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版，不能叠装 standalone 版。",
       "mutexEn": "Old and new builds of this skin are mutually exclusive (legacy @dsh-external 0.0.1 is retired); do not stack them. client-ui skins are mutually exclusive and must not be stacked (deep-whale-manager is the unified switcher). On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.",
       "notesZh": "虎鲸主题 DSH Web UI 皮肤（鲸鱼娘美术系列社区版）。",
-      "notesEn": "Orca-themed DSH Web UI skin (community whale-art series)."
+      "notesEn": "Orca-themed DSH Web UI skin (community whale-art series).",
+      "compatZh": "✅ 适配良好（社区）：黑白水墨虎鲸立绘 + 标语文案，会话树缩进线清晰，无错位。",
+      "compatEn": "✅ Good (community): ink-wash orca artwork and slogan; clean session tree; no misplacement.",
+      "unsafe": false
     },
     {
       "id": "liang",
@@ -337,7 +373,10 @@
       "mutexZh": "同皮肤新旧两版互斥（旧 @dsh-external 0.0.1 已退役）：不可与旧版叠装。client-ui 皮肤之间互斥，不可叠装（deep-whale-manager 为统一切换管理器）。已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版，不能叠装 standalone 版。",
       "mutexEn": "Old and new builds of this skin are mutually exclusive (legacy @dsh-external 0.0.1 is retired); do not stack them. client-ui skins are mutually exclusive and must not be stacked (deep-whale-manager is the unified switcher). On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.",
       "notesZh": "「滑动变阻器」强度可调主题皮肤，kingOfSoySauce 经 GitHub Release 分发 tgz（v0.1.7 起包体从 ~45MB 瘦身至 ~1.3MB）。",
-      "notesEn": "Intensity-adjustable 'sliding rheostat' theme skin, distributed as a release tarball by kingOfSoySauce (~45MB before v0.1.7, ~1.3MB since)."
+      "notesEn": "Intensity-adjustable 'sliding rheostat' theme skin, distributed as a release tarball by kingOfSoySauce (~45MB before v0.1.7, ~1.3MB since).",
+      "compatZh": "⚠️ 轻度问题：滑动变阻器特色滑块正常，但「新会话」按钮灰底灰字对比度偏低；其余布局正常。",
+      "compatEn": "⚠️ Minor: the signature slider works, but the \"New Session\" button is grey-on-grey (low contrast); otherwise fine.",
+      "unsafe": false
     },
     {
       "id": "deep-whale-day-night",
@@ -361,7 +400,10 @@
       "mutexZh": "同皮肤新旧两版互斥（旧 @dsh-external 0.0.1 已退役）：不可与旧版叠装。client-ui 皮肤之间互斥，不可叠装（deep-whale-manager 为统一切换管理器）。已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版，不能叠装 standalone 版。",
       "mutexEn": "Old and new builds of this skin are mutually exclusive (legacy @dsh-external 0.0.1 is retired); do not stack them. client-ui skins are mutually exclusive and must not be stacked (deep-whale-manager is the unified switcher). On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.",
       "notesZh": "昼夜双主题工坊皮肤（GGBond2424648901 经 GitHub Release 分发 tgz，随包附 SHA256SUMS；npm 包名与仓库名不同）。",
-      "notesEn": "Day/night dual-theme workshop skin (tgz from GGBond2424648901's GitHub releases, ships with SHA256SUMS; npm package name differs from repo name)."
+      "notesEn": "Day/night dual-theme workshop skin (tgz from GGBond2424648901's GitHub releases, ships with SHA256SUMS; npm package name differs from repo name).",
+      "compatZh": "⚠️ 中度错位：昼/夜双主题与鲸鱼娘立绘正常，但侧栏会话文字被装饰气泡/立绘部分遮挡（与 blue-fantasy 同源装饰系统）。带「夜间」切换钮。",
+      "compatEn": "⚠️ Moderate: day/night themes and artwork render, but sidebar session text is partly covered by decorations (same decoration system as blue-fantasy). Includes the day/night toggle.",
+      "unsafe": false
     },
     {
       "id": "endfield",
@@ -385,7 +427,10 @@
       "mutexZh": "同皮肤新旧两版互斥（旧 @dsh-external 0.0.1 已退役）：不可与旧版叠装。client-ui 皮肤之间互斥，不可叠装（deep-whale-manager 为统一切换管理器）。已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版，不能叠装 standalone 版。",
       "mutexEn": "Old and new builds of this skin are mutually exclusive (legacy @dsh-external 0.0.1 is retired); do not stack them. client-ui skins are mutually exclusive and must not be stacked (deep-whale-manager is the unified switcher). On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.",
       "notesZh": "明日方舟：终末地风格主题 —— 奶油纸面、墨色文字、信号黄点缀、零圆角工业排版；设置项经 DSH 0.1.7 volatile Config + configForms 持久化。npm 版已 unpublish，改从 GitHub 仓库打包。",
-      "notesEn": "Arknights: Endfield styled theme — cream paper, ink text, signal-yellow accents, zero-radius industrial typography; settings persist via DSH 0.1.7 volatile Config + configForms. npm version unpublished; packaged from the GitHub repo."
+      "notesEn": "Arknights: Endfield styled theme — cream paper, ink text, signal-yellow accents, zero-radius industrial typography; settings persist via DSH 0.1.7 volatile Config + configForms. npm version unpublished; packaged from the GitHub repo.",
+      "compatZh": "⚠️ 中度错位：整壳黑黄主题生效；但右下角状态指示器（status-rotator 插件）会错位到左上角并与菜单栏重叠——启用本皮肤时建议同时禁用 status-rotator 插件。",
+      "compatEn": "⚠️ Moderate: the black/yellow theme applies, but the bottom-right status pill (status-rotator plugin) jumps to the top-left and overlaps the menu bar — disable status-rotator while using this skin.",
+      "unsafe": false
     }
   ]
 }
