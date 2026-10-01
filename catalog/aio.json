@@ -16,7 +16,7 @@
     "descEn": "Narrow AIO compatibility exports for legacy image galleries and plain message text (provenance-bound shim for retired host exports).",
     "license": "MIT",
     "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC (branch aio-v1, assets/plugins/dsh-aio-ui-compat)",
-    "notes": "AIO 独有（EAC 主线无）。@dsh-external/dsh-webui 与 @ha-na-bi/dsh-client-ui-custom 的 peerDependencies 精确依赖 dsh-aio-ui-compat@1.0.0 —— 三者必须同装。"
+    "notes": "AIO 独有（EAC 主线无）。@dsh-external/dsh-webui 与 @ha-na-bi/dsh-client-ui-custom 的 peerDependencies 精确依赖 dsh-aio-ui-compat@1.0.0 —— 三者必须同装。 D9 实测：RC2 兼容。"
   },
   {
     "id": "auto-compact",
@@ -35,7 +35,7 @@
     "descEn": "Auto-compaction plugin retained by AIO only (retired from the EAC main line but still in service on AIO).",
     "license": "MIT",
     "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC (branch aio-v1, assets/plugins/dsh-auto-compact)",
-    "notes": "AIO 独有。同名项在 EAC 主线注册表 RETIRED_BUILTIN_PLUGINS（head 版）中列退役 —— 两包定位不同，勿混用清单。"
+    "notes": "AIO 独有。同名项在 EAC 主线注册表 RETIRED_BUILTIN_PLUGINS（head 版）中列退役 —— 两包定位不同，勿混用清单。 D9 实测：RC2 兼容。"
   },
   {
     "id": "balance",
@@ -187,14 +187,14 @@
       "aio"
     ],
     "tier": "heavy",
-    "defaultEnabled": true,
+    "defaultEnabled": false,
     "titleZh": "独立 WebUI",
     "titleEn": "Standalone WebUI",
     "descZh": "AIO 第三方运行时 Web UI（statem-li/dsh-webui 谱系）：完整独立界面，依赖 shiki/katex/markdown 套件。",
     "descEn": "AIO third-party runtime web UI (statem-li/dsh-webui lineage): full standalone interface with shiki/katex/markdown suite.",
     "license": "BSD-3-Clause",
     "upstream": "https://github.com/statem-li/dsh-webui",
-    "notes": "npm 无任何版本（404）。提取自本机 AIO 6.9.3 离线包 resources/profile-seed/profiles/web-desktop/node_modules（aio-v1 seed 锁定 0.5.1）。peer 大量精确 pin @deepseek-ai/dsh-* 0.1.3-alpha.2，重打包统一放宽。在 AIO seed bundles 列表内。"
+    "notes": "D9 实测：等待 settingsScope 服务（EAC 分叉版专有），官方 RC2 上阻塞 web boot。默认关闭。"
   },
   {
     "id": "visualize",
@@ -213,7 +213,7 @@
     "descEn": "Rich visualization rendering for tool calls.",
     "license": "BSD-3-Clause",
     "upstream": "https://github.com/Nagi-ovo/dsh-visualize",
-    "notes": "aio-v1 seed 以 git+https 引用，写名为 @dsh-external/dsh-visualize；上游仓库已改名 @nagi-ovo/dsh-visualize（HEAD 0.1.4；本机 AIO 6.9.3 旧副本为 @dsh-external 0.1.2）。Host 写 bundles/patch 行须用新名 @nagi-ovo/dsh-visualize。在 AIO seed bundles 列表内。"
+    "notes": "aio-v1 seed 以 git+https 引用，写名为 @dsh-external/dsh-visualize；上游仓库已改名 @nagi-ovo/dsh-visualize（HEAD 0.1.4；本机 AIO 6.9.3 旧副本为 @dsh-external 0.1.2）。Host 写 bundles/patch 行须用新名 @nagi-ovo/dsh-visualize。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。"
   },
   {
     "id": "client-ui-custom",
@@ -225,14 +225,14 @@
       "aio"
     ],
     "tier": "visual",
-    "defaultEnabled": true,
+    "defaultEnabled": false,
     "titleZh": "客制化 DSH（壁纸/快捷键）",
     "titleEn": "Client UI Custom",
     "descZh": "web 表面主题化（壁纸/毛玻璃/强调色/半透明表面）、可配置快捷键、应用用量面板与入场动效；零 shell 改动。",
     "descEn": "Web-surface theming (wallpaper, frosted glass, accent, translucent surfaces), configurable shortcuts, usage panel and entrance motion; zero shell edits.",
     "license": "MIT",
     "upstream": "https://github.com/ha-na-bi/dsh-client-ui-custom",
-    "notes": "npm 仅有 0.1.0-rc.5，seed 锁定 0.1.0-rc.6 → 提取自本机 AIO 6.9.3 离线包 profile-seed node_modules。peer 精确 pin @deepseek-ai/dsh-* 0.1.3-alpha.2 + dsh-aio-ui-compat@1.0.0，重打包放宽前者。在 AIO seed bundles 列表内。"
+    "notes": "D9 实测：同 webui，settingsScope 依赖，官方 RC2 上阻塞 web boot。默认关闭。"
   },
   {
     "id": "webui-statem-bridge",
@@ -251,7 +251,7 @@
     "descEn": "AIO-private bridge layer wiring the standalone WebUI into the host.",
     "license": "UNLICENSED",
     "upstream": "（AIO 私有 source/local-plugins/dsh-webui-statem-bridge，公开仓库不含）",
-    "notes": "package.json 标记 private:true / UNLICENSED；aio-v1 公开仓库无源码（THIRD_PARTY_NOTICES 指向私有 source/local-plugins/）。提取自本机 AIO 6.9.3 离线包 profile-seed node_modules。分发风险最高项：随 AIO 包原样再分发，不可单独发布。在 AIO seed bundles 列表内。"
+    "notes": "package.json 标记 private:true / UNLICENSED；aio-v1 公开仓库无源码（THIRD_PARTY_NOTICES 指向私有 source/local-plugins/）。提取自本机 AIO 6.9.3 离线包 profile-seed node_modules。分发风险最高项：随 AIO 包原样再分发，不可单独发布。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。"
   },
   {
     "id": "drag-and-drop",
@@ -270,7 +270,7 @@
     "descEn": "Drag local files into the DSH Web UI to insert their original filesystem paths without uploading or copying.",
     "license": "BSD-3-Clause",
     "upstream": "https://github.com/bill9109/dsh-drag-and-drop",
-    "notes": "aio-v1 seed 以 git+https 引用；GitHub HEAD 0.1.6 与本机 AIO 6.9.3 副本一致。在 AIO seed bundles 列表内。"
+    "notes": "aio-v1 seed 以 git+https 引用；GitHub HEAD 0.1.6 与本机 AIO 6.9.3 副本一致。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。"
   },
   {
     "id": "find-plugin",
@@ -289,7 +289,7 @@
     "descEn": "Plugin discovery/search tool.",
     "license": "MIT",
     "upstream": "https://www.npmjs.com/package/dsh-find-plugin",
-    "notes": "npm 锁定 seed 版本 ^0.3.7 的精确版 0.3.7（npm 存在）。在 AIO seed bundles 列表内。"
+    "notes": "npm 锁定 seed 版本 ^0.3.7 的精确版 0.3.7（npm 存在）。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。"
   },
   {
     "id": "meme",
@@ -308,7 +308,7 @@
     "descEn": "Meme search and insertion.",
     "license": "MIT",
     "upstream": "https://www.npmjs.com/package/dsh-meme",
-    "notes": "npm 锁定 seed 版本 ^0.1.39 的精确版 0.1.39（npm 存在）。在 AIO seed bundles 列表内。"
+    "notes": "npm 锁定 seed 版本 ^0.1.39 的精确版 0.1.39（npm 存在）。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。"
   },
   {
     "id": "wallpaper-engine",
@@ -327,7 +327,7 @@
     "descEn": "Renders local Wallpaper Engine video/scene wallpapers behind the chat with liquid-glass styling controls.",
     "license": "MIT",
     "upstream": "https://www.npmjs.com/package/dsh-plugin-wallpaper-engine",
-    "notes": "npm 锁定 seed 版本 ^0.6.7 的精确版 0.6.7（npm 存在）。依赖 jpeg-js/@shaderfrog/glsl-parser。在 AIO seed bundles 列表内。"
+    "notes": "npm 锁定 seed 版本 ^0.6.7 的精确版 0.6.7（npm 存在）。依赖 jpeg-js/@shaderfrog/glsl-parser。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。"
   },
   {
     "id": "status-rotator",
@@ -346,7 +346,7 @@
     "descEn": "Rotates the session status line text.",
     "license": "MIT",
     "upstream": "https://www.npmjs.com/package/dsh-status-rotator",
-    "notes": "npm 锁定 seed 版本 ^0.9.1 的精确版 0.9.1（npm 存在；背景清单误记版本，seed 实为 ^0.9.1）。无 peer 依赖。在 AIO seed bundles 列表内。"
+    "notes": "npm 锁定 seed 版本 ^0.9.1 的精确版 0.9.1（npm 存在；背景清单误记版本，seed 实为 ^0.9.1）。无 peer 依赖。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。"
   },
   {
     "id": "whale-widget",

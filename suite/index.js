@@ -323,6 +323,25 @@ async function executeJob(job) {
   for (const entry of entries) {
     results.push(await runStep(job, entry))
   }
+  // Verification pass: back-to-back pnpm operations can silently drop one
+  // operation's manifest effect (observed on the real kernel). Re-check every
+  // claimed-ok install against listBundles and retry the missing once.
+  if (job.type === 'install') {
+    let names = new Set()
+    try {
+      const bundles = await pmCall(job.pm ?? state.pm, 'listBundles')
+      names = new Set(bundles.map((b) => normalizeBundle(b)).filter(Boolean).map((b) => b.name))
+    } catch {
+      /* no verification possible this round */
+    }
+    for (let i = 0; i < results.length; i++) {
+      if (!results[i].ok) continue
+      const entry = entries[i]
+      if (names.size && names.has(entry.name)) continue
+      emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: 'install did not persist, retrying once' })
+      results[i] = await runStep(job, entry)
+    }
+  }
   const ok = results.filter((r) => r.ok).length
   emit({ type: 'job-done', jobId: job.id, jobType: job.type, pack: job.pack, ok, failed: results.length - ok })
   appendJobLog(job.id, `done ok=${ok} failed=${results.length - ok}`)
@@ -347,10 +366,10 @@ async function runStep(job, entry) {
     } else {
       const target = resolveTarget(entry, state.distIndex)
       const options = {}
-      if (job.type === 'install' && job.setEnabled !== false) {
-        // Respect the catalog default; the kernel installs bundles disabled
-        // unless told otherwise, so pass the intent explicitly.
-        options.enabled = entry.defaultEnabled !== false
+      if (job.type === 'install') {
+        // Explicit is important: the kernel defaults to activating the bundle,
+        // so a user's setEnabled:false must reach the kernel as enabled:false.
+        options.enabled = job.setEnabled === false ? false : entry.defaultEnabled !== false
       }
       let result = await pmCall(pm, 'installBundle', target, options)
       // pnpm blocked build scripts: approve exactly what was reported and retry once
