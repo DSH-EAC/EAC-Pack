@@ -1,7 +1,7 @@
 {
-  "channelVersion": 4,
+  "channelVersion": 5,
   "suiteVersion": "0.2.0",
-  "generatedAt": "2026-10-01T09:52:38.896Z",
+  "generatedAt": "2026-10-01T10:17:42.558Z",
   "notesZh": "v0.2.0「完全体」首版在线渠道：全量 74 个插件离线 tgz + 在线更新通道。\n新增 6 套社区皮肤（deep-whale-manager / maid-atelier / orca-link / liang / deep-whale-day-night / endfield），内置 9 套皮肤升级皮肤馆（预览图 + Prompt 创作包）。\n注意：client-ui 皮肤之间互斥，请勿叠装；已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版。",
   "notesEn": "First online channel of v0.2.0 \"Complete Edition\": 74 offline plugin tarballs + online update pipeline.\nAdds 6 community skins (deep-whale-manager / maid-atelier / orca-link / liang / deep-whale-day-night / endfield) and the skin gallery for the 9 built-in skins (previews + prompt packs).\nNote: client-ui skins are mutually exclusive — do not stack them. On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build.",
   "items": [
@@ -191,13 +191,13 @@
     {
       "id": "blue-fantasy",
       "name": "@linxin666/dsh-client-ui-skin-blue-fantasy",
-      "version": "0.1.11",
+      "version": "0.2.0",
       "packs": [
         "skins"
       ],
-      "file": "@linxin666_dsh-client-ui-skin-blue-fantasy-0.1.11.tgz",
-      "sha256": "1940a6833ec00cdb741cfc517fa532c5afcf3dce9c02d4f7d35dc10ef896de5e",
-      "bytes": 5312931,
+      "file": "@linxin666_dsh-client-ui-skin-blue-fantasy-0.2.0.tgz",
+      "sha256": "44236cfd09daaa3a00999bcbfcdf081c2a21db015671ad75eee161ab1de690da",
+      "bytes": 5312560,
       "source": "npm"
     },
     {
