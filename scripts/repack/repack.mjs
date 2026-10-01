@@ -41,11 +41,26 @@ const AIO_SEED_NM =
 // npm 包基名 -> EAC v5.3.6 assets 目录名的例外（其余 = base name 本身）
 const DIR_OVERRIDES = { 'meow-smooth': 'dsh-meow-smooth' };
 
-// github 源（可复现：缓存目录缺 package.json 时自动浅克隆）
+// github 源（可复现：缓存目录缺 package.json 时自动浅克隆）。
+// 兼容两种 source 取值：'github'（存量 EAC 独立分发）与 'github-repo'（v0.2.0 社区皮肤）。
 const GH_SOURCES = {
   'dsh-think-zh-expand-eac': { url: 'https://github.com/jing-hy/dsh-think-zh-expand-eac.git', dir: 'think-zh-src' },
   '@nagi-ovo/dsh-visualize': { url: 'https://github.com/Nagi-ovo/dsh-visualize.git', dir: 'visualize-src' },
   'dsh-drag-and-drop': { url: 'https://github.com/bill9109/dsh-drag-and-drop.git', dir: 'dragdrop-src' },
+  'dsh-theme-endfield': { url: 'https://github.com/ymh0000123/dsh-theme-endfield.git', dir: 'endfield-src' },
+};
+
+// github-tgz 源：社区作者经 GitHub Release 分发的 npm-pack 形态 tgz。
+// 锁定具体 release 资产 URL（可复现，不追新）；下载缓存于 .cache/community-tgz/。
+const GH_TGZ_SOURCES = {
+  'dsh-client-liang-intensity-skin': {
+    url: 'https://github.com/kingOfSoySauce/dsh-liang-skin/releases/download/v0.1.7/dsh-client-liang-intensity-skin-0.1.7.tgz',
+  },
+  // 键 = 实际包名（day-night 的包名 @dsh-external/dsh-client-ui-skin-deep-whale-day-night
+  // ≠ 仓库名 deep-whale-day-night-theme，以 release tgz 内 package.json 为准）
+  '@dsh-external/dsh-client-ui-skin-deep-whale-day-night': {
+    url: 'https://github.com/GGBond2424648901/deep-whale-day-night-theme/releases/download/v0.1.12/deep-whale-day-night-theme-0.1.12.tgz',
+  },
 };
 
 // aio seed 提取（本机 AIO 离线包 node_modules）的包集合
@@ -93,7 +108,12 @@ function loadCatalog(file) {
 }
 
 // ---- 合并 catalog：以包名为唯一键，eac.json 为共享条目主记录 ----
-const catalogs = { eac: loadCatalog('eac.json'), aio: loadCatalog('aio.json'), skins: loadCatalog('skins.json') };
+const catalogs = {
+  eac: loadCatalog('eac.json'),
+  aio: loadCatalog('aio.json'),
+  skins: loadCatalog('skins.json'),
+  community: loadCatalog('community.json'),
+};
 const byName = new Map();
 for (const [cat, list] of Object.entries(catalogs)) {
   for (const item of list) {
@@ -208,6 +228,33 @@ function materializeGithub(entry, staging) {
   copyTree(cloneDir, staging);
 }
 
+// github-tgz：下载 release asset（npm-pack 形态 tgz）→ 解包 → 交由统一规范化。
+// 兼容 package/ 前缀（npm pack 标准）与平铺两种布局。
+const COMMUNITY_TGZ = path.join(CACHE, 'community-tgz');
+
+function materializeGithubTgz(entry, staging) {
+  const src = GH_TGZ_SOURCES[entry.name];
+  if (!src) die(`catalog github-tgz 来源缺少 GH_TGZ_SOURCES 映射: ${entry.name}`);
+  fs.mkdirSync(COMMUNITY_TGZ, { recursive: true });
+  const tgz = path.join(COMMUNITY_TGZ, src.url.split('/').pop());
+  if (!fs.existsSync(tgz) || fs.statSync(tgz).size < 1024) {
+    log(`curl -fL ${src.url}`);
+    // --ssl-no-revoke：Windows schannel 对部分代理/网络会报 CRYPT_E_NO_REVOCATION_CHECK
+    sh(`curl -fL --ssl-no-revoke --retry 3 --silent --show-error -o ${q(tgz)} ${JSON.stringify(src.url)}`);
+  }
+  if (!fs.existsSync(tgz) || fs.statSync(tgz).size < 1024) die(`release tgz 下载失败: ${src.url}`);
+  const tmp = path.join(STAGING, '.extract-gh-tgz');
+  rmRf(tmp);
+  fs.mkdirSync(tmp, { recursive: true });
+  // 相对路径调用 tar（cwd=缓存目录）：GNU tar 会把 "D:\..." 的冒号解析为远程主机语法
+  sh(`tar -xzf ${JSON.stringify(path.basename(tgz))} -C ${q(tmp)}`, { cwd: path.dirname(tgz) });
+  const pkgDir = path.join(tmp, 'package');
+  if (fs.existsSync(path.join(pkgDir, 'package.json'))) copyTree(pkgDir, staging);
+  else if (fs.existsSync(path.join(tmp, 'package.json'))) copyTree(tmp, staging);
+  else die(`release tgz 内无 package 目录: ${tgz}`);
+  rmRf(tmp);
+}
+
 // 生命周期脚本：staging 目录只含发布物（files 白名单），源仓库的构建脚本
 // （如 dsh-pet 的 scripts/prepack-check.js）多半不在内，npm pack 会执行
 // prepack/prepare 导致失败。重打包语境下一律剥离生命周期脚本；
@@ -283,7 +330,8 @@ for (const entry of entries) {
 
   if (entry.source === 'npm') materializeNpm(entry, staging);
   else if (entry.source === 'eac-tag') materializeEacTag(entry, staging);
-  else if (entry.source === 'github') materializeGithub(entry, staging);
+  else if (entry.source === 'github' || entry.source === 'github-repo') materializeGithub(entry, staging);
+  else if (entry.source === 'github-tgz') materializeGithubTgz(entry, staging);
   else die(`未知 source: ${entry.source}`);
 
   const pkgFile = path.join(staging, 'package.json');

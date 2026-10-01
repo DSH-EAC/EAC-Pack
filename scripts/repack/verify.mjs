@@ -36,7 +36,7 @@ const fail = (msg) => {
 const ok = (msg) => console.log('[verify] ok   :', msg);
 
 const catalog = {};
-for (const f of ['eac.json', 'aio.json', 'skins.json']) {
+for (const f of ['eac.json', 'aio.json', 'skins.json', 'community.json']) {
   for (const item of JSON.parse(fs.readFileSync(path.join(ROOT, 'catalog', f), 'utf8'))) {
     (catalog[item.name] ||= []).push({ ...item, _cat: f });
   }
