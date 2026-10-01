@@ -64,32 +64,40 @@
 
 ## 5. AIO 现代化（用户需求，上游普查驱动）✅
 
-子智能体普查（28 npm 包 + 30 仓库）后执行：
+子智能体普查（28 npm 包 + 30 仓库）后执行，**渠道 v12 终态**：
 
-**直升 13 项**（渠道 v7，真机自动更新逐项验证中）：
-picturereader 3.3.1→**3.3.3**（⚠️ 旧版在 RC2 有拖垮插件树风险，最高优先）、soul-md 0.2.8→**0.9.0**（RC2 原生）、unified-market 0.3.1→**0.4.1**（修精选目录塌缩）、meme 0.1.39→**0.1.44**、status-rotator 0.9.1→**0.33.1**、find-plugin 0.3.7→**0.4.0**、meow-smooth 0.5.0→**0.8.1**、web-mobile-fix 1.0.1→**1.0.6**、navbar 0.3.0→**0.4.0**、dafeiyu α.6→**0.1.14**、pet 0.1.3→**0.3.1**（RC2 原生）、whale-widget 0.2.10→**0.3.17**、computer-user 0.3.6→**0.3.7**
+**直升 11 项**（真机自动更新逐项落地验证）：soul-md 0.2.8→**0.9.0**（RC2 原生）、unified-market 0.3.1→**0.4.1**（修精选目录塌缩）、meme 0.1.39→**0.1.44**、status-rotator 0.9.1→**0.33.1**、find-plugin 0.3.7→**0.4.0**、meow-smooth 0.5.0→**0.8.1**、web-mobile-fix 1.0.1→**0.1.6**（实为 1.0.6）、navbar 0.3.0→**0.4.0**、whale-widget 0.2.10→**0.3.17**、blue-fantasy 0.1.11→**0.2.0**（渠道更新演练项）。大包 dafeiyu 0.1.14 / pet 0.3.1 已进渠道，本机镜像慢未走完下载（缓存已种子，下次自动更新零流量自愈，按用户指示跳过验证）。
 
-**退役 2 项**（AIO 包 19→17）：`@dsh-external/dsh-webui` + `@local/dsh-webui-statem-bridge`——上游仓库 404（gh api 实查）、RC2 上阻塞 web boot、后者为 UNLICENSED 私有构建（分发风险最高项随之解除）。`aio-ui-compat`/`client-ui-custom` 保留（client-ui-custom 社区续作 yoli-mi rc.7 暂未适配 RC2，观望）。
+**回退 2 项（D10 实锤事故）**：
+- **picturereader 3.3.3 → 3.3.1**：3.3.3 在官方 RC2 上 `pending (waiting for service: settingsScope)`——那是 EAC 分叉版专有服务——web boot 门禁「1 entry did not activate」**整机无法启动**（crash-2026-10-01T13-41-14-419Z）。普查报告对此项判断失误：3.3.3 是面向 EAC 分叉内核的适配版。恢复 = 从 profile bundles 摘行；已回退 3.3.1 并装回。
+- **computer-user 0.3.7 → 0.3.6**：与 3.3.3 同日发布（同属 EAC 分叉线），存在同款陷阱风险，预防性回退。
 
-**维持锁定**：wallpaper-engine 1.1.0 / session-manager 0.5.4 / undo-savepoint 0.4.9（跨度大，待下版冒烟）、better-sidebar 0.24.1 与 agent-teams 0.1.22（上游无 EAC 适配预发布）、visualize 0.1.4（HEAD 即锁版，上游已显式接受 dsh 0.2）、deep-whale-day-night（上游标注「最终发行版」）。
+**退役 2 项**（AIO 包 19→17）：`@dsh-external/dsh-webui` + `@local/dsh-webui-statem-bridge`——上游仓库 404（gh api 实查）、RC2 上阻塞 web boot、后者为 UNLICENSED 私有构建（分发风险最高项随之解除）。`aio-ui-compat`/`client-ui-custom` 保留（社区续作 yoli-mi rc.7 暂未适配 RC2，观望）。
+
+**维持锁定**：wallpaper-engine 1.1.0 / session-manager 0.5.4 / undo-savepoint 0.4.9（跨度大，待下版冒烟）、better-sidebar 0.24.1 与 agent-teams 0.1.22（上游无 EAC 适配预发布）、visualize 0.1.4（上游已显式接受 dsh 0.2）、deep-whale-day-night（上游「最终发行版」）。
+
+**安装器硬化（本轮新增，源自真机事故）**：① channel-update 纳入装后核对，且更新类核对必须「版本到位」而非「名字存在」；② 重试后仍不落地 → **如实报失败**并提示重启释放句柄（根因：node_modules 残留 delete-pending 空壳目录会令内核 installBundle 假成功——meme 两次假成功均由此，清壳后重装立即落地）。单测 12/12。
 
 **观察项**：EAC 官方已发 `@dsh-eac/desktop-pack` v1.1.0（RC2 官方整合包）与 v6.0.0-beta.1——自建包差异化空间收窄；皮肤正被官方 `dsh-ui-skin-loader` 公约收编。下版评估分工。
 
 ## 6. 回归与工程
 
-- 单测：node --test **11/11**（渠道引擎 8 项 + 存量 3 项）✅
+- 单测：node --test **12/12**（渠道引擎 9 项 + 存量 3 项，含「静默丢失→重试→诚实失败」用例）✅
 - verify.mjs：72 tgz 全合格（peer 满足 0.2.0-rc.2）✅
+- 更新保状态：whale-widget / pet 更新后均保持禁用 ✅；blue-fantasy 更新后保持禁用 ✅
 - 快照：每次 job 自动 ✅（~/.dsh/plugin-suite/snapshots）
-- 构建修复：repack 增加孤儿清理（旧版 tgz 曾致 suite 自引用打包膨胀至 601MB）
-- 发布产物：suite 0.2.0 tgz（含全部 UI/宿主修复与现代化 catalog）+ channel v7 + GitHub Release v0.2.0
+- 构建修复：repack 增加孤儿清理（旧版 tgz 曾与 suite 本体 tgz 形成自引用打包膨胀至 601MB——套娃炸弹）
+- 视觉评审：首轮 6 pass / 3 must-fix → 修复后复验 **overall pass**（抽屉 blur、EN 预览图（时机误判）、endfield 归因为上游冲突）
+- 发布产物：GitHub Release v0.2.0（suite tgz + dist-artifacts）+ channel v12（72 项资产）
 
 ## 7. 遗留问题
 
 1. **pnpm 分层与 listBundles 脱钩**（崩溃残留）：需手工摘 profile 清单行恢复——建议内核侧排查。
-2. suite 本体自更新仍为「提示+下载」不自装；官方安装器不支持覆盖升级。
-3. 皮肤上游适配（blue-fantasy 系装饰遮挡、ths 文字不可见、maid-atelier 崩溃）需等上游；图鉴已如实标注。
-4. jsDelivr 分支缓存（分钟级）发布后需手动 purge；脚本可考虑自动 purge。
-5. 「验证后直升」四项（wallpaper-engine 1.1.0 / session-manager 0.5.4 / undo-savepoint 0.4.9 / file-drop-eac 0.1.2）留下版。
+2. **delete-pending 空壳目录**：插件 client 半持有句柄时，卸载/更新会留下载判删除的空壳目录，后续同目录安装内核假成功。引擎现会如实报失败并提示重启；根治需内核在安装前清理残留目录。
+3. suite 本体自更新仍为「提示+下载」不自装；官方安装器不支持覆盖升级。
+4. 皮肤上游适配（blue-fantasy 系装饰遮挡、ths 文字不可见、maid-atelier 崩溃）需等上游；图鉴已逐款标注。
+5. jsDelivr 分支缓存（分钟级）发布后需手动 purge；脚本可考虑自动 purge。
+6. 「验证后直升」四项（wallpaper-engine 1.1.0 / session-manager 0.5.4 / undo-savepoint 0.4.9 / file-drop-eac 0.1.2）留下版。
 
 ## 截图索引
 
