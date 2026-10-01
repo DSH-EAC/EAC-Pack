@@ -374,12 +374,32 @@ async function executeJob(job) {
       job.type === 'channel-update'
         ? installed.get(entry.name) === entry.version
         : installed.has(entry.name)
+    const persistedAfterRetry = (entry, map) =>
+      job.type === 'channel-update' ? map.get(entry.name) === entry.version : map.has(entry.name)
     for (let i = 0; i < results.length; i++) {
       if (!results[i].ok) continue
       const entry = entries[i]
       if (installed.size && persisted(entry)) continue
       emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: 'install did not persist, retrying once' })
       results[i] = await runStep(job, entry)
+      // After the retry, verify honestly: a kernel that still reports the old
+      // state means the install never landed (e.g. a delete-pending stale
+      // directory in node_modules blocks rematerialization) — surface it.
+      try {
+        const after = await pmCall(job.pm ?? state.pm, 'listBundles')
+        const afterMap = new Map(after.map((b) => normalizeBundle(b)).filter(Boolean).map((b) => [b.name, b.version]))
+        if (!persistedAfterRetry(entry, afterMap)) {
+          const seen = afterMap.get(entry.name) ?? 'nothing'
+          results[i] = {
+            id: entry.id,
+            ok: false,
+            error: `install still not persisted after retry (kernel reports ${seen}); restart the app to release stale file handles, then retry`,
+          }
+          emit({ type: 'step-fail', jobId: job.id, id: entry.id, message: results[i].error })
+        }
+      } catch {
+        /* verification unavailable — keep the optimistic result */
+      }
     }
   }
   const ok = results.filter((r) => r.ok).length
