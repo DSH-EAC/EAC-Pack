@@ -80,6 +80,28 @@ const MUTEX_SKIN = {
   mutexEn: 'client-ui skins are mutually exclusive and must not be stacked (deep-whale-manager is the unified switcher). On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.',
 };
 
+// RC2 真机适配扫查结论（D10，官方桌面端 v0.2.0-rc.2 逐款启用实测）。
+// 皮肤普遍针对 AIO/EAC 分叉版 Web UI 制作，官方 RC2 DOM 漂移会让装饰层
+// （气泡/花纹）选择器打偏——这是上游皮肤自身的适配问题，与安装机制无关。
+const COMPAT_RC2 = {
+  miku: {
+    compatZh: '✅ 适配良好：整壳换肤完整（标题栏/壁纸/状态栏），无错位。',
+    compatEn: '✅ Good: full-shell reskin (title bar / wallpaper / status bar) with no misplacement.',
+  },
+  endfield: {
+    compatZh: '⚠️ 基本可用：整壳黑黄主题生效；但右下角状态指示器（status-rotator）会错位到左上角并与菜单栏重叠——启用本皮肤时建议同时禁用 status-rotator 插件。',
+    compatEn: '⚠️ Usable: the black/yellow theme applies, but the bottom-right status pill (status-rotator) jumps to the top-left and overlaps the menu bar — disable status-rotator while using this skin.',
+  },
+  'blue-fantasy': {
+    compatZh: '⚠️ 部分错位：主区域（输入框花框/分隔线）正常，但侧栏会话列表上会浮现装饰气泡、遮挡会话文字。可正常使用，介意者等上游适配。',
+    compatEn: '⚠️ Partial: the main area (composer frame / divider) is fine, but decorative bubbles float over sidebar session text. Usable; wait for upstream fix if it bothers you.',
+  },
+};
+const COMPAT_DEFAULT = {
+  compatZh: '未逐项目录化：本皮肤面向 AIO/EAC 分叉版 Web UI 制作，在官方 RC2 上可能存在不同程度的装饰层错位（选择器漂移），属上游适配问题，不影响安装与启用。',
+  compatEn: 'Not itemized: this skin targets the AIO/EAC fork web UI and may show varying degrees of decoration misplacement on official RC2 (selector drift) — an upstream issue that does not affect install/enable.',
+};
+
 // ---------- PNG 占位编码（零依赖） ----------
 const CRC_TABLE = (() => {
   const t = new Int32Array(256);
@@ -371,6 +393,8 @@ function buildGallery(previewMap) {
         mutexEn: mutex.mutexEn ?? null,
         notesZh: entry.descZh || '',
         notesEn: entry.descEn || '',
+        compatZh: (COMPAT_RC2[id] ?? COMPAT_DEFAULT).compatZh,
+        compatEn: (COMPAT_RC2[id] ?? COMPAT_DEFAULT).compatEn,
       });
     }
   }

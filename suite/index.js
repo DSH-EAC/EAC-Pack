@@ -879,15 +879,16 @@ function loadPrompt(id) {
 
 function servePreview(res, id, theme) {
   const file = path.join(PKG_DIR, 'assets', 'previews', id, `${theme}.png`)
-  if (!fs.existsSync(file)) return json(res, 404, { error: 'preview not found' })
-  res.writeHead(200, { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=86400' })
-  return pipeline(fs.createReadStream(file), res, () => {}).catch(() => {
-    try {
-      res.end()
-    } catch {
-      /* client hung up */
-    }
-  })
+  // Buffer + single res.end(): the dsh-app fetch bridge captures the body from
+  // res.end (streamed pipes never reach it and surface as empty/failed fetches).
+  let data
+  try {
+    data = fs.readFileSync(file)
+  } catch {
+    return json(res, 404, { error: 'preview not found' })
+  }
+  res.writeHead(200, { 'Content-Type': 'image/png', 'Content-Length': data.length, 'Cache-Control': 'public, max-age=86400' })
+  res.end(data)
 }
 
 

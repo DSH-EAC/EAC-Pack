@@ -71,7 +71,7 @@ window.__ModuleLoader__.load({
         'pack.aio': 'AIO 全量包',
         'pack.aioHint': 'AIO 6.9.3 全部 11 项 + 稳定线 v1.2.0 增补 8 项，无遗漏',
         'pack.skins': '皮肤馆',
-        'pack.skinsHint': '16 款社区皮肤图鉴，支持 AI prompt 查看与一键启用',
+        'pack.skinsHint': '皮肤图鉴与 AI prompt 创作包，支持明暗预览与一键启用',
         'pack.manage': '管理',
         'pack.installAll': '一键安装',
         'pack.allInstalled': '已全部安装',
@@ -91,6 +91,9 @@ window.__ModuleLoader__.load({
         'gallery.author': '作者',
         'gallery.install': '安装',
         'gallery.enable': '启用',
+        'gallery.unsafe': 'RC2 崩溃',
+        'gallery.unsafeBtn': '在 RC2 上不可用',
+        'gallery.unsafeTitle': '实测启用本皮肤会导致官方 v0.2.0-rc.2 Web UI 崩溃，已禁用启用按钮',
         'gallery.disable': '禁用',
         'gallery.installed': '已启用',
         'gallery.disabled': '已装未启用',
@@ -111,6 +114,7 @@ window.__ModuleLoader__.load({
         'gallery.copyFailed': '复制失败，请手动选择文本',
         'gallery.close': '关闭',
         'gallery.notes': '说明',
+        'gallery.compat': 'RC2 适配状态（真机实测）',
         'gallery.loadingPrompt': '正在读取 prompt…',
         'gallery.promptFailed': 'prompt 读取失败',
 
@@ -211,7 +215,7 @@ window.__ModuleLoader__.load({
         'pack.aio': 'AIO Full Pack',
         'pack.aioHint': 'All 11 plugins from AIO 6.9.3 + 8 from the v1.2.0 stable line',
         'pack.skins': 'Skin Gallery',
-        'pack.skinsHint': '16 community skins with AI prompt viewer and one-click enable',
+        'pack.skinsHint': 'Skin gallery with AI prompt packs, light/dark previews and one-click enable',
         'pack.manage': 'Manage',
         'pack.installAll': 'Install all',
         'pack.allInstalled': 'All installed',
@@ -231,6 +235,9 @@ window.__ModuleLoader__.load({
         'gallery.author': 'Author',
         'gallery.install': 'Install',
         'gallery.enable': 'Enable',
+        'gallery.unsafe': 'Crashes RC2',
+        'gallery.unsafeBtn': 'Unavailable on RC2',
+        'gallery.unsafeTitle': 'Enabling this skin crashed the official v0.2.0-rc.2 web UI in real-machine testing; the enable button is disabled',
         'gallery.disable': 'Disable',
         'gallery.installed': 'Enabled',
         'gallery.disabled': 'Installed, disabled',
@@ -251,6 +258,7 @@ window.__ModuleLoader__.load({
         'gallery.copyFailed': 'Copy failed — please select the text manually',
         'gallery.close': 'Close',
         'gallery.notes': 'Notes',
+        'gallery.compat': 'RC2 compatibility (verified on real machine)',
         'gallery.loadingPrompt': 'Loading prompt…',
         'gallery.promptFailed': 'Failed to load the prompt',
 
@@ -450,7 +458,7 @@ window.__ModuleLoader__.load({
 /* ── drawer ─────────────────────────────────────────────── */
 .suite-scrim { position: fixed; inset: 0; z-index: 55; background: rgba(0,0,0,.35); animation: suite-fade 200ms ease both; }
 .suite-scrim.closing { animation: suite-fade 180ms ease both reverse; }
-.suite-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 56; width: min(460px, 94vw); background: var(--dsw-alias-bg-layer-1); border-left: 1px solid var(--dsw-alias-border-l1); box-shadow: -16px 0 40px rgba(0,0,0,.18); display: flex; flex-direction: column; animation: suite-drawer-in 280ms ${EASE} both; }
+.suite-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 56; width: min(460px, 94vw); background: var(--dsw-alias-bg-layer-1); backdrop-filter: blur(30px) saturate(150%); -webkit-backdrop-filter: blur(30px) saturate(150%); border-left: 1px solid var(--dsw-alias-border-l1); box-shadow: -16px 0 40px rgba(0,0,0,.22); display: flex; flex-direction: column; animation: suite-drawer-in 280ms ${EASE} both; }
 .suite-drawer.closing { animation: suite-drawer-out 200ms ease both; }
 .drawer-head { display: flex; align-items: center; gap: 8px; padding: 13px 16px; border-bottom: 1px solid var(--dsw-alias-border-l1); }
 .drawer-head .dh-title { font-weight: 650; font-size: 13.5px; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -464,6 +472,9 @@ window.__ModuleLoader__.load({
 .d-raw pre { margin: 6px 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; line-height: 1.5; background: var(--dsw-alias-bg-layer-2); border: 1px solid var(--dsw-alias-border-l1); border-radius: 8px; padding: 8px 10px; overflow: auto; max-height: 180px; color: var(--dsw-alias-label-secondary); }
 .prompt-box { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px; line-height: 1.55; background: var(--dsw-alias-bg-layer-2); border: 1px solid var(--dsw-alias-border-l1); border-radius: 10px; padding: 10px 12px; max-height: 46vh; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--dsw-alias-label-secondary); }
 .d-notes { font-size: 11.5px; color: var(--dsw-alias-label-secondary); background: var(--dsw-alias-bg-layer-2); border-radius: 8px; padding: 8px 10px; white-space: pre-wrap; }
+.d-compat { background: color-mix(in srgb, var(--dsw-alias-state-warning-primary) 12%, transparent); border: 1px solid color-mix(in srgb, var(--dsw-alias-state-warning-primary) 35%, transparent); border-radius: 8px; padding: 8px 10px; }
+.d-compat-badge { display: inline-block; font-size: 10px; font-weight: 600; color: var(--dsw-alias-state-warning-primary); margin-bottom: 4px; letter-spacing: .02em; }
+.d-compat-text { font-size: 11.5px; color: var(--dsw-alias-label-primary); white-space: pre-wrap; }
 .d-foot { display: flex; align-items: center; gap: 8px; padding: 11px 16px; border-top: 1px solid var(--dsw-alias-border-l1); }
 .d-foot .suite-btn { margin-right: auto; }
 .copy-check { display: inline-flex; align-items: center; gap: 5px; }
@@ -505,6 +516,8 @@ window.__ModuleLoader__.load({
 .suite-badge.tier-heavy { color: var(--dsw-alias-state-warning-primary); border-color: color-mix(in srgb, var(--dsw-alias-state-warning-primary) 28%, transparent); background: color-mix(in srgb, var(--dsw-alias-state-warning-primary) 9%, transparent); }
 .suite-badge.ver { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; color: var(--dsw-alias-label-tertiary); border-color: var(--dsw-alias-border-l1); }
 .suite-badge.st-installed { color: var(--dsw-alias-state-success-primary); background: color-mix(in srgb, var(--dsw-alias-state-success-primary) 11%, transparent); }
+.suite-badge.st-error { color: var(--dsw-alias-state-error-primary); border-color: color-mix(in srgb, var(--dsw-alias-state-error-primary) 30%, transparent); background: color-mix(in srgb, var(--dsw-alias-state-error-primary) 9%, transparent); }
+.skin-card.unsafe { outline: 1px solid color-mix(in srgb, var(--dsw-alias-state-error-primary) 22%, transparent); }
 .suite-badge.st-disabled { color: var(--dsw-alias-label-tertiary); border-color: var(--dsw-alias-border-l2); }
 .suite-badge.st-update { color: var(--dsw-alias-state-warning-primary); background: color-mix(in srgb, var(--dsw-alias-state-warning-primary) 11%, transparent); }
 .suite-badge.st-missing { color: var(--dsw-alias-label-tertiary); border-style: dashed; border-color: var(--dsw-alias-border-l2); }
@@ -909,17 +922,47 @@ window.__ModuleLoader__.load({
     }
 
     // ── skin gallery ──────────────────────────────────────────────────────────
+    // <img src> hits the dsh-app:// protocol directly, which the shell does not
+    // proxy to the plugin API — load preview bytes through fetch (which IS
+    // proxied) and hand the <img> an object URL instead.
+    function usePreviewUrls(skin) {
+      const [urls, setUrls] = useState({})
+      useEffect(() => {
+        let alive = true
+        const created = []
+        const next = {}
+        const keys = ['light', 'dark'].filter(k => skin.previews?.[k])
+        setUrls({})
+        Promise.all(keys.map(k =>
+          fetch(`${API}/asset/${skin.previews[k]}`)
+            .then(r => (r.ok ? r.blob() : null))
+            .then(b => {
+              if (!b) return
+              const u = URL.createObjectURL(b)
+              created.push(u)
+              next[k] = u
+            })
+            .catch(() => {}),
+        )).then(() => { if (alive) setUrls(next) })
+        return () => {
+          alive = false
+          for (const u of created) URL.revokeObjectURL(u)
+        }
+      }, [skin.id])
+      return urls
+    }
+
     function PreviewBox({ skin, t }) {
       const [pinned, setPinned] = useState('light')
       const [hover, setHover] = useState(false)
       const [failed, setFailed] = useState({})
-      const lightOk = Boolean(skin.previews?.light) && !failed.light
-      const darkOk = Boolean(skin.previews?.dark) && !failed.dark
+      const urls = usePreviewUrls(skin)
+      const lightOk = Boolean(urls.light) && !failed.light
+      const darkOk = Boolean(urls.dark) && !failed.dark
       let shown = hover ? (pinned === 'light' ? 'dark' : 'light') : pinned
       if (!lightOk) shown = 'dark' // degrade gracefully when one theme is missing
       if (!darkOk) shown = 'light'
       const onErr = key => setFailed(prev => ({ ...prev, [key]: true }))
-      const url = key => `${API}/asset/${skin.previews[key]}`
       const letter = (skin.nameEn || skin.name || '?').trim().charAt(0).toUpperCase()
       if (!lightOk && !darkOk) {
         return h('div', { className: 'skin-preview' },
@@ -929,13 +972,13 @@ window.__ModuleLoader__.load({
       }
       return h('div', { className: 'skin-preview', onMouseEnter: () => setHover(true), onMouseLeave: () => setHover(false) },
         lightOk && h('img', {
-          src: url('light'), alt: t('gallery.previewLight'), loading: 'lazy', draggable: false,
+          src: urls.light, alt: t('gallery.previewLight'), draggable: false,
           className: shown === 'light' ? 'shown' : '',
           style: { opacity: shown === 'light' ? 1 : 0 },
           onError: () => onErr('light'),
         }),
         darkOk && h('img', {
-          src: url('dark'), alt: t('gallery.previewDark'), loading: 'lazy', draggable: false,
+          src: urls.dark, alt: t('gallery.previewDark'), draggable: false,
           className: shown === 'dark' ? 'shown' : '',
           style: { opacity: shown === 'dark' ? 1 : 0 },
           onError: () => onErr('dark'),
@@ -951,31 +994,40 @@ window.__ModuleLoader__.load({
       const st = statusOf(entry)
       const stKey = GALLERY_BADGE[st]?.key ?? 'gallery.missing'
       const working = busy.has(skin.id)
+      const unsafe = skin.unsafe === true && st !== 'missing'
       const action = st === 'missing' ? 'install' : st === 'disabled' ? 'enable' : st === 'update' ? 'update' : null
       const actionLabel = st === 'missing' ? t('gallery.install') : st === 'disabled' ? t('gallery.enable') : st === 'update' ? t('row.update') : null
-      return h('div', { className: 'skin-card suite-rise', style: { '--i': index % 12 }, 'data-skin-id': skin.id, onClick: () => onOpen(skin) },
+      return h('div', { className: 'skin-card suite-rise' + (unsafe ? ' unsafe' : ''), style: { '--i': index % 12 }, 'data-skin-id': skin.id, onClick: () => onOpen(skin) },
         h('div', { style: { position: 'relative' } },
           h(PreviewBox, { skin, t }),
-          h('span', { className: 'skin-st' }, h(StatusBadge, { st, t, map: GALLERY_BADGE }))),
+          h('span', { className: 'skin-st' }, unsafe
+            ? h('span', { className: 'suite-badge st-error' }, t('gallery.unsafe'))
+            : h(StatusBadge, { st, t, map: GALLERY_BADGE }))),
         h('div', { className: 'skin-body' },
           h('div', { className: 'skin-name', title: skin.name }, skin.name || skin.id),
           h('div', { className: 'skin-en' }, [skin.nameEn, skin.author && `${t('gallery.author')}: ${skin.author}`].filter(Boolean).join(' · ')),
           h('div', { className: 'skin-meta' },
             h('span', { className: 'skin-origin' }, t(skin.origin === 'community' ? 'gallery.originCommunity' : 'gallery.originBuiltin')),
             skin.license && h('span', { className: 'skin-license' }, skin.license)),
-          action
+          unsafe
             ? h('div', { className: 'skin-actions' },
                 h('button', {
-                  type: 'button', className: 'suite-btn primary sm', disabled: working,
-                  onClick: e => { e.stopPropagation(); onAction(skin, action) },
-                }, working ? t('working') : actionLabel))
-            : h('div', { className: 'skin-actions' },
-                h('span', { className: 'suite-badge st-installed' }, t(stKey)),
-                h('button', {
-                  type: 'button', className: 'suite-btn ghost sm', disabled: working,
-                  title: t('gallery.disable'),
-                  onClick: e => { e.stopPropagation(); onAction(skin, 'disable') },
-                }, t('gallery.disable'))),
+                  type: 'button', className: 'suite-btn ghost sm', disabled: true,
+                  title: t('gallery.unsafeTitle'),
+                }, t('gallery.unsafeBtn')))
+            : action
+              ? h('div', { className: 'skin-actions' },
+                  h('button', {
+                    type: 'button', className: 'suite-btn primary sm', disabled: working,
+                    onClick: e => { e.stopPropagation(); onAction(skin, action) },
+                  }, working ? t('working') : actionLabel))
+              : h('div', { className: 'skin-actions' },
+                  h('span', { className: 'suite-badge st-installed' }, t(stKey)),
+                  h('button', {
+                    type: 'button', className: 'suite-btn ghost sm', disabled: working,
+                    title: t('gallery.disable'),
+                    onClick: e => { e.stopPropagation(); onAction(skin, 'disable') },
+                  }, t('gallery.disable'))),
           (skin.mutexZh || skin.mutexEn) && h('div', { className: 'skin-mutex' }, skin.mutexZh || skin.mutexEn)),
       )
     }
@@ -1028,6 +1080,9 @@ window.__ModuleLoader__.load({
             manifest && h('details', { className: 'd-raw' },
               h('summary', null, t('gallery.manifestRaw')),
               h('pre', null, JSON.stringify(manifest, null, 2))),
+            (skin.compatZh || skin.compatEn) && h('div', { className: 'd-compat' },
+              h('div', { className: 'd-compat-badge' }, t('gallery.compat')),
+              h('div', { className: 'd-compat-text' }, skin.compatZh || skin.compatEn)),
             (skin.notesZh || skin.notesEn) && h(Fragment, null,
               h('div', { className: 'd-section-title' }, t('gallery.notes')),
               h('div', { className: 'd-notes' }, skin.notesZh || skin.notesEn)),

@@ -129,5 +129,7 @@
   "snapshot": "安装前已自动快照：{name}",
   "confirmUninstall": "移除后插件将在重启后彻底消失，确定移除所选吗？",
   "noSelection": "请先勾选要处理的插件",
-  "needRestart": "版本替换需重启应用后完全生效"
+  "needRestart": "版本替换需重启应用后完全生效",
+  "gallery.compat": "RC2 适配状态（真机实测）",
+  "gallery.unsafe": "RC2 崩溃"
 }

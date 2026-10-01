@@ -129,5 +129,7 @@
   "snapshot": "Profile snapshotted automatically: {name}",
   "confirmUninstall": "Removed plugins disappear after a restart. Remove the selection?",
   "noSelection": "Select at least one plugin first",
-  "needRestart": "Version replacement fully applies after an app restart"
+  "needRestart": "Version replacement fully applies after an app restart",
+  "gallery.compat": "RC2 compatibility (verified on real machine)",
+  "gallery.unsafe": "Crashes RC2"
 }
