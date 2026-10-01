@@ -271,9 +271,9 @@
   {
     "id": "computer-user",
     "name": "computer-user",
-    "version": "0.3.7",
+    "version": "0.3.6",
     "source": "npm",
-    "spec": "computer-user@0.3.7",
+    "spec": "computer-user@0.3.6",
     "packs": [
       "eac"
     ],
@@ -285,7 +285,7 @@
     "descEn": "Codex-style computer use: read the screen and drive mouse & keyboard, pairing with picturereader for the look-act-verify loop (Windows).",
     "license": "MIT",
     "upstream": "https://github.com/jing-hy/computer-user",
-    "notes": "npm 锁定 EAC 随包版本 0.3.6（上游 npm latest 0.3.7）。重资源/系统级自动化。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
+    "notes": "npm 锁定 EAC 随包版本 0.3.6（上游 npm latest 0.3.7）。重资源/系统级自动化。 D10 上游普查直升（见 reports/D10-final-test-report.md）。 D10：0.3.7 与 picturereader 3.3.3 同日发布（EAC 分叉线），存在同款 settingsScope 陷阱风险，回退锁定 0.3.6（RC2 验证版）。"
   },
   {
     "id": "soul-md",
