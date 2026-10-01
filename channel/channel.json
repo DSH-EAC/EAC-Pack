@@ -1,7 +1,7 @@
 {
-  "channelVersion": 5,
+  "channelVersion": 6,
   "suiteVersion": "0.2.0",
-  "generatedAt": "2026-10-01T10:17:42.558Z",
+  "generatedAt": "2026-10-01T12:41:09.525Z",
   "notesZh": "v0.2.0「完全体」首版在线渠道：全量 74 个插件离线 tgz + 在线更新通道。\n新增 6 套社区皮肤（deep-whale-manager / maid-atelier / orca-link / liang / deep-whale-day-night / endfield），内置 9 套皮肤升级皮肤馆（预览图 + Prompt 创作包）。\n注意：client-ui 皮肤之间互斥，请勿叠装；已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版。",
   "notesEn": "First online channel of v0.2.0 \"Complete Edition\": 74 offline plugin tarballs + online update pipeline.\nAdds 6 community skins (deep-whale-manager / maid-atelier / orca-link / liang / deep-whale-day-night / endfield) and the skin gallery for the 9 built-in skins (previews + prompt packs).\nNote: client-ui skins are mutually exclusive — do not stack them. On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build.",
   "items": [
@@ -165,18 +165,6 @@
       "source": "eac-tag"
     },
     {
-      "id": "webui",
-      "name": "@dsh-external/dsh-webui",
-      "version": "0.5.1",
-      "packs": [
-        "aio"
-      ],
-      "file": "@dsh-external_dsh-webui-0.5.1.tgz",
-      "sha256": "a67b2e993fe2a02e1806553aaecff0a617b3131dda384a939d6afaba2e35974a",
-      "bytes": 3036793,
-      "source": "eac-tag"
-    },
-    {
       "id": "client-ui-custom",
       "name": "@ha-na-bi/dsh-client-ui-custom",
       "version": "0.1.0-rc.6",
@@ -297,18 +285,6 @@
       "source": "npm"
     },
     {
-      "id": "webui-statem-bridge",
-      "name": "@local/dsh-webui-statem-bridge",
-      "version": "1.2.2",
-      "packs": [
-        "aio"
-      ],
-      "file": "@local_dsh-webui-statem-bridge-1.2.2.tgz",
-      "sha256": "fd67d30d05b3a887a7d3508ffd18daf3e25662ec84ca5cee18f9f843798bff65",
-      "bytes": 1396,
-      "source": "eac-tag"
-    },
-    {
       "id": "visualize",
       "name": "@nagi-ovo/dsh-visualize",
       "version": "0.1.4",
@@ -371,25 +347,25 @@
     {
       "id": "navbar",
       "name": "@vlln/dsh-navbar",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "packs": [
         "eac"
       ],
-      "file": "@vlln_dsh-navbar-0.3.0.tgz",
-      "sha256": "d431cfd151fc9931b7366bb0668face06fc5a6dd19509486c22a952b10a2dfc9",
-      "bytes": 10930,
+      "file": "@vlln_dsh-navbar-0.4.0.tgz",
+      "sha256": "16cfb013b4db97e061375d9e481ae75885cf95f13bb7ea361b4c04c46d9590c6",
+      "bytes": 14462,
       "source": "npm"
     },
     {
       "id": "computer-user",
       "name": "computer-user",
-      "version": "0.3.6",
+      "version": "0.3.7",
       "packs": [
         "eac"
       ],
-      "file": "computer-user-0.3.6.tgz",
-      "sha256": "5d5ef7e332dfdf54361811e603f7d8f7af818aae0b720b0982edcc99a08bb955",
-      "bytes": 40528,
+      "file": "computer-user-0.3.7.tgz",
+      "sha256": "c5872d8e7e02e866cc573826dd335c0c3896c014cc0bd45c0357905420dc2b58",
+      "bytes": 42351,
       "source": "npm"
     },
     {
@@ -481,13 +457,13 @@
     {
       "id": "dafeiyu",
       "name": "dsh-dafeiyu",
-      "version": "0.1.0-alpha.6",
+      "version": "0.1.14",
       "packs": [
         "eac"
       ],
-      "file": "dsh-dafeiyu-0.1.0-alpha.6.tgz",
-      "sha256": "677afafac330ed9020828053b1a9b01afa6f75be9ba284359a2627ffa55ee129",
-      "bytes": 55452482,
+      "file": "dsh-dafeiyu-0.1.14.tgz",
+      "sha256": "e9f506542488b6cc0aad5999315af54551b182214d6cfcce0d284e912d2489e2",
+      "bytes": 167827628,
       "source": "npm"
     },
     {
@@ -565,13 +541,13 @@
     {
       "id": "find-plugin",
       "name": "dsh-find-plugin",
-      "version": "0.3.7",
+      "version": "0.4.0",
       "packs": [
         "aio"
       ],
-      "file": "dsh-find-plugin-0.3.7.tgz",
-      "sha256": "d993c3bafdbb22343dae711f1c314abd4f7b4b253d11aac75240943b1fb3bb70",
-      "bytes": 32001,
+      "file": "dsh-find-plugin-0.4.0.tgz",
+      "sha256": "0ee79eacb5b02010fb19b37a27f3972fc4359653105f37517c6afce6cc771df0",
+      "bytes": 45273,
       "source": "npm"
     },
     {
@@ -601,13 +577,13 @@
     {
       "id": "meme",
       "name": "dsh-meme",
-      "version": "0.1.39",
+      "version": "0.1.44",
       "packs": [
         "aio"
       ],
-      "file": "dsh-meme-0.1.39.tgz",
-      "sha256": "f8949e66d7704775b3e1af8273aefb3922ed1a36039c4a26e1c4fea60ad64b63",
-      "bytes": 7587297,
+      "file": "dsh-meme-0.1.44.tgz",
+      "sha256": "daaf02ef2635040e6bb87577c27afd11773a5da348047cc0a21614bba174e76f",
+      "bytes": 4395454,
       "source": "npm"
     },
     {
@@ -637,13 +613,13 @@
     {
       "id": "pet",
       "name": "dsh-pet",
-      "version": "0.1.3",
+      "version": "0.3.1",
       "packs": [
         "eac"
       ],
-      "file": "dsh-pet-0.1.3.tgz",
-      "sha256": "95a152ae41444298402a73dffdad70008a4d6e57a97150ba3e8b11d63b8b1ea3",
-      "bytes": 15550416,
+      "file": "dsh-pet-0.3.1.tgz",
+      "sha256": "5f0da7c67649de77f2f952f05719a62ec3dd9fcb0d3c1ea65708e1dbb4486ad1",
+      "bytes": 62222749,
       "source": "npm"
     },
     {
@@ -758,25 +734,25 @@
     {
       "id": "soul-md",
       "name": "dsh-soul-md",
-      "version": "0.2.8",
+      "version": "0.9.0",
       "packs": [
         "eac"
       ],
-      "file": "dsh-soul-md-0.2.8.tgz",
-      "sha256": "c79645c494317b64a0cdedb7081dbedb018db5045fec9f230f68164c4dc1ea5c",
-      "bytes": 11680,
+      "file": "dsh-soul-md-0.9.0.tgz",
+      "sha256": "34e7b8ffb1e8111b50243ff50dc8943918da83607f343dd17fc749a7f5cd9c3b",
+      "bytes": 30798,
       "source": "npm"
     },
     {
       "id": "status-rotator",
       "name": "dsh-status-rotator",
-      "version": "0.9.1",
+      "version": "0.33.1",
       "packs": [
         "aio"
       ],
-      "file": "dsh-status-rotator-0.9.1.tgz",
-      "sha256": "632723d46aae2d34fda28e588f21c628993c6f34afb4b354319661e3b13165a7",
-      "bytes": 67943,
+      "file": "dsh-status-rotator-0.33.1.tgz",
+      "sha256": "c2ba248e4b9b1d04654109f505c4dad922bdf4ab844ee04df60c5e62f4ce37c3",
+      "bytes": 332532,
       "source": "npm"
     },
     {
@@ -819,13 +795,13 @@
     {
       "id": "unified-market",
       "name": "dsh-unified-market",
-      "version": "0.3.1",
+      "version": "0.4.1",
       "packs": [
         "eac"
       ],
-      "file": "dsh-unified-market-0.3.1.tgz",
-      "sha256": "6a1f63fbe839cb6a3e68aa6ed1355ee652c0112551c88b3f233e415a807a8d37",
-      "bytes": 96457,
+      "file": "dsh-unified-market-0.4.1.tgz",
+      "sha256": "21d0c6d52e37a828a6371df09f9cd1146cf8dbb8f50346136410fbfd20da7c27",
+      "bytes": 111762,
       "source": "npm"
     },
     {
@@ -843,13 +819,13 @@
     {
       "id": "web-mobile-fix",
       "name": "dsh-web-mobile-fix",
-      "version": "1.0.1",
+      "version": "1.0.6",
       "packs": [
         "eac"
       ],
-      "file": "dsh-web-mobile-fix-1.0.1.tgz",
-      "sha256": "8b5810c55c18edf5641f247db3eca3e1d7d0a57d8984d53870ec0c6b6fb9191a",
-      "bytes": 5575,
+      "file": "dsh-web-mobile-fix-1.0.6.tgz",
+      "sha256": "2692b0a3e4ca4823db092def3100cad34f0a68fd89b05421f19591be3fce6321",
+      "bytes": 7206,
       "source": "npm"
     },
     {
@@ -867,45 +843,45 @@
     {
       "id": "whale-widget",
       "name": "dsh-whale-widget",
-      "version": "0.2.10",
+      "version": "0.3.17",
       "packs": [
         "aio",
         "eac"
       ],
-      "file": "dsh-whale-widget-0.2.10.tgz",
-      "sha256": "8de4a9a01d2edcccb7ecf67dea87df677e634db532d8526f78f6ef9ec7067160",
-      "bytes": 1950412,
+      "file": "dsh-whale-widget-0.3.17.tgz",
+      "sha256": "15361ed9ea00d9d1d744c102845aa26dbaa735f20d8d52be7e4c3f39e215699d",
+      "bytes": 4888040,
       "source": "npm"
     },
     {
       "id": "meow-smooth",
       "name": "meow-smooth",
-      "version": "0.5.0",
+      "version": "0.8.1",
       "packs": [
         "eac"
       ],
-      "file": "meow-smooth-0.5.0.tgz",
-      "sha256": "e91b76c02bab1dc72219de6ac540a6804fee3eb5f41edd612db77ca0f7fda0f4",
-      "bytes": 150514,
+      "file": "meow-smooth-0.8.1.tgz",
+      "sha256": "e29ba9e7302a5aefdd57e1294325b5c68d3ed2e6aa364fba1d85fd9cfe4b9a86",
+      "bytes": 209101,
       "source": "npm"
     },
     {
       "id": "picturereader",
       "name": "picturereader",
-      "version": "3.3.1",
+      "version": "3.3.3",
       "packs": [
         "eac"
       ],
-      "file": "picturereader-3.3.1.tgz",
-      "sha256": "6db6246aba1cdaa5a426df6353c6bbc983549d531b99ae012897dfdc5bcf0157",
-      "bytes": 133657,
+      "file": "picturereader-3.3.3.tgz",
+      "sha256": "45c65f04b937fa9ddda0c738657ac26d7eaad4539c800142016a8351ca82088d",
+      "bytes": 136958,
       "source": "npm"
     }
   ],
   "suite": {
     "version": "0.2.0",
     "file": "dsh-plugin-suite-0.2.0.tgz",
-    "sha256": "5265526cdcbe04fa4024c1a0144324f261cc2e6382baf1af3908c920d9c0dd2c",
-    "bytes": 178195084
+    "sha256": "251cf0d2d77bfce6d0e198cc5882eff97cf8dae372710135c93b123d51a50ed1",
+    "bytes": 601729049
   }
 }
