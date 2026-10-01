@@ -80,7 +80,7 @@ const MUTEX_SKIN = {
   mutexEn: 'client-ui skins are mutually exclusive and must not be stacked (deep-whale-manager is the unified switcher). On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build instead of this standalone package.',
 };
 
-// RC2 真机适配扫查结论（D10，官方桌面端 v0.2.0-rc.2 逐款启用实测）。
+// RC2 真机适配扫查结论（D10，官方桌面端 v0.2.0-rc.2 逐款启用实测，每款启用前断言单皮肤生效）。
 // 皮肤普遍针对 AIO/EAC 分叉版 Web UI 制作，官方 RC2 DOM 漂移会让装饰层
 // （气泡/花纹）选择器打偏——这是上游皮肤自身的适配问题，与安装机制无关。
 const COMPAT_RC2 = {
@@ -88,13 +88,58 @@ const COMPAT_RC2 = {
     compatZh: '✅ 适配良好：整壳换肤完整（标题栏/壁纸/状态栏），无错位。',
     compatEn: '✅ Good: full-shell reskin (title bar / wallpaper / status bar) with no misplacement.',
   },
-  endfield: {
-    compatZh: '⚠️ 基本可用：整壳黑黄主题生效；但右下角状态指示器（status-rotator）会错位到左上角并与菜单栏重叠——启用本皮肤时建议同时禁用 status-rotator 插件。',
-    compatEn: '⚠️ Usable: the black/yellow theme applies, but the bottom-right status pill (status-rotator) jumps to the top-left and overlaps the menu bar — disable status-rotator while using this skin.',
+  'dragon-heir': {
+    compatZh: '✅ 适配良好：长城巨龙壁纸 + 淡雅红色点缀，布局干净无错位。',
+    compatEn: '✅ Good: Great-Wall dragon wallpaper with subtle red accents; clean layout, no misplacement.',
+  },
+  minecraft: {
+    compatZh: '✅ 适配良好：像素主题完整（像素按钮/像素字体），文字清晰。',
+    compatEn: '✅ Good: pixel theme applies fully (pixel buttons / pixel font); text stays crisp.',
+  },
+  xp: {
+    compatZh: '✅ 适配良好：Luna 蓝标题栏 + 底部任务栏复刻完整，无错位。',
+    compatEn: '✅ Good: Luna title bar and bottom task bar reproduced; no misplacement.',
+  },
+  trading: {
+    compatZh: '✅ 适配良好：行情顶栏/底栏 + 侧栏文字清晰，无错位。',
+    compatEn: '✅ Good: market ticker bars render; sidebar text crisp; no misplacement.',
+  },
+  'whale-song': {
+    compatZh: '✅ 适配良好：浅蓝鲸歌主题，布局干净无错位。',
+    compatEn: '✅ Good: light-blue whale theme; clean layout, no misplacement.',
+  },
+  'orca-link': {
+    compatZh: '✅ 适配良好（社区）：黑白水墨虎鲸立绘 + 标语文案，会话树缩进线清晰，无错位。',
+    compatEn: '✅ Good (community): ink-wash orca artwork and slogan; clean session tree; no misplacement.',
+  },
+  qq98: {
+    compatZh: '⚠️ 轻度问题：QQ2008 复古风格完整，但蓝色侧栏上的次要文字（会话时间戳、「展开其余」项）对比度偏低、不易读。',
+    compatEn: '⚠️ Minor: the QQ2008 retro style applies, but secondary text on the blue sidebar (session timestamps, "show more") has low contrast.',
+  },
+  liang: {
+    compatZh: '⚠️ 轻度问题：滑动变阻器特色滑块正常，但「新会话」按钮灰底灰字对比度偏低；其余布局正常。',
+    compatEn: '⚠️ Minor: the signature slider works, but the "New Session" button is grey-on-grey (low contrast); otherwise fine.',
   },
   'blue-fantasy': {
-    compatZh: '⚠️ 部分错位：主区域（输入框花框/分隔线）正常，但侧栏会话列表上会浮现装饰气泡、遮挡会话文字。可正常使用，介意者等上游适配。',
-    compatEn: '⚠️ Partial: the main area (composer frame / divider) is fine, but decorative bubbles float over sidebar session text. Usable; wait for upstream fix if it bothers you.',
+    compatZh: '⚠️ 中度错位：主区域（输入框花框/分隔线）正常，但侧栏会话列表上会浮现装饰气泡、遮挡会话文字（上游装饰层选择器在 RC2 上打偏）。可正常使用，介意者等上游适配。',
+    compatEn: '⚠️ Moderate: main area is fine, but decorative bubbles float over sidebar session text (upstream decoration selectors drift on RC2). Usable; wait for upstream fix if it bothers you.',
+  },
+  'deep-whale-day-night': {
+    compatZh: '⚠️ 中度错位：昼/夜双主题与鲸鱼娘立绘正常，但侧栏会话文字被装饰气泡/立绘部分遮挡（与 blue-fantasy 同源装饰系统）。带「夜间」切换钮。',
+    compatEn: '⚠️ Moderate: day/night themes and artwork render, but sidebar session text is partly covered by decorations (same decoration system as blue-fantasy). Includes the day/night toggle.',
+  },
+  endfield: {
+    compatZh: '⚠️ 中度错位：整壳黑黄主题生效；但右下角状态指示器（status-rotator 插件）会错位到左上角并与菜单栏重叠——启用本皮肤时建议同时禁用 status-rotator 插件。',
+    compatEn: '⚠️ Moderate: the black/yellow theme applies, but the bottom-right status pill (status-rotator plugin) jumps to the top-left and overlaps the menu bar — disable status-rotator while using this skin.',
+  },
+  ths: {
+    compatZh: '❌ 明显问题：同花顺红金标题栏/行情条正常，但深色侧栏上的会话文字与工作区名称几乎不可见（文字颜色被主题覆盖）。当前版本不建议启用。',
+    compatEn: '❌ Notable: the THS red title bar and tickers render, but sidebar session/workspace text is nearly invisible (text color overridden by the theme). Not recommended for now.',
+  },
+  'maid-atelier': {
+    unsafe: true,
+    compatZh: '💥 禁用启用按钮：真机实测启用本皮肤会导致官方 v0.2.0-rc.2 Web UI 渲染进程崩溃循环（主进程内存膨胀、CDP 失联），需从 profile 清单摘除才能恢复。等上游适配 RC2 后再启用。',
+    compatEn: '💥 Enable disabled: enabling this skin crashed the official v0.2.0-rc.2 web UI in real-machine testing (renderer crash loop, main-process memory balloon). Wait for an upstream RC2-compatible build.',
   },
 };
 const COMPAT_DEFAULT = {
@@ -395,6 +440,7 @@ function buildGallery(previewMap) {
         notesEn: entry.descEn || '',
         compatZh: (COMPAT_RC2[id] ?? COMPAT_DEFAULT).compatZh,
         compatEn: (COMPAT_RC2[id] ?? COMPAT_DEFAULT).compatEn,
+        unsafe: Boolean(COMPAT_RC2[id]?.unsafe),
       });
     }
   }

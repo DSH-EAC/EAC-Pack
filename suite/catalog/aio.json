@@ -178,25 +178,6 @@
     "notes": "共享插件：AIO(aio-v1) 随包 0.3.3-1，EAC 为 0.3.4 —— 版本以 EAC 包为准。条目主记录在 catalog/eac.json。"
   },
   {
-    "id": "webui",
-    "name": "@dsh-external/dsh-webui",
-    "version": "0.5.1",
-    "source": "eac-tag",
-    "spec": "file:dist/@dsh-external_dsh-webui-0.5.1.tgz",
-    "packs": [
-      "aio"
-    ],
-    "tier": "heavy",
-    "defaultEnabled": false,
-    "titleZh": "独立 WebUI",
-    "titleEn": "Standalone WebUI",
-    "descZh": "AIO 第三方运行时 Web UI（statem-li/dsh-webui 谱系）：完整独立界面，依赖 shiki/katex/markdown 套件。",
-    "descEn": "AIO third-party runtime web UI (statem-li/dsh-webui lineage): full standalone interface with shiki/katex/markdown suite.",
-    "license": "BSD-3-Clause",
-    "upstream": "https://github.com/statem-li/dsh-webui",
-    "notes": "D9 实测：等待 settingsScope 服务（EAC 分叉版专有），官方 RC2 上阻塞 web boot。默认关闭。"
-  },
-  {
     "id": "visualize",
     "name": "@nagi-ovo/dsh-visualize",
     "version": "0.1.4",
@@ -235,25 +216,6 @@
     "notes": "D9 实测：同 webui，settingsScope 依赖，官方 RC2 上阻塞 web boot。默认关闭。"
   },
   {
-    "id": "webui-statem-bridge",
-    "name": "@local/dsh-webui-statem-bridge",
-    "version": "1.2.2",
-    "source": "eac-tag",
-    "spec": "file:dist/@local_dsh-webui-statem-bridge-1.2.2.tgz",
-    "packs": [
-      "aio"
-    ],
-    "tier": "core",
-    "defaultEnabled": true,
-    "titleZh": "WebUI Statem 桥",
-    "titleEn": "WebUI Statem Bridge",
-    "descZh": "AIO 私有构建的 WebUI 桥接层（连接 @dsh-external/dsh-webui 与宿主）。",
-    "descEn": "AIO-private bridge layer wiring the standalone WebUI into the host.",
-    "license": "UNLICENSED",
-    "upstream": "（AIO 私有 source/local-plugins/dsh-webui-statem-bridge，公开仓库不含）",
-    "notes": "package.json 标记 private:true / UNLICENSED；aio-v1 公开仓库无源码（THIRD_PARTY_NOTICES 指向私有 source/local-plugins/）。提取自本机 AIO 6.9.3 离线包 profile-seed node_modules。分发风险最高项：随 AIO 包原样再分发，不可单独发布。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。"
-  },
-  {
     "id": "drag-and-drop",
     "name": "dsh-drag-and-drop",
     "version": "0.1.6",
@@ -275,9 +237,9 @@
   {
     "id": "find-plugin",
     "name": "dsh-find-plugin",
-    "version": "0.3.7",
+    "version": "0.4.0",
     "source": "npm",
-    "spec": "file:dist/dsh-find-plugin-0.3.7.tgz",
+    "spec": "dsh-find-plugin@0.4.0",
     "packs": [
       "aio"
     ],
@@ -289,14 +251,14 @@
     "descEn": "Plugin discovery/search tool.",
     "license": "MIT",
     "upstream": "https://www.npmjs.com/package/dsh-find-plugin",
-    "notes": "npm 锁定 seed 版本 ^0.3.7 的精确版 0.3.7（npm 存在）。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。"
+    "notes": "npm 锁定 seed 版本 ^0.3.7 的精确版 0.3.7（npm 存在）。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "meme",
     "name": "dsh-meme",
-    "version": "0.1.39",
+    "version": "0.1.44",
     "source": "npm",
-    "spec": "file:dist/dsh-meme-0.1.39.tgz",
+    "spec": "dsh-meme@0.1.44",
     "packs": [
       "aio"
     ],
@@ -308,7 +270,7 @@
     "descEn": "Meme search and insertion.",
     "license": "MIT",
     "upstream": "https://www.npmjs.com/package/dsh-meme",
-    "notes": "npm 锁定 seed 版本 ^0.1.39 的精确版 0.1.39（npm 存在）。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。"
+    "notes": "npm 锁定 seed 版本 ^0.1.39 的精确版 0.1.39（npm 存在）。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "wallpaper-engine",
@@ -332,9 +294,9 @@
   {
     "id": "status-rotator",
     "name": "dsh-status-rotator",
-    "version": "0.9.1",
+    "version": "0.33.1",
     "source": "npm",
-    "spec": "file:dist/dsh-status-rotator-0.9.1.tgz",
+    "spec": "dsh-status-rotator@0.33.1",
     "packs": [
       "aio"
     ],
@@ -346,14 +308,14 @@
     "descEn": "Rotates the session status line text.",
     "license": "MIT",
     "upstream": "https://www.npmjs.com/package/dsh-status-rotator",
-    "notes": "npm 锁定 seed 版本 ^0.9.1 的精确版 0.9.1（npm 存在；背景清单误记版本，seed 实为 ^0.9.1）。无 peer 依赖。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。"
+    "notes": "npm 锁定 seed 版本 ^0.9.1 的精确版 0.9.1（npm 存在；背景清单误记版本，seed 实为 ^0.9.1）。无 peer 依赖。在 AIO seed bundles 列表内。 D9 实测：RC2 兼容。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "whale-widget",
     "name": "dsh-whale-widget",
-    "version": "0.2.10",
+    "version": "0.3.17",
     "source": "npm",
-    "spec": "file:dist/dsh-whale-widget-0.2.10.tgz",
+    "spec": "dsh-whale-widget@0.3.17",
     "packs": [
       "eac",
       "aio"

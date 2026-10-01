@@ -252,9 +252,9 @@
   {
     "id": "picturereader",
     "name": "picturereader",
-    "version": "3.3.1",
+    "version": "3.3.3",
     "source": "npm",
-    "spec": "file:dist/picturereader-3.3.1.tgz",
+    "spec": "picturereader@3.3.3",
     "packs": [
       "eac"
     ],
@@ -266,14 +266,14 @@
     "descEn": "Unified image understanding: visual twin adapter for native thumbnails, auto-analysis on text-only models, local tools (scan/OCR x4/crop/palette/compare/batch), document-to-image, local photo editing, optional external VLM bridge.",
     "license": "MIT",
     "upstream": "https://github.com/jing-hy/picturereader",
-    "notes": "npm 锁定 EAC 随包版本 3.3.1（上游 npm latest 已到 3.3.3，整合包不追新）。"
+    "notes": "npm 锁定 EAC 随包版本 3.3.1（上游 npm latest 已到 3.3.3，整合包不追新）。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "computer-user",
     "name": "computer-user",
-    "version": "0.3.6",
+    "version": "0.3.7",
     "source": "npm",
-    "spec": "file:dist/computer-user-0.3.6.tgz",
+    "spec": "computer-user@0.3.7",
     "packs": [
       "eac"
     ],
@@ -285,14 +285,14 @@
     "descEn": "Codex-style computer use: read the screen and drive mouse & keyboard, pairing with picturereader for the look-act-verify loop (Windows).",
     "license": "MIT",
     "upstream": "https://github.com/jing-hy/computer-user",
-    "notes": "npm 锁定 EAC 随包版本 0.3.6（上游 npm latest 0.3.7）。重资源/系统级自动化。"
+    "notes": "npm 锁定 EAC 随包版本 0.3.6（上游 npm latest 0.3.7）。重资源/系统级自动化。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "soul-md",
     "name": "dsh-soul-md",
-    "version": "0.2.8",
+    "version": "0.9.0",
     "source": "npm",
-    "spec": "file:dist/dsh-soul-md-0.2.8.tgz",
+    "spec": "dsh-soul-md@0.9.0",
     "packs": [
       "eac"
     ],
@@ -304,14 +304,14 @@
     "descEn": "Inject a markdown persona file into the system prompt (soul:persona) with hot reload and a Web UI settings tab.",
     "license": "MIT",
     "upstream": "https://github.com/Scorp1o117/dsh-soul-md",
-    "notes": "npm 锁定 EAC 随包版本 0.2.8（上游 npm latest 0.9.0）。EAC 注册表 config: {\"path\":\"soul.md\"}，Host 写 patch 行需带。"
+    "notes": "npm 锁定 EAC 随包版本 0.2.8（上游 npm latest 0.9.0）。EAC 注册表 config: {\"path\":\"soul.md\"}，Host 写 patch 行需带。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "web-mobile-fix",
     "name": "dsh-web-mobile-fix",
-    "version": "1.0.1",
+    "version": "1.0.6",
     "source": "npm",
-    "spec": "file:dist/dsh-web-mobile-fix-1.0.1.tgz",
+    "spec": "dsh-web-mobile-fix@1.0.6",
     "packs": [
       "eac"
     ],
@@ -323,7 +323,7 @@
     "descEn": "Mobile layout fixes for settings panel, popups, sidebar and session header on narrow screens; pure client-side CSS overlay.",
     "license": "MIT",
     "upstream": "https://github.com/AcidGr/dsh-web-mobile-fix",
-    "notes": "npm 锁定 EAC 随包版本 1.0.1（上游 npm latest 1.0.6）。EAC 注册表行 id: mobile-fix。"
+    "notes": "npm 锁定 EAC 随包版本 1.0.1（上游 npm latest 1.0.6）。EAC 注册表行 id: mobile-fix。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "viewport-lock",
@@ -347,9 +347,9 @@
   {
     "id": "meow-smooth",
     "name": "meow-smooth",
-    "version": "0.5.0",
+    "version": "0.8.1",
     "source": "npm",
-    "spec": "file:dist/meow-smooth-0.5.0.tgz",
+    "spec": "meow-smooth@0.8.1",
     "packs": [
       "eac"
     ],
@@ -361,7 +361,7 @@
     "descEn": "Frontend behavior polish: composer height collapse on blur and auto-collapsed sidebar on narrow screens (pure client).",
     "license": "MIT",
     "upstream": "https://github.com/Phant0Meow/dsh-meow-smooth",
-    "notes": "npm 锁定 EAC 随包版本 0.5.0（上游 npm latest 0.8.1）。EAC 注册表 config: {\"enabled\":true}。"
+    "notes": "npm 锁定 EAC 随包版本 0.5.0（上游 npm latest 0.8.1）。EAC 注册表 config: {\"enabled\":true}。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "better-sidebar",
@@ -424,9 +424,9 @@
   {
     "id": "pet",
     "name": "dsh-pet",
-    "version": "0.1.3",
+    "version": "0.3.1",
     "source": "npm",
-    "spec": "file:dist/dsh-pet-0.1.3.tgz",
+    "spec": "dsh-pet@0.3.1",
     "packs": [
       "eac"
     ],
@@ -438,7 +438,7 @@
     "descEn": "28 transparent animated floating pets with idle breathing, direction turns, random actions and screen wandering.",
     "license": "MIT",
     "upstream": "https://github.com/PC2005-cloud/dsh-pet",
-    "notes": "npm 锁定 EAC 随包版本 0.1.3（上游 npm latest 0.3.1）。EAC 注册表默认 disabled:true，行需带 config: {\"size\":260,\"position\":\"bottom-right\"}。"
+    "notes": "npm 锁定 EAC 随包版本 0.1.3（上游 npm latest 0.3.1）。EAC 注册表默认 disabled:true，行需带 config: {\"size\":260,\"position\":\"bottom-right\"}。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "dock-settings",
@@ -539,9 +539,9 @@
   {
     "id": "navbar",
     "name": "@vlln/dsh-navbar",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "source": "npm",
-    "spec": "file:dist/@vlln_dsh-navbar-0.3.0.tgz",
+    "spec": "@vlln/dsh-navbar@0.4.0",
     "packs": [
       "eac"
     ],
@@ -553,7 +553,7 @@
     "descEn": "Right-edge node rail for quick jumping between user messages (hover preview, click jump, wheel switch).",
     "license": "MIT",
     "upstream": "https://github.com/vlln/dsh-navbar",
-    "notes": "npm 锁定 EAC 随包版本 0.3.0（上游 npm latest 0.4.0）。EAC 注册表行 id: dsh-navbar。"
+    "notes": "npm 锁定 EAC 随包版本 0.3.0（上游 npm latest 0.4.0）。EAC 注册表行 id: dsh-navbar。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "session-manager",
@@ -634,9 +634,9 @@
   {
     "id": "whale-widget",
     "name": "dsh-whale-widget",
-    "version": "0.2.10",
+    "version": "0.3.17",
     "source": "npm",
-    "spec": "file:dist/dsh-whale-widget-0.2.10.tgz",
+    "spec": "dsh-whale-widget@0.3.17",
     "packs": [
       "eac",
       "aio"
@@ -649,7 +649,7 @@
     "descEn": "Bottom-right DeepSeek balance whale widget (usage today, tidal pricing, random lines, sounds, per-turn stats); requires DEEPSEEK_API_KEY.",
     "license": "MIT",
     "upstream": "https://github.com/MeteorNOX/DeepSeek-Balance-Whale-Widget",
-    "notes": "npm 锁定 EAC 随包版本 0.2.10（上游 npm latest 0.3.17）。EAC 注册表默认 disabled:true；AIO seed 将其列入 bundles。两包共享，版本以 EAC 包为准。EAC 注册表行 id: dsh-whale-widget。"
+    "notes": "npm 锁定 EAC 随包版本 0.2.10（上游 npm latest 0.3.17）。EAC 注册表默认 disabled:true；AIO seed 将其列入 bundles。两包共享，版本以 EAC 包为准。EAC 注册表行 id: dsh-whale-widget。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "agent-teams",
@@ -732,9 +732,9 @@
   {
     "id": "dafeiyu",
     "name": "dsh-dafeiyu",
-    "version": "0.1.0-alpha.6",
+    "version": "0.1.14",
     "source": "npm",
-    "spec": "file:dist/dsh-dafeiyu-0.1.0-alpha.6.tgz",
+    "spec": "dsh-dafeiyu@0.1.14",
     "packs": [
       "eac"
     ],
@@ -746,7 +746,7 @@
     "descEn": "Native always-on-top desktop pet driven by real session states (idle/thinking/working/waiting/done/error) with a project status card.",
     "license": "SEE LICENSE IN ASSET_LICENSE.md",
     "upstream": "https://github.com/QCYTSN/dsh-dafeiyu",
-    "notes": "npm 锁定 EAC 随包版本 0.1.0-alpha.6（上游 npm latest 0.1.14）。代码 MIT、角色素材按 ASSET_LICENSE.md 随包分发保留署名；含 ~49MB PyInstaller helper。EAC 注册表行 id: dsh-dafeiyu。"
+    "notes": "npm 锁定 EAC 随包版本 0.1.0-alpha.6（上游 npm latest 0.1.14）。代码 MIT、角色素材按 ASSET_LICENSE.md 随包分发保留署名；含 ~49MB PyInstaller helper。EAC 注册表行 id: dsh-dafeiyu。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "pet-settings",
@@ -884,9 +884,9 @@
   {
     "id": "unified-market",
     "name": "dsh-unified-market",
-    "version": "0.3.1",
+    "version": "0.4.1",
     "source": "npm",
-    "spec": "file:dist/dsh-unified-market-0.3.1.tgz",
+    "spec": "dsh-unified-market@0.4.1",
     "packs": [
       "eac"
     ],
@@ -898,7 +898,7 @@
     "descEn": "Aggregates curated catalog, GitHub dsh-plugin ecosystem and npm registry with allowlist, conflict pre-check, trial install verification and auto-update.",
     "license": "MIT",
     "upstream": "https://github.com/jing-hy/dsh-unified-market",
-    "notes": "npm 锁定 EAC 随包版本 0.3.1（上游 npm latest 0.4.1）。取代曾内置的 webui-market / zat-market / 旧 npm 市场（见 retired.json）。EAC 注册表行 id: unified-market。"
+    "notes": "npm 锁定 EAC 随包版本 0.3.1（上游 npm latest 0.4.1）。取代曾内置的 webui-market / zat-market / 旧 npm 市场（见 retired.json）。EAC 注册表行 id: unified-market。 D10 上游普查直升（见 reports/D10-final-test-report.md）。"
   },
   {
     "id": "think-zh-expand-eac",

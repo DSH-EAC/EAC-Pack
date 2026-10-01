@@ -112,6 +112,23 @@
       "retiredFrom": "suite-skins",
       "evidence": "catalog/skins.json 0.1.6 期条目（eac-tag 从 aio-v1 assets/skins/maid-atelier 提取重打包的 0.0.1 占位版）。T1 实测社区 @smalltailqwq/dsh-client-ui-skin-maid-atelier 已在 npm 发布正式版至 0.1.7，故移入本台账。",
       "reason": "由社区 @smalltailqwq/dsh-client-ui-skin-maid-atelier 0.1.7 取代（同皮肤新旧两版，见 catalog/community.json maid-atelier；勿同装）。"
+    },
+    {
+      "id": "webui",
+      "name": "@dsh-external/dsh-webui",
+      "retiredFrom": "aio-v1 (integration pack 0.2.0)",
+      "evidence": "上游 statem-li/dsh-webui 仓库 404（2026-10 gh api 实查），npm 无任何版本；D9/D10 实测在官方 RC2 上启用会阻塞 web boot（缺 settingsScope 服务）。无 RC2 路径，退役。",
+      "titleZh": "WebUI 远程界面",
+      "titleEn": "WebUI remote"
+    },
+    {
+      "id": "webui-statem-bridge",
+      "name": "@local/dsh-webui-statem-bridge",
+      "version": "1.2.2",
+      "retiredFrom": "aio-v1 (integration pack 0.2.0)",
+      "evidence": "AIO 私有构建（UNLICENSED，分发风险最高项），唯一宿主 @dsh-external/dsh-webui 上游已死且退役，桥失去意义。随 webui 一并退役。",
+      "titleZh": "WebUI Statem 桥",
+      "titleEn": "WebUI Statem Bridge"
     }
   ]
 }

@@ -385,4 +385,16 @@ index.sort((a, b) => a.name.localeCompare(b.name));
 fs.writeFileSync(path.join(DIST, 'index.json'), JSON.stringify(index, null, 2) + '\n');
 const sums = index.map((e) => `${e.sha256}  ${e.file}`).join('\n') + '\n';
 fs.writeFileSync(path.join(DIST, 'SHA256SUMS'), sums);
+// 清理孤儿：旧版本 tgz 与 suite 本体包不得留在 dist/（后者会经 sync 进入
+// suite/assets/dist 再被 npm pack 吞下，形成自引用的指数膨胀）。
+const wanted = new Set(index.map((e) => e.file));
+let orphans = 0;
+for (const name of fs.readdirSync(DIST)) {
+  if (!name.endsWith('.tgz') || wanted.has(name)) continue;
+  try {
+    fs.rmSync(path.join(DIST, name), { force: true });
+    orphans++;
+  } catch { /* delete-pending：报告但不阻塞 */ }
+}
+if (orphans) log(`清理孤儿 tgz：${orphans} 个`);
 log(`完成：dist/ 共 ${index.length} 个 tgz + index.json + SHA256SUMS`);
