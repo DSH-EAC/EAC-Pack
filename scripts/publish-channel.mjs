@@ -23,7 +23,7 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 const CHANNEL = path.join(ROOT, 'channel');
 const CHANNEL_FILE = path.join(CHANNEL, 'channel.json');
-const SUITE_VERSION = '0.2.0';
+const SUITE_VERSION = '0.2.1';
 const SUITE_FILE = `dsh-plugin-suite-${SUITE_VERSION}.tgz`;
 
 const noUpload = process.argv.includes('--no-upload');
@@ -62,14 +62,18 @@ if (!suiteTgz) {
 
 // ---- notes（v0.2.0） ----
 const notesZh = [
-  'v0.2.0「完全体」首版在线渠道：全量 74 个插件离线 tgz + 在线更新通道。',
-  '新增 6 套社区皮肤（deep-whale-manager / maid-atelier / orca-link / liang / deep-whale-day-night / endfield），内置 9 套皮肤升级皮肤馆（预览图 + Prompt 创作包）。',
-  '注意：client-ui 皮肤之间互斥，请勿叠装；已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版。',
+  'v0.2.1（issue #1 修复版）：修复官方内核上 2 处致命与 2 处一般缺陷。',
+  '致命1：easy-setup / side-session / client-ui-custom（需 EAC 分叉版 settingsScope 服务）安装被跳过、启用被拒绝，UI 红徽章「仅 EAC 内核」锁定；即使被手工加回 bundles 也不再阻塞启动（重打包内含 disabled 硬钉）。',
+  '致命2：内核自带包（dsh-plugin-manager / dsh-terminal 0.2.0-rc.2）不再被重打包副本遮蔽：安装跳过 + 启动自动清扫幽灵残留 + 已声明副本自动退役；重打包 plugin-manager 补 ./tools exports 兜底。受影响机器升级后首次启动即自愈。',
+  '缺陷3：dsh-compact 1.0.1 修复补丁形态（insert 双行：主行 + agent 引擎行），请求路径自动压缩真正挂载。',
+  '注意：dsh-compact 的 status/compact-now 端点与设置卡片依赖 EAC 分叉版服务，官方内核上不可用（无害）；skin-switch remote face 为上游已知问题。',
 ].join('\n');
 const notesEn = [
-  'First online channel of v0.2.0 "Complete Edition": 74 offline plugin tarballs + online update pipeline.',
-  'Adds 6 community skins (deep-whale-manager / maid-atelier / orca-link / liang / deep-whale-day-night / endfield) and the skin gallery for the 9 built-in skins (previews + prompt packs).',
-  'Note: client-ui skins are mutually exclusive — do not stack them. On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build.',
+  'v0.2.1 (issue #1 fixes): repairs 2 fatal and 2 moderate defects on the official kernel.',
+  'Fatal 1: easy-setup / side-session / client-ui-custom (EAC-fork-only settingsScope) are skipped at install and refused at enable, with a locked "EAC fork only" badge; hand-adding them back to bundles can no longer block boot (hard-disabled rows in the repacks).',
+  'Fatal 2: kernel-built-in packages (dsh-plugin-manager / dsh-terminal, 0.2.0-rc.2) are no longer shadowed: install skips, boot-time ghost sweep, offline retire of declared copies, and ./tools exports on the repack. Affected hosts self-heal on the first start after upgrading.',
+  'Defect 3: dsh-compact 1.0.1 fixes the patch form (two insert rows: main + agent engine), so request-path compaction actually mounts.',
+  'Note: dsh-compact status/compact-now endpoints and its settings card need EAC-fork services and stay unavailable (harmless) on the official kernel; skin-switch remote face mount remains a known upstream issue.',
 ].join('\n');
 
 // ---- channel.json ----

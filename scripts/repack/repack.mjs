@@ -93,6 +93,38 @@ const onlyArg = (() => {
   return i >= 0 ? process.argv[i + 1] : null;
 })();
 
+// --only 模式下只重建命中的包：index.json 走合并而不是整体替换，孤儿清理只
+// 限「重建包名下的旧版本文件」——否则一次 --only 会把其余 70+ 个 tgz 全部清掉。
+const MERGE_MODE = onlyArg != null;
+
+// 定向覆写（issue #1 修复，2026-10-02）。重打包是可复现管线，覆写必须在
+// staging 阶段显式声明；reason 记录修复背景，随 PROVENANCE 归档。
+const OVERRIDES = {
+  'dsh-compact': {
+    version: '1.0.1',
+    patchYml:
+      "- insert:\n    - id: compact\n      name: 'dsh-compact'\n      config: {}\n    - id: compact-agent\n      name: 'dsh-compact/agent'\n      config: {}\n",
+    reason:
+      'issue#1 缺陷3：上游 cordis.patch.yml 是裸 id 定向形态（loader 报 entry compact not found → 插件静默不挂载），改写为 insert 自挂载；且补第二行 compact-agent（dsh-compact/agent）——压缩引擎在 agent 半边，只挂主行等于只挂了个设置壳。注意：其 status/compact-now 端点与设置卡片依赖 EAC 分叉版的 agentPresets/settingsScope，官方 RC2 上不可用（无害的懒注入 pending）；请求路径自动压缩本身只依赖 llm/tokenMeter/sessions，RC2 齐备。版本 +0.0.1 让已装用户经在线渠道收到修复。',
+  },
+  '@deepseek-ai/dsh-plugin-manager': {
+    exportsAdd: { './tools': { default: './lib/index.js' } },
+    reason:
+      'issue#1 缺陷2 纵深：补 exports["./tools"]（EAC 配套包的 host 半边本就是合法挂载目标）——即使重打包副本残留 profile node_modules，内核 tool-plugin-manager 行也能启动，不再因 ERR_PACKAGE_PATH_NOT_EXPORTED 拒绝整个预设（全部会话无法恢复）。',
+  },
+  '@dsh-external/dsh-side-session': {
+    patchYml:
+      '# dsh-side-session bundle patch\n#\n# 服务端子插件加载：web profile 启动时把本插件纳入 cordis 插件栈。\n# 客户端 bundle 由 package.json 的 dsh.client.inject 声明，host 自动加载\n# lib/client.js（window.__ModuleLoader__.load）。\n#\n# issue#1 缺陷1 纵深：行固定 disabled —— 官方内核不提供 settingsScope，该行\n# 一旦激活即阻塞 web boot；即使被手工加回 dsh.profile.bundles 也只会得到\n# 一个停用行，不再整机砖化。\n- insert:\n    - id: side-session\n      name: \'@dsh-external/dsh-side-session\'\n      config: {}\n      disabled: true\n',
+    reason: 'issue#1 缺陷1 纵深：bundle 行固定 disabled:true，防手工启用后阻塞 web boot。',
+  },
+  '@deepseek-ai/dsh-easy-setup': {
+    patchYml:
+      '# dsh-easy-setup bundle patch（0.2.1 新增，issue#1 缺陷1 纵深）\n#\n# 上游没有 bundle patch：官方内核不提供 settingsScope，本插件行一旦激活即\n# 阻塞 web boot。固定 disabled —— 即使被手工加回 dsh.profile.bundles 也只会\n# 得到一个停用行，不再整机砖化。\n- insert:\n    - id: easy-setup\n      name: \'@deepseek-ai/dsh-easy-setup\'\n      config: {}\n      disabled: true\n',
+    ensureBundlePatch: './cordis.patch.yml',
+    reason: 'issue#1 缺陷1 纵深：上游无 bundle patch，补一个且行固定 disabled:true（并声明 dsh.bundle.patch 让补丁生效）。',
+  },
+};
+
 const log = (...a) => console.log('[repack]', ...a);
 const die = (msg) => {
   console.error('[repack] FATAL:', msg);
@@ -335,7 +367,16 @@ for (const entry of entries) {
   else die(`未知 source: ${entry.source}`);
 
   const pkgFile = path.join(staging, 'package.json');
+  // 定向覆写：补丁文件与 dsh.bundle.patch 声明要在 npm pack 前落盘
+  const override = OVERRIDES[entry.name];
+  if (override?.patchYml) fs.writeFileSync(path.join(staging, 'cordis.patch.yml'), override.patchYml);
   const pkg = JSON.parse(fs.readFileSync(pkgFile, 'utf8'));
+  if (override?.version) pkg.version = override.version;
+  if (override?.exportsAdd) pkg.exports = { ...(pkg.exports ?? {}), ...override.exportsAdd };
+  if (override?.ensureBundlePatch) {
+    pkg.dsh = { ...(pkg.dsh ?? {}), bundle: { ...(pkg.dsh?.bundle ?? {}), patch: override.ensureBundlePatch } };
+  }
+  if (override) log(`  override: ${override.reason}`);
   if (pkg.name !== entry.name) die(`包名不符 catalog: ${pkg.name} != ${entry.name}`);
   if (pkg.version !== entry.version)
     die(`版本漂移 ${entry.name}: 源=${pkg.version} catalog=${entry.version}（请更新 catalog 或锁定源）`);
@@ -352,7 +393,7 @@ for (const entry of entries) {
     if (!Object.keys(pkg.scripts).length) delete pkg.scripts;
   }
   const addedFiles = ensureAttributionFiles(pkg, staging);
-  if (changes.length || addedFiles.length || strippedScripts.length) {
+  if (override || changes.length || addedFiles.length || strippedScripts.length) {
     fs.writeFileSync(pkgFile, JSON.stringify(pkg, null, 2) + '\n');
     for (const c of changes) log(`  peer: ${c}`);
     if (strippedScripts.length) log(`  scripts-= ${strippedScripts.join(', ')}`);
@@ -382,19 +423,39 @@ for (const entry of entries) {
 }
 
 index.sort((a, b) => a.name.localeCompare(b.name));
-fs.writeFileSync(path.join(DIST, 'index.json'), JSON.stringify(index, null, 2) + '\n');
-const sums = index.map((e) => `${e.sha256}  ${e.file}`).join('\n') + '\n';
+// --only 合并模式：保留未重建包的既有 index 记录，只替换本轮重建的包
+let finalIndex = index;
+if (MERGE_MODE) {
+  const prevFile = path.join(DIST, 'index.json');
+  if (fs.existsSync(prevFile)) {
+    try {
+      const prev = JSON.parse(fs.readFileSync(prevFile, 'utf8'));
+      if (Array.isArray(prev)) {
+        const rebuilt = new Set(index.map((e) => e.name));
+        finalIndex = [...prev.filter((e) => e?.name && !rebuilt.has(e.name)), ...index];
+      }
+    } catch (e) {
+      log(`WARN 既有 index.json 不可解析（${e.message}），按整体替换处理`);
+    }
+  }
+}
+finalIndex.sort((a, b) => String(a.name).localeCompare(String(b.name)));
+fs.writeFileSync(path.join(DIST, 'index.json'), JSON.stringify(finalIndex, null, 2) + '\n');
+const sums = finalIndex.map((e) => `${e.sha256}  ${e.file}`).join('\n') + '\n';
 fs.writeFileSync(path.join(DIST, 'SHA256SUMS'), sums);
 // 清理孤儿：旧版本 tgz 与 suite 本体包不得留在 dist/（后者会经 sync 进入
 // suite/assets/dist 再被 npm pack 吞下，形成自引用的指数膨胀）。
-const wanted = new Set(index.map((e) => e.file));
+const wanted = new Set(finalIndex.map((e) => e.file));
+const rebuiltPrefixes = index.map((e) => `${e.name.replace(/\//g, '_')}-`);
 let orphans = 0;
 for (const name of fs.readdirSync(DIST)) {
   if (!name.endsWith('.tgz') || wanted.has(name)) continue;
+  // --only 模式只清「本轮重建包名下的旧版本文件」，不碰其它包
+  if (MERGE_MODE && !rebuiltPrefixes.some((p) => name.startsWith(p))) continue;
   try {
     fs.rmSync(path.join(DIST, name), { force: true });
     orphans++;
   } catch { /* delete-pending：报告但不阻塞 */ }
 }
 if (orphans) log(`清理孤儿 tgz：${orphans} 个`);
-log(`完成：dist/ 共 ${index.length} 个 tgz + index.json + SHA256SUMS`);
+log(`完成：dist/ 共 ${finalIndex.length} 个 tgz + index.json + SHA256SUMS${MERGE_MODE ? `（合并模式，本轮重建 ${index.length} 个）` : ''}`);

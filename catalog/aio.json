@@ -108,14 +108,15 @@
       "aio"
     ],
     "tier": "core",
-    "defaultEnabled": true,
+    "defaultEnabled": false,
+    "kernelProvided": true,
     "titleZh": "插件启停管理",
     "titleEn": "Plugin Manager",
     "descZh": "设置页「插件」栏，配套插件一键启停。",
     "descEn": "Settings plugins tab with one-click enable/disable of companion plugins.",
     "license": "MIT",
     "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC",
-    "notes": "共享插件：两包同版本 0.1.0。条目主记录在 catalog/eac.json，版本以 EAC 包为准。"
+    "notes": "共享插件：条目主记录在 catalog/eac.json。RC2 内核已内置官方版，整合包安装时自动跳过（kernelProvided，issue #1 缺陷2），默认停用。"
   },
   {
     "id": "plugin-shield",
@@ -207,13 +208,14 @@
     ],
     "tier": "visual",
     "defaultEnabled": false,
+    "compat": "eac-fork",
     "titleZh": "客制化 DSH（壁纸/快捷键）",
     "titleEn": "Client UI Custom",
     "descZh": "web 表面主题化（壁纸/毛玻璃/强调色/半透明表面）、可配置快捷键、应用用量面板与入场动效；零 shell 改动。",
     "descEn": "Web-surface theming (wallpaper, frosted glass, accent, translucent surfaces), configurable shortcuts, usage panel and entrance motion; zero shell edits.",
     "license": "MIT",
     "upstream": "https://github.com/ha-na-bi/dsh-client-ui-custom",
-    "notes": "D9 实测：同 webui，settingsScope 依赖，官方 RC2 上阻塞 web boot。默认关闭。"
+    "notes": "D9 实测：同 webui，settingsScope 依赖，官方 RC2 上阻塞 web boot。默认关闭。 D9 实测：启用等待 EAC 专有服务 settingsScope，官方 RC2 上阻塞 web boot（issue #1 缺陷1 同族）。0.2.1 起整合包拦截其安装与启用（compat=eac-fork）。"
   },
   {
     "id": "drag-and-drop",

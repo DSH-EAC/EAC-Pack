@@ -137,6 +137,10 @@ window.__ModuleLoader__.load({
         'tier.core': '功能',
         'tier.visual': '外观',
         'tier.heavy': '重型',
+        'compat.eacFork': '仅 EAC 内核',
+        'compat.eacForkTip': '依赖 EAC 分叉版专有服务 settingsScope：在官方内核上启用会导致应用无法启动，整合包已拦截其安装与启用（issue #1）',
+        'compat.kernelProvided': '内核自带',
+        'compat.kernelTip': '内核已内置官方版：安装重打包副本会遮蔽官方包、导致所有会话无法恢复，整合包已拦截安装并在启动时自动卸载残留（issue #1）',
         disabledNote: '此插件在当前内核验证异常，默认保持关闭',
         unavailableNote: '上游不可得，本包跳过',
 
@@ -281,6 +285,10 @@ window.__ModuleLoader__.load({
         'tier.core': 'Core',
         'tier.visual': 'Visual',
         'tier.heavy': 'Heavy',
+        'compat.eacFork': 'EAC fork only',
+        'compat.eacForkTip': 'Depends on the EAC-fork-only settingsScope service: enabling it on the official kernel blocks app boot. Install/enable is blocked by the suite (issue #1)',
+        'compat.kernelProvided': 'Built into kernel',
+        'compat.kernelTip': 'The kernel ships an official copy: installing the repackaged one shadows it and breaks session resume. Install is blocked and boot sweeps leftovers automatically (issue #1)',
         disabledNote: 'This plugin misbehaves on the current kernel and stays disabled by default',
         unavailableNote: 'Upstream unavailable, skipped by this pack',
 
@@ -520,6 +528,8 @@ window.__ModuleLoader__.load({
 .skin-card.unsafe { outline: 1px solid color-mix(in srgb, var(--dsw-alias-state-error-primary) 22%, transparent); }
 .suite-badge.st-disabled { color: var(--dsw-alias-label-tertiary); border-color: var(--dsw-alias-border-l2); }
 .suite-badge.st-update { color: var(--dsw-alias-state-warning-primary); background: color-mix(in srgb, var(--dsw-alias-state-warning-primary) 11%, transparent); }
+.suite-badge.compat-fork { color: var(--dsw-alias-state-error-primary); border-color: color-mix(in srgb, var(--dsw-alias-state-error-primary) 30%, transparent); background: color-mix(in srgb, var(--dsw-alias-state-error-primary) 9%, transparent); cursor: help; }
+.suite-badge.compat-kernel { color: var(--dsw-alias-state-success-primary); border-color: color-mix(in srgb, var(--dsw-alias-state-success-primary) 30%, transparent); background: color-mix(in srgb, var(--dsw-alias-state-success-primary) 9%, transparent); cursor: help; }
 .suite-badge.st-missing { color: var(--dsw-alias-label-tertiary); border-style: dashed; border-color: var(--dsw-alias-border-l2); }
 
 /* ── updates tab ────────────────────────────────────────── */
@@ -772,6 +782,16 @@ window.__ModuleLoader__.load({
       const key = 'tier.' + (tier ?? 'core')
       return h('span', { className: 'suite-badge tier tier-' + (tier ?? 'core') }, t(key))
     }
+
+    /** Issue #1: entries the suite must not install/enable on the official kernel. */
+    function CompatBadge({ item, t }) {
+      if (item?.compat === 'eac-fork') return h('span', { className: 'suite-badge compat-fork', title: t('compat.eacForkTip') }, t('compat.eacFork'))
+      if (item?.kernelProvided) return h('span', { className: 'suite-badge compat-kernel', title: t('compat.kernelTip') }, t('compat.kernelProvided'))
+      return null
+    }
+
+    /** Selection + updates are pointless (and blocked host-side) for these. */
+    const isCompatLocked = item => item?.compat === 'eac-fork' || item?.kernelProvided
 
     function StatusBadge({ st, t, map = STATUS_BADGE }) {
       const b = map[st] ?? map.missing
@@ -1106,18 +1126,21 @@ window.__ModuleLoader__.load({
     function PluginRow({ item, index, checked, onCheck, onUpdate, t, busy }) {
       const st = statusOf(item)
       const badge = STATUS_BADGE[st]
+      const locked = isCompatLocked(item)
       return h('label', {
         className: 'suite-row suite-rise' + (checked ? ' checked' : ''),
         style: { '--i': Math.min(index, 11) },
       },
         h('input', {
           type: 'checkbox', className: 'suite-check', checked,
+          disabled: locked,
           onChange: e => onCheck(item.id, e.target.checked),
         }),
         h('div', { className: 'main' },
           h('div', { className: 'title-line' },
             h('span', { className: 'title', title: item.name }, item.titleZh || item.name),
-            h(TierBadge, { tier: item.tier, t })),
+            h(TierBadge, { tier: item.tier, t }),
+            h(CompatBadge, { item, t })),
           h('div', { className: 'desc' }, item.descZh || item.name),
           item.descEn && h('div', { className: 'desc en' }, item.descEn)),
         h('div', { className: 'side' },
@@ -1125,7 +1148,7 @@ window.__ModuleLoader__.load({
             fmt(t('versionPair'), { a: item.installedVersion, b: item.version })),
           item.installedVersion && !item.updateAvailable && h('span', { className: 'suite-badge ver' }, item.installedVersion),
           h(StatusBadge, { st, t }),
-          st === 'update' && h('button', {
+          st === 'update' && !locked && h('button', {
             type: 'button', className: 'suite-btn sm', disabled: busy,
             onClick: e => { e.preventDefault(); e.stopPropagation(); onUpdate(item) },
           }, t('row.update'))),
@@ -1180,12 +1203,14 @@ window.__ModuleLoader__.load({
       },
         h('input', {
           type: 'checkbox', className: 'suite-check', checked: checked.has(u.id),
+          disabled: isCompatLocked(u),
           onChange: e => toggleRow(u.id, e.target.checked),
         }),
         h('div', { className: 'main' },
           h('div', { className: 'title-line' },
             h('span', { className: 'title' }, u.titleZh || u.name),
-            h(TierBadge, { tier: u.tier, t })),
+            h(TierBadge, { tier: u.tier, t }),
+            h(CompatBadge, { item: u, t })),
           h('div', { className: 'desc' }, u.titleEn || u.name)),
         h('div', { className: 'side' },
           isInstalled

@@ -377,7 +377,7 @@ async function executeJob(job) {
     const persistedAfterRetry = (entry, map) =>
       job.type === 'channel-update' ? map.get(entry.name) === entry.version : map.has(entry.name)
     for (let i = 0; i < results.length; i++) {
-      if (!results[i].ok) continue
+      if (!results[i].ok || results[i].skipped) continue
       const entry = entries[i]
       if (installed.size && persisted(entry)) continue
       emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: 'install did not persist, retrying once' })
@@ -403,6 +403,19 @@ async function executeJob(job) {
     }
   }
   const ok = results.filter((r) => r.ok).length
+  // Ghost sweep: install jobs must never leave undeclared residue behind —
+  // a package directory in <profile>/node_modules that is in no manifest
+  // (dependencies, dsh.profile.bundles, pnpm-lock, listBundles) shadows the
+  // kernel's own copy of the same name (issue #1 defect 2).
+  try {
+    const removed = await sweepGhosts(`post-${job.type}`, job.id)
+    if (removed.length) {
+      emit({ type: 'step-warn', jobId: job.id, id: 'ghost-sweep', message: `removed undeclared node_modules residue: ${removed.join(', ')}` })
+      appendJobLog(job.id, `ghost-sweep removed: ${removed.join(', ')}`)
+    }
+  } catch (err) {
+    trace('ghost-sweep-error', String(err?.stack ?? err))
+  }
   emit({ type: 'job-done', jobId: job.id, jobType: job.type, pack: job.pack, ok, failed: results.length - ok })
   appendJobLog(job.id, `done ok=${ok} failed=${results.length - ok}`)
   state.currentJob = null
@@ -417,6 +430,38 @@ function selectEntries(pack, ids) {
   return list.filter((e) => wanted.has(e.id))
 }
 
+/**
+ * Why an install/update step must not run for this entry, if so.
+ *
+ * - `compat: 'eac-fork'` entries need a service only the EAC fork kernel
+ *   provides (`settingsScope`); on the official kernel the row stays pending
+ *   forever and web boot refuses to start (issue #1 defect 1). `defaultEnabled:
+ *   false` proved not enough — the wizard/enhancement toggles can still flip
+ *   them on, so the installer refuses unless the caller forces it.
+ * - `kernelProvided` entries duplicate a package the kernel ships itself
+ *   (app.asar/dsh/node_modules). Installing the repackaged copy drops files
+ *   into `<profile>/node_modules` that shadow the official one; module
+ *   resolution never falls back through, so kernel rows pointing at a
+ *   subpath the repack lacks (dsh-plugin-manager `./tools`) never start and
+ *   every session fails to resume (issue #1 defect 2).
+ */
+function installSkipReason(entry, job) {
+  if (job?.force === true || job?.type === 'uninstall') return null
+  if (entry.compat === 'eac-fork') {
+    return {
+      reason: 'compat-eac-fork',
+      message: `skipped: ${entry.name} needs the EAC fork kernel (settingsScope service) — enabling it on the official kernel blocks app boot`,
+    }
+  }
+  if (entry.kernelProvided) {
+    return {
+      reason: 'kernel-provided',
+      message: `skipped: ${entry.name} is built into the kernel — installing a repackaged copy would shadow the official one and break session resume`,
+    }
+  }
+  return null
+}
+
 async function runStep(job, entry) {
   const pm = job.pm ?? state.pm
   emit({ type: 'step-start', jobId: job.id, id: entry.id, name: entry.name, version: entry.version })
@@ -424,6 +469,12 @@ async function runStep(job, entry) {
     if (job.type === 'uninstall') {
       await pmCall(pm, 'removeBundle', entry.name)
     } else {
+      const skip = installSkipReason(entry, job)
+      if (skip) {
+        emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: skip.message })
+        appendJobLog(job.id, `skip ${entry.name}: ${skip.reason}`)
+        return { id: entry.id, ok: true, skipped: skip.reason }
+      }
       if (job.type === 'channel-update' && entry.channelItem) {
         emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: `fetching ${entry.channelItem.file} from channel` })
         entry.cacheFile = await downloadItem(entry.channelItem, job.id)
@@ -492,6 +543,160 @@ async function runStep(job, entry) {
 /** Kernel runtime the catalog targets; used as the exemption fallback. */
 const SUITE_RUNTIME = '0.2.0-rc.2'
 
+/**
+ * Remove "ghost" packages from `<profile>/node_modules`: directories (or
+ * links) named after a catalog entry that appear in NO manifest — not in the
+ * profile's package.json dependencies, not in `dsh.profile.bundles`, not in
+ * pnpm-lock.yaml, and not reported by listBundles.
+ *
+ * Such residue is exactly how issue #1 defect 2 poisoned profiles: the
+ * repackaged `@deepseek-ai/dsh-plugin-manager@0.1.0` was left on disk without
+ * any declaration, shadowed the kernel's official package, and broke session
+ * resume profile-wide. Sweeping at boot and after every job makes affected
+ * installs self-heal on the next suite start.
+ */
+async function sweepGhosts(reason = 'boot', jobId = null) {
+  const catalog = state.catalog ?? loadCatalog()
+  const names = new Set()
+  for (const list of [...Object.values(catalog.packs), catalog.retired ?? []]) {
+    for (const entry of list ?? []) {
+      if (entry?.name) names.add(entry.name)
+    }
+  }
+  if (!names.size) return []
+  const profile = path.join(resolveDshHome(), 'profiles', activeProfileName())
+  const nmDir = path.join(profile, 'node_modules')
+  if (!fs.existsSync(nmDir)) return []
+  const pkg = readJson(path.join(profile, 'package.json')) ?? {}
+  const deps = pkg.dependencies ?? {}
+  const bundleList = pkg?.dsh?.profile?.bundles ?? []
+  const declaredBundles = new Set(Array.isArray(bundleList) ? bundleList : [])
+  const lockText = readFileOrNull(path.join(profile, 'pnpm-lock.yaml')) ?? ''
+  let installed = new Set()
+  try {
+    for (const bundle of await pmCall(state.pm, 'listBundles')) {
+      const normalized = normalizeBundle(bundle)
+      if (normalized?.name) installed.add(normalized.name)
+    }
+  } catch {
+    /* listBundles unavailable — manifest guards below still apply */
+  }
+  const removed = []
+  for (const name of names) {
+    const dir = path.join(nmDir, ...name.split('/'))
+    let stat
+    try {
+      stat = fs.lstatSync(dir)
+    } catch {
+      continue
+    }
+    const guards = [
+      [name in deps, 'dependencies'],
+      [declaredBundles.has(name), 'dsh.profile.bundles'],
+      [lockText.includes(`${name}@`), 'pnpm-lock.yaml'],
+      [installed.has(name), 'listBundles'],
+    ].filter(([hit]) => hit)
+    if (guards.length) {
+      trace('ghost-sweep-keep', `${name} declared via ${guards.map(([, via]) => via).join('+')} (${reason})`)
+      continue
+    }
+    try {
+      if (stat.isSymbolicLink() || stat.isFile()) fs.rmSync(dir, { force: true, maxRetries: 5, retryDelay: 200 })
+      else fs.rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 })
+      if (fs.existsSync(dir)) throw new Error('directory still present after removal (file handles held?)')
+      removed.push(name)
+      trace('ghost-sweep-remove', `${name} (${reason}, ${stat.isDirectory() ? 'dir' : 'link'})`)
+      if (jobId) appendJobLog(jobId, `ghost-sweep removed ${name}`)
+    } catch (err) {
+      trace('ghost-sweep-fail', `${name}: ${String(err?.message ?? err)}`)
+    }
+  }
+  return removed
+}
+
+/**
+ * Uninstall any INSTALLED `kernelProvided` entries, however they got there.
+ *
+ * Runs OFFLINE at apply-start — deliberately not waiting for the pluginManager
+ * binding: a present repackaged copy shadows the kernel's own package, which
+ * kills the pluginManager service itself (real-machine finding, issue #1
+ * defect 2), so a pm-dependent cleanup would deadlock on exactly the state it
+ * exists to fix. The profile edit is a plain manifest rewrite; the kernel's
+ * profile watcher reconciles pnpm-lock/node_modules from it. Any still-held
+ * file handles simply fail the rm and retry on the next boot.
+ */
+async function retireKernelProvided(jobId = null) {
+  const catalog = state.catalog ?? loadCatalog()
+  const entries = [...Object.values(catalog.packs).flat(), ...(catalog.retired ?? [])].filter(
+    (e) => e?.kernelProvided,
+  )
+  if (!entries.length) return []
+  const profile = path.join(resolveDshHome(), 'profiles', activeProfileName())
+  const nmDir = path.join(profile, 'node_modules')
+  const pkgFile = path.join(profile, 'package.json')
+  const pkg = readJson(pkgFile)
+  if (!pkg) return []
+  let manifestDirty = false
+  const removed = []
+  for (const entry of entries) {
+    const dir = path.join(nmDir, ...entry.name.split('/'))
+    let stat
+    try {
+      stat = fs.lstatSync(dir)
+    } catch {
+      continue
+    }
+    // Manifest first: drop the dependency and any bundle row, so the kernel's
+    // profile watcher (and every later pnpm run) sees a clean declaration.
+    if (pkg.dependencies && ObjectOwn(pkg.dependencies, entry.name)) {
+      delete pkg.dependencies[entry.name]
+      manifestDirty = true
+    }
+    const bundles = pkg?.dsh?.profile?.bundles
+    if (Array.isArray(bundles) && bundles.includes(entry.name)) {
+      pkg.dsh.profile.bundles = bundles.filter((n) => n !== entry.name)
+      manifestDirty = true
+    }
+    try {
+      if (stat.isSymbolicLink() || stat.isFile()) fs.rmSync(dir, { force: true, maxRetries: 5, retryDelay: 200 })
+      else fs.rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 })
+      if (fs.existsSync(dir)) throw new Error('still present (file handles held?)')
+      removed.push(entry.name)
+      trace('retire-kernel-provided', `${entry.name} (${stat.isDirectory() ? 'dir' : 'link'}, declared=${manifestDirty})`)
+      if (jobId) appendJobLog(jobId, `retire ${entry.name} (kernel-provided)`)
+      emit({
+        type: 'step-warn',
+        jobId: jobId ?? 'retire',
+        id: entry.id,
+        message: `${entry.name} uninstalled: the kernel ships its own official copy (issue #1 defect 2)`,
+      })
+    } catch (err) {
+      trace('retire-kernel-provided-fail', `${entry.name}: ${String(err?.message ?? err)}`)
+    }
+  }
+  if (manifestDirty) {
+    try {
+      fs.writeFileSync(pkgFile, JSON.stringify(pkg, null, 2) + '\n')
+      trace('retire-kernel-provided', 'profile package.json rewritten')
+    } catch (err) {
+      trace('retire-kernel-provided-fail', `manifest rewrite failed: ${String(err?.message ?? err)}`)
+    }
+  }
+  if (removed.length) {
+    try {
+      const leftovers = await sweepGhosts('post-retire', jobId)
+      if (leftovers.length) trace('retire-swept', leftovers.join(', '))
+    } catch {
+      /* best effort */
+    }
+  }
+  return removed
+}
+
+function ObjectOwn(obj, key) {
+  return Object.prototype.hasOwnProperty.call(obj, key)
+}
+
 async function syncEnabled(pm, entry, enabled, jobId = 'n/a') {
   try {
     await pmCall(pm, 'setBundleEnabled', entry.name, enabled)
@@ -531,6 +736,8 @@ async function buildStatus() {
         updateAvailable,
         tier: entry.tier ?? 'core',
         defaultEnabled: entry.defaultEnabled !== false,
+        compat: entry.compat ?? null,
+        kernelProvided: Boolean(entry.kernelProvided),
         titleZh: entry.titleZh ?? entry.name,
         titleEn: entry.titleEn ?? entry.name,
         descZh: entry.descZh ?? '',
@@ -788,6 +995,9 @@ async function buildChannelStatus() {
       return { item, cat, inst: installedMap.get(item.name) }
     })
     .filter(({ item, cat, inst }) => {
+      // compat/kernelProvided entries never update via the channel — install
+      // steps skip them, so listing them as updatable would only mislead.
+      if (cat?.compat || cat?.kernelProvided) return false
       const reference = inst?.version ?? cat?.version ?? null
       return reference ? cmpVersions(item.version, reference) > 0 : false
     })
@@ -799,6 +1009,8 @@ async function buildChannelStatus() {
       tier: cat?.tier ?? 'visual',
       packs: item.packs ?? cat?.packs ?? [],
       installed: Boolean(inst),
+      compat: cat?.compat ?? null,
+      kernelProvided: Boolean(cat?.kernelProvided),
       titleZh: cat?.titleZh ?? item.name,
       titleEn: cat?.titleEn ?? item.name,
     }))
@@ -976,7 +1188,7 @@ function createApiHandler(ctx) {
       if (method === 'POST') {
         const body = await readBody(req)
         if (routePath === '/install') {
-          const job = { id: `job-${Date.now()}`, type: 'install', pm: state.pm, pack: body.pack ?? null, ids: body.ids ?? null, setEnabled: body.setEnabled !== false }
+          const job = { id: `job-${Date.now()}`, type: 'install', pm: state.pm, pack: body.pack ?? null, ids: body.ids ?? null, setEnabled: body.setEnabled !== false, force: body.force === true }
           if (!job.pack && !job.ids?.length) return json(res, 400, { error: 'pack or ids required' })
           enqueue(job)
           return json(res, 202, { jobId: job.id, poll: '/api/plugin-suite/events', note: 'a profile snapshot is taken automatically when the job starts' })
@@ -997,6 +1209,21 @@ function createApiHandler(ctx) {
           const all = [...catalog.packs.eac, ...catalog.packs.aio, ...catalog.packs.skins]
           const entry = all.find((e) => e.id === body.id || e.name === body.id)
           if (!entry) return json(res, 404, { error: 'unknown id' })
+          // Enable-time guard (issue #1): install-time skips are not enough —
+          // the kernel's own plugin page can still flip these on. The suite at
+          // least refuses to be the one that bricks the app.
+          if (entry.compat === 'eac-fork' && body.force !== true) {
+            return json(res, 409, {
+              error: `${entry.name} requires the EAC fork kernel (service settingsScope) — enabling it on the official kernel blocks app boot (issue #1 defect 1)`,
+              compat: 'eac-fork',
+            })
+          }
+          if (entry.kernelProvided && body.force !== true) {
+            return json(res, 409, {
+              error: `${entry.name} is built into the kernel — enabling a repackaged copy shadows the official one and breaks session resume (issue #1 defect 2); uninstall it instead`,
+              kernelProvided: true,
+            })
+          }
           await syncEnabled(state.pm, entry, body.enabled !== false)
           return json(res, 200, { ok: true })
         }
@@ -1088,6 +1315,22 @@ export function apply(ctx, config) {
     state.channelCfg = loadChannelConfig()
     rescheduleAutoCheck()
 
+    // Boot self-heal runs BEFORE any service dependency: a plugin-manager
+    // ghost in <profile>/node_modules blocks the pluginManager service itself
+    // from ever being delivered (issue #1 defect 2, real-machine finding), so
+    // waiting for that binding would deadlock the cleanup. The manifest
+    // guards (dependencies / dsh.profile.bundles / pnpm-lock) need no kernel.
+    sweepGhosts('boot')
+      .then((removed) => {
+        if (removed.length) logger.info?.(`[plugin-suite] ghost sweep removed: ${removed.join(', ')}`)
+      })
+      .catch((err) => trace('ghost-sweep-boot-error', String(err?.stack ?? err)))
+    retireKernelProvided('boot')
+      .then((removed) => {
+        if (removed.length) logger.info?.(`[plugin-suite] retired kernel-provided duplicates: ${removed.join(', ')}`)
+      })
+      .catch((err) => trace('retire-boot-error', String(err?.stack ?? err)))
+
     const counts = Object.entries(state.catalog.packs)
       .map(([pack, list]) => `${pack}=${list.length}`)
       .join(' ')
@@ -1099,6 +1342,16 @@ export function apply(ctx, config) {
       state.pm = scoped.pluginManager
       trace('pluginManager', state.pm ? 'resolved' : 'null')
       logger.info?.('[plugin-suite] pluginManager service bound')
+      // pm is bound: run a second sweep pass that also honors the listBundles
+      // guard. The retire of kernel-provided duplicates already ran offline at
+      // apply-start (it must not wait for this binding — see its doc).
+      if (state.pm) {
+        sweepGhosts('boot-pm')
+          .then((removed) => {
+            if (removed.length) logger.info?.(`[plugin-suite] ghost sweep (pm pass) removed: ${removed.join(', ')}`)
+          })
+          .catch(() => { /* trace already recorded inside */ })
+      }
     })
 
     // webServer is optional: without it the settings tab has no data source,
@@ -1143,4 +1396,7 @@ export const __test = {
   assetUrl,
   loadGallery,
   loadPrompt,
+  sweepGhosts,
+  retireKernelProvided,
+  installSkipReason,
 }

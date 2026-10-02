@@ -1,9 +1,9 @@
 {
-  "channelVersion": 12,
-  "suiteVersion": "0.2.0",
-  "generatedAt": "2026-10-01T14:00:01.100Z",
-  "notesZh": "v0.2.0「完全体」首版在线渠道：全量 74 个插件离线 tgz + 在线更新通道。\n新增 6 套社区皮肤（deep-whale-manager / maid-atelier / orca-link / liang / deep-whale-day-night / endfield），内置 9 套皮肤升级皮肤馆（预览图 + Prompt 创作包）。\n注意：client-ui 皮肤之间互斥，请勿叠装；已装 @linxin666/dsh-web-all 的环境请使用其皮肤中心适配版。",
-  "notesEn": "First online channel of v0.2.0 \"Complete Edition\": 74 offline plugin tarballs + online update pipeline.\nAdds 6 community skins (deep-whale-manager / maid-atelier / orca-link / liang / deep-whale-day-night / endfield) and the skin gallery for the 9 built-in skins (previews + prompt packs).\nNote: client-ui skins are mutually exclusive — do not stack them. On hosts with @linxin666/dsh-web-all installed, use its skin-center adapter build.",
+  "channelVersion": 13,
+  "suiteVersion": "0.2.1",
+  "generatedAt": "2026-10-02T03:25:57.289Z",
+  "notesZh": "v0.2.1（issue #1 修复版）：修复官方内核上 2 处致命与 2 处一般缺陷。\n致命1：easy-setup / side-session / client-ui-custom（需 EAC 分叉版 settingsScope 服务）安装被跳过、启用被拒绝，UI 红徽章「仅 EAC 内核」锁定；即使被手工加回 bundles 也不再阻塞启动（重打包内含 disabled 硬钉）。\n致命2：内核自带包（dsh-plugin-manager / dsh-terminal 0.2.0-rc.2）不再被重打包副本遮蔽：安装跳过 + 启动自动清扫幽灵残留 + 已声明副本自动退役；重打包 plugin-manager 补 ./tools exports 兜底。受影响机器升级后首次启动即自愈。\n缺陷3：dsh-compact 1.0.1 修复补丁形态（insert 双行：主行 + agent 引擎行），请求路径自动压缩真正挂载。\n注意：dsh-compact 的 status/compact-now 端点与设置卡片依赖 EAC 分叉版服务，官方内核上不可用（无害）；skin-switch remote face 为上游已知问题。",
+  "notesEn": "v0.2.1 (issue #1 fixes): repairs 2 fatal and 2 moderate defects on the official kernel.\nFatal 1: easy-setup / side-session / client-ui-custom (EAC-fork-only settingsScope) are skipped at install and refused at enable, with a locked \"EAC fork only\" badge; hand-adding them back to bundles can no longer block boot (hard-disabled rows in the repacks).\nFatal 2: kernel-built-in packages (dsh-plugin-manager / dsh-terminal, 0.2.0-rc.2) are no longer shadowed: install skips, boot-time ghost sweep, offline retire of declared copies, and ./tools exports on the repack. Affected hosts self-heal on the first start after upgrading.\nDefect 3: dsh-compact 1.0.1 fixes the patch form (two insert rows: main + agent engine), so request-path compaction actually mounts.\nNote: dsh-compact status/compact-now endpoints and its settings card need EAC-fork services and stay unavailable (harmless) on the official kernel; skin-switch remote face mount remains a known upstream issue.",
   "items": [
     {
       "id": "balance",
@@ -50,8 +50,8 @@
         "eac"
       ],
       "file": "@deepseek-ai_dsh-easy-setup-0.1.0.tgz",
-      "sha256": "39dbb6f85fee3b5ff4635b86ab635a44abf8c7036badaf5d625597044b572ca5",
-      "bytes": 17216,
+      "sha256": "991bde7b0ed52f1f0302574035153c41a67a33043a347ed222be542064efc82e",
+      "bytes": 17495,
       "source": "eac-tag"
     },
     {
@@ -99,8 +99,8 @@
         "eac"
       ],
       "file": "@deepseek-ai_dsh-plugin-manager-0.1.0.tgz",
-      "sha256": "17cd77ed71bcd0454e4d8b90e6abd8b77f49b9a579b2fd92a3e83bcc51a68992",
-      "bytes": 7863,
+      "sha256": "92b4da4ce87b01ab67638f0c187f032f570a811a7a8bcf402be5b814c3794c74",
+      "bytes": 7870,
       "source": "eac-tag"
     },
     {
@@ -160,8 +160,8 @@
         "eac"
       ],
       "file": "@dsh-external_dsh-side-session-0.2.8.tgz",
-      "sha256": "686b61c7f332e3d9ef140f533917c369c9b1bfbd28ae05396a421810e40f8840",
-      "bytes": 37444,
+      "sha256": "3fc8badb3752405d38510b071faf40231c071ea2b8fc13a639e477c50f131d7e",
+      "bytes": 37604,
       "source": "eac-tag"
     },
     {
@@ -432,13 +432,13 @@
     {
       "id": "compact",
       "name": "dsh-compact",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "packs": [
         "eac"
       ],
-      "file": "dsh-compact-1.0.0.tgz",
-      "sha256": "5b686127ec36e2c8754162656973a52483516c6daf91573f6ef20429b9fddb86",
-      "bytes": 14638,
+      "file": "dsh-compact-1.0.1.tgz",
+      "sha256": "d08df7a3cf88dadf08069a6f021a36665ae7540a04e8cab4dfd16cfd3d0ea553",
+      "bytes": 14663,
       "source": "eac-tag"
     },
     {
@@ -879,9 +879,9 @@
     }
   ],
   "suite": {
-    "version": "0.2.0",
-    "file": "dsh-plugin-suite-0.2.0.tgz",
-    "sha256": "452ec8a698318ae64e9fe51597bccb997b3a6ae7375d7f1eabaf90431feec5b6",
-    "bytes": 334183639
+    "version": "0.2.1",
+    "file": "dsh-plugin-suite-0.2.1.tgz",
+    "sha256": "d8a6f0a8cf9777961f29af6dfb780011d5c90481cc79e52a2973d31ea8553c2f",
+    "bytes": 334188521
   }
 }

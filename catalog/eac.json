@@ -68,13 +68,14 @@
     ],
     "tier": "core",
     "defaultEnabled": false,
+    "kernelProvided": true,
     "titleZh": "会话内终端",
     "titleEn": "In-session Terminal",
     "descZh": "与对话/轨迹/文件并列的会话内交互式命令行（SSE 流式，非 PTY）。",
     "descEn": "In-session interactive terminal alongside chat/trajectory/files (SSE streaming, not PTY).",
     "license": "MIT",
     "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC (tag v5.3.6)",
-    "notes": "RC2 内核已内置官方 dsh-terminal（比 EAC 0.1.0 新），整合包跳过重复安装。"
+    "notes": "RC2 内核已内置官方 dsh-terminal 0.2.0-rc.2（比 EAC 0.1.0 新）。整合包安装时自动跳过（kernelProvided）：重打包副本会遮蔽内核官方包（issue #1 缺陷2）。"
   },
   {
     "id": "plugin-manager",
@@ -88,13 +89,14 @@
     ],
     "tier": "core",
     "defaultEnabled": false,
+    "kernelProvided": true,
     "titleZh": "插件启停管理",
     "titleEn": "Plugin Manager",
     "descZh": "设置页「插件」栏：列出全部内置插件及其作用，配套插件可一键关闭（写 cordis.patch.yml disabled 条目，重启生效）。",
     "descEn": "Settings plugins tab: list all bundled plugins and toggle companion plugins off via cordis.patch.yml disabled rows.",
     "license": "MIT",
     "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC (tag v5.3.6)",
-    "notes": "RC2 内核已内置官方 dsh-plugin-manager（npm 0.1.6-alpha.2），整合包跳过重复安装。"
+    "notes": "RC2 内核已内置官方 dsh-plugin-manager 0.2.0-rc.2（此前 notes 误记 npm 0.1.6-alpha.2）。整合包安装时自动跳过（kernelProvided）；重打包 0.1.0 的 exports 缺 ./tools，一旦残留会遮蔽官方包导致全部会话无法恢复（issue #1 缺陷2，0.2.1 起加 ghost sweep 自愈 + ./tools 纵深修复）。"
   },
   {
     "id": "float-window",
@@ -203,13 +205,14 @@
     ],
     "tier": "core",
     "defaultEnabled": false,
+    "compat": "eac-fork",
     "titleZh": "快速配置向导",
     "titleEn": "Easy Setup",
     "descZh": "设置页快速配置：视觉模型提供商/模型一键选择、soul.md 人设可视化编辑、从 Codex/Claude Code 一键迁移 skills+MCP+记忆。",
     "descEn": "Quick setup: one-click vision provider/model pick, visual soul.md editor, one-click migration of skills+MCP+memory from Codex/Claude Code.",
     "license": "MIT",
     "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC (tag v5.3.6)",
-    "notes": "D8 实测：依赖 EAC 分叉版专有服务 settingsScope，官方 RC2 不提供，启用会阻塞 web boot（应用拒绝启动）。默认关闭。"
+    "notes": "D8 实测：依赖 EAC 分叉版专有服务 settingsScope，官方 RC2 不提供，启用会阻塞 web boot（应用拒绝启动）。0.2.1 起整合包直接拦截其安装与启用（compat=eac-fork，issue #1 缺陷1）；重打包内含 disabled:true 硬钉补丁，即使被手工加回 dsh.profile.bundles 也不会阻塞启动。如确需在 EAC 内核使用，走 /install、/enable 的 force 参数。"
   },
   {
     "id": "eac-locale-compat",
@@ -481,9 +484,9 @@
   {
     "id": "compact",
     "name": "dsh-compact",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "source": "eac-tag",
-    "spec": "file:dist/dsh-compact-1.0.0.tgz",
+    "spec": "file:dist/dsh-compact-1.0.1.tgz",
     "packs": [
       "eac"
     ],
@@ -495,7 +498,7 @@
     "descEn": "Request-path context compaction with bounded overflow recovery using the native compaction engine.",
     "license": "MIT",
     "upstream": "https://github.com/zixin947/dsh-compact",
-    "notes": "锁定 EAC 随包 1.0.0；npm 同名包仅 0.1.0（非同一版本线），不可混用。"
+    "notes": "请求路径自动压缩（默认启用，阈值 0.75）。0.2.1 重打包修复（issue #1 缺陷3）：上游 cordis.patch.yml 为裸 id 定向形态（entry compact not found，静默不挂载），改为 insert 双行自挂载（compact 主行 + compact-agent 引擎行）；status/compact-now 端点与设置卡片依赖 EAC 分叉版 agentPresets/settingsScope，官方 RC2 上不可用（无害），压缩功能本身只依赖 llm/tokenMeter/sessions。版本 +0.0.1 以触达已装用户。"
   },
   {
     "id": "plugin-shield",
@@ -585,13 +588,14 @@
     ],
     "tier": "visual",
     "defaultEnabled": false,
+    "compat": "eac-fork",
     "titleZh": "侧边临时会话",
     "titleEn": "Side Session",
     "descZh": "独立悬浮窗临时追问：自动导入当前主对话上下文，不污染主会话（Ctrl+Shift+S），多种回答引擎。",
     "descEn": "Floating side-session panel that imports current conversation context for throwaway follow-ups without polluting the main session.",
     "license": "MIT",
     "upstream": "https://github.com/myYangyunfan/dsh_desktop",
-    "notes": "D8 实测：同 easy-setup，等待 settingsScope 服务，官方 RC2 上阻塞 web boot。默认关闭。"
+    "notes": "D8 实测：同 easy-setup，等待 settingsScope 服务，官方 RC2 上阻塞 web boot。0.2.1 起整合包直接拦截其安装与启用（compat=eac-fork，issue #1 缺陷1）；其 bundle 补丁已固定 disabled:true，即使被手工加回 dsh.profile.bundles 也不会阻塞启动。如确需在 EAC 内核使用，走 /install、/enable 的 force 参数。"
   },
   {
     "id": "phone",
