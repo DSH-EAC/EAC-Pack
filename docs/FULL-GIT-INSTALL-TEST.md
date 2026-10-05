@@ -45,7 +45,7 @@ Release 全量 tarball 另经 pnpm --offline --ignore-scripts 安装；安装后
 
 这是全部基线资源可用与安装管理主路径验收，不是所有 72 个第三方插件逐个启用或所有功能运行的证明。EAC-only、kernelProvided 和皮肤互斥守卫保留。第三方传递依赖仍由宿主解析，可能需要网络；baselineFetches=0 不代表整个第三方依赖图均离线。在线 channel 更新仍是独立能力，不是启用后补齐基线。
 
-旧机制报告继续保留为历史证据，不应与此次全量生产资源验收混淆。用户并行文档 docs/EAC-SKIN-LOADER-GOAL-PLAN.md 未修改。
+旧机制报告继续保留为历史证据，不应与此次全量生产资源验收混淆。
 
 ## 可复核证据
 

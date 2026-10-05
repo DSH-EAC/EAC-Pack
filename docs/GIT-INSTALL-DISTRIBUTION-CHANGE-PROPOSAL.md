@@ -179,7 +179,7 @@ Git 内保留固定 bootstrap 清单，绑定资源包名称、精确版本、sc
 | `suite/test/*` | 更新直接内置假设；覆盖依赖解析、清单一致、失败闭合、两个入口及完整 Release |
 | `.gitignore`、`.gitattributes` | staging/build 产物排除；确定历史方案后停止跟踪重资源，不直接执行历史重写 |
 
-**不修改**用户并行文档 `EAC-SKIN-LOADER-GOAL-PLAN.md`；不顺便变更渠道更新策略、Host 安装器权限或第三方插件代码。
+不顺便变更渠道更新策略、Host 安装器权限或第三方插件代码。
 
 ### 6.1 特别注意 Git 打包阶段
 

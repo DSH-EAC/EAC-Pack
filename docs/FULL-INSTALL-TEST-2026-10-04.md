@@ -48,6 +48,6 @@
 - `G:\Code\fork\EAC-Pack\.cache\full-desktop\home\eac-plugin-suite\events.jsonl`
 - `G:\Code\fork\EAC-Pack\.cache\direct-full-fixture\`：直接内置测试夹具。
 
-旧 full-install-fixture 是已撤回的 file: 资源依赖测试，不作为最终方案的证据。原轻量补齐报告也仅作历史记录。用户的 EAC-SKIN-LOADER-GOAL-PLAN.md 未修改。
+旧 full-install-fixture 是已撤回的 file: 资源依赖测试，不作为最终方案的证据。原轻量补齐报告也仅作历史记录。
 
 测试结束关闭任务隔离 Desktop，保留夹具、缓存和证据。未提交、推送、发布，未降低 pnpm 安全策略。

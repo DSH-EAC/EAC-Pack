@@ -28,7 +28,7 @@
 
 - 3f4e1b9：级联实现，包含改名、双入口、资源解析/完整性、构建与测试。
 - 9d7e64f：实施建议和完整验收记录。
-- 本交接提交及用户要求追加的两份文档随后提交；接手后以 `git log -5 --oneline` 获取最终交接 HEAD，不用以上旧 HEAD 安装来替代最终版本。
+- 本交接提交及用户要求追加的修改报告随后提交；接手后以 `git log -5 --oneline` 获取最终交接 HEAD，不用以上旧 HEAD 安装来替代最终版本。
 
 已核对的旧远端基线：15672c64bf02f9a4b4464e2bb57fb7931a968e0b。main 从该基线重组未推送提交，是 fast-forward，不包含 912edd5 的 302 MB payload 提交祖先。原提交仅在本地 backup/pre-cascade-20261005，**禁止 push --all 或推送此备份 ref**。
 
@@ -156,11 +156,10 @@ node scripts/pack-delivery.mjs
 - 本文是当前交接状态；CASCADE-INSTALL-TEST-2026-10-05.md 是级联验收记录。
 - GIT-INSTALL-DISTRIBUTION-CHANGE-PROPOSAL.md 保存对话演变、架构选择与完整实施方案，部分矩阵仍是计划而不是已通过的验收。
 - EAC-PLUGIN-SUITE-MODIFICATION-REPORT.md 是用户要求一并提交的 **0.2.2 直接内置方案历史报告**，正文保留原样，不代表0.2.3还把payload放Git。
-- EAC-SKIN-LOADER-GOAL-PLAN.md 是用户要求一并提交的 **另一仓库 EAC-skin-loader 的计划**，不是本任务的实施范围，不在 EAC-Pack 中执行它。
 - FULL-GIT-INSTALL-TEST.md 等历史报告保留原版本与历史边界，不可借其结论替代当前生产 registry 验收。
 
 ## 8. 交接完成与原目标完成不是一回事
 
-本轮目标是将现有源码、两份用户文档和可操作 Handoff 提交到远端，供其他人继续。远端推送以 ls-remote 与本地 main 相同为准；不因 Writing objects 完成就判定成功。
+本轮目标是将现有源码、用户修改报告和可操作 Handoff 提交到远端，供其他人继续。远端推送以 ls-remote 与本地 main 相同为准；不因 Writing objects 完成就判定成功。
 
 原目标仍未完全达成：正式 Git 全功能安装依赖生产资源发布。接手者必须完成生产发布/校验并取得相应验收证据后，才能宣布正式交付完成。若移交资源 tgz 没有到位，首先向主人取得第5节产物，不要重新从缺资源的 Git checkout 猜测或编造产物。
