@@ -62,11 +62,11 @@ Done in 727ms    EXIT=0
 - peer 预检：无警告（该包无 peer）。
 - 关键情报：`dsh plugin add` 读取包内 `package.json` 的 **`dsh.bundle` 字段**判定层级——有 `dsh.bundle.patch`（如 whale-widget、our-free-model）→ 自动写入 `dsh.profile.bundles`；无（如 viewport-lock 仅有 `dsh.client`）→ 普通依赖 + warning。Host 生成 profile 时对 bundle 型插件可依赖该自动化，patch 型（非 bundle）插件需自行写 cordis.patch.yml 行。
 
-### ③ git 类：`add git+https://github.com/zouyuxuan122/dsh-our-free-model.git`
+### ③ git 类：`add git+https://github.com/Ebony-Vinyl/dsh-our-free-model.git`
 
 ```
 dependencies:
-+ dsh-our-free-model git+https://github.com/zouyuxuan122/dsh-our-free-model.git
++ dsh-our-free-model git+https://github.com/Ebony-Vinyl/dsh-our-free-model.git
 Packages: +1 ... Done in 7.2s    EXIT=0
 ```
 
@@ -78,7 +78,7 @@ Packages: +1 ... Done in 7.2s    EXIT=0
 ```json
 {
   "dependencies": {
-    "dsh-our-free-model": "git+https://github.com/zouyuxuan122/dsh-our-free-model.git",
+    "dsh-our-free-model": "git+https://github.com/Ebony-Vinyl/dsh-our-free-model.git",
     "dsh-viewport-lock": "file:D:/丰富履历专用文件夹/插件包/dist/dsh-viewport-lock-1.0.1.tgz",
     "dsh-whale-widget": "0.2.10"
   },
@@ -108,7 +108,7 @@ node scripts/repack/verify.mjs      # 产物校验（当前 PASS）
 # 冒烟（隔离 profile，勿用 desktop）：
 dsh plugin --profile suite-smoke add dsh-whale-widget@0.2.10
 dsh plugin --profile suite-smoke add <整合包根>/dist/dsh-viewport-lock-1.0.1.tgz
-dsh plugin --profile suite-smoke add git+https://github.com/zouyuxuan122/dsh-our-free-model.git
+dsh plugin --profile suite-smoke add git+https://github.com/Ebony-Vinyl/dsh-our-free-model.git
 ```
 
 ## 5. 遗留问题

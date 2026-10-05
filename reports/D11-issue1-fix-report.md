@@ -1,6 +1,6 @@
 # D11 — issue #1 修复报告（dsh-plugin-suite 0.2.1 / channel v13）
 
-> 对应 issue：[#1 官方内核 0.2.0-rc.2 上共 4 处问题：2 处致命（应用无法启动 / 全部会话无法恢复）](https://github.com/zouyuxuan122/EAC-Plugin-Integration-Pack/issues/1)
+> 对应 issue：[#1 官方内核 0.2.0-rc.2 上共 4 处问题：2 处致命（应用无法启动 / 全部会话无法恢复）](https://github.com/Ebony-Vinyl/EAC-Plugin-Integration-Pack/issues/1)
 > 日期：2026-10-02 · 全部修复在官方 0.2.0-rc.2 真机（DSH_HOME=`~/.dsh`，desktop profile）逐项验证。
 
 ## 修复总览
