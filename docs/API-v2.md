@@ -28,7 +28,7 @@
   ],
   "suite": {
     "version": "0.2.0",
-    "file": "dsh-plugin-suite-0.2.0.tgz",
+    "file": "eac-plugin-suite-0.2.0.tgz",
     "sha256": "<64hex>",
     "bytes": 123456
   }
@@ -37,12 +37,12 @@
 
 - `items` = `dist/index.json` 条目超集（同字段，不减少），可附加字段但不得改名。
 - `file` 仅文件名；下载 URL 模板：
-  - 直连：`https://github.com/zouyuxuan122/EAC-Plugin-Integration-Pack/releases/download/channel/<file>`
-  - 镜像：`<mirror>/https://github.com/zouyuxuan122/EAC-Plugin-Integration-Pack/releases/download/channel/<file>`（mirror 为用户配置的 gh-proxy 风格前缀，可带或不带尾斜杠）
+  - 直连：`https://github.com/DSH-EAC/EAC-Pack/releases/download/channel/<file>`
+  - 镜像：`<mirror>/https://github.com/DSH-EAC/EAC-Pack/releases/download/channel/<file>`（mirror 为用户配置的 gh-proxy 风格前缀，可带或不带尾斜杠）
 - 渠道索引 URL 探测顺序（首个成功者生效）：
-  1. `https://cdn.jsdelivr.net/gh/zouyuxuan122/EAC-Plugin-Integration-Pack@main/channel/channel.json`
-  2. `https://raw.githubusercontent.com/zouyuxuan122/EAC-Plugin-Integration-Pack/main/channel/channel.json`
-  3. 若配置了 mirror：`<mirror>/https://raw.githubusercontent.com/zouyuxuan122/EAC-Plugin-Integration-Pack/main/channel/channel.json`
+  1. `https://cdn.jsdelivr.net/gh/DSH-EAC/EAC-Pack@main/channel/channel.json`
+  2. `https://raw.githubusercontent.com/DSH-EAC/EAC-Pack/main/channel/channel.json`
+  3. 若配置了 mirror：`<mirror>/https://raw.githubusercontent.com/DSH-EAC/EAC-Pack/main/channel/channel.json`
 
 ## 2. 皮肤馆 gallery.json（随包 `suite/assets/gallery.json`，sync-assets 生成）
 
@@ -73,10 +73,10 @@
 
 - `origin`: `"builtin"`（10 内置）| `"community"`（6 社区）。
 - `previews.*` / `prompt` 为**相对 suite 包根**路径；缺失则该键为 `null`（前端必须容错渲染占位图）。
-- `previews.*` 相对键不带 `assets/` 前缀（前端拼 `/api/plugin-suite/asset/<路径>`）。
+- `previews.*` 相对键不带 `assets/` 前缀（前端拼 `/api/eac-plugin-suite/asset/<路径>`）。
 - `mutex*`：互斥/注意事项文案（如 maid-atelier 与 manager 互斥），无则 null。
 
-## 3. 本地配置 `~/.dsh/plugin-suite/config.json`
+## 3. 本地配置 `~/.dsh/eac-plugin-suite/config.json`
 
 ```json
 {
@@ -92,7 +92,7 @@
 
 宿主启动若无配置文件则用默认值创建。`channelState`: `online | offline | checking | never`。
 
-## 4. HTTP API（全部挂 `/api/plugin-suite`，与 v1 共存）
+## 4. HTTP API（全部挂 `/api/eac-plugin-suite`，与 v1 共存）
 
 ### 渠道
 
@@ -120,7 +120,7 @@
   "updates": [
     { "id": "miku", "name": "@linxin666/dsh-client-ui-skin-miku", "installedVersion": "0.1.11", "channelVersion": "0.2.0", "tier": "visual", "packs": ["skins"], "installed": true, "titleZh": "…", "titleEn": "…" }
   ],
-  "suiteUpdate": { "version": "0.2.1", "file": "dsh-plugin-suite-0.2.1.tgz", "sha256": "…", "downloadUrl": "…" },
+  "suiteUpdate": { "version": "0.2.1", "file": "eac-plugin-suite-0.2.1.tgz", "sha256": "…", "downloadUrl": "…" },
   "error": null
 }
 ```
@@ -141,7 +141,7 @@
 
 - 所有响应 `application/json; charset=utf-8`（PNG 除外）；错误统一 `{ error: "<message>" }` + 合适状态码。
 - `/channel/apply` 的 job：每条目 = 下载（如需）→ sha256 → `installBundle(file:<cache 路径>)`；事件走现有 `step-*`；新增事件见 §6。
-- 下载缓存目录：`~/.dsh/plugin-suite/cache/`；同名文件已存在且 sha256 匹配则跳过下载。
+- 下载缓存目录：`~/.dsh/eac-plugin-suite/cache/`；同名文件已存在且 sha256 匹配则跳过下载。
 
 ## 5. 宿主 updater 行为
 
@@ -176,3 +176,21 @@
 | 前端线 B | `suite/client.js`、`suite/dev/**`、`suite/locale/*.json` | index.js、catalog/、scripts/、assets/（mock 预览图放 dev/ 内） |
 
 集成期（M5）由主线统一跑 sync-assets / npm pack / verify。
+
+## 完整安装资源校验（eac-plugin-suite 0.2.2）
+
+API 前缀 /api/eac-plugin-suite。GET /status 的 resources 以及 SSE type: resources 事件报告本地资源校验状态：
+
+```json
+{"state":"checking","mode":"installed","resourceVersion":"0.2.2","total":72,"completed":18,"totalBytes":302031150,"completedBytes":50000000,"receivedBytes":50000000,"active":[],"error":null}
+```
+
+状态为 idle | checking | ready | failed | cancelled；没有 downloading。completed 只计校验通过的本地文件，receivedBytes 为兼容显示字段，等于 completedBytes，并非网络下载流量；active 恒为空。
+
+POST /resources/retry 仅启动/复用本地重新校验，返回 202；服务未初始化为 409。不下载、不修复文件。缺失或损坏请重新安装完整包。
+
+普通安装只接受随包固定的版本、大小、摘要；大文件用随包分块本地拼接，并检查完整摘要，安装前重新校验并保存至持久化目录。不得用旧缓存遮蔽本次安装缺失，或者降级到上游/latest。禁用插件中止校验。在线渠道下载更新行为不变。
+
+## 0.2.3 资源位置变更说明（2026-10-05）
+
+现有 `/api/eac-plugin-suite` API 路径与字段不变，resources.mode 仍为 installed：表示本地资源已由安装事务提供，不表示资源物理位于 Git 入口中。Git 使用精确必选 registry 资源依赖，完整 Release 内置同一依赖；启动和 retry 均只进行本地校验。gallery、preview 与 Prompt 在返回前校验固定摘要，preview 保持 `/asset/previews/<id>/<light|dark>.png` 路径。发布状态与本轮验收见 `CASCADE-INSTALL-TEST-2026-10-05.md`。

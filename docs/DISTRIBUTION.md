@@ -188,3 +188,23 @@ node scripts/repack/repack.mjs --only viewport-lock
 ```
 
 产物：`dist/<name>_<version>.tgz` + `dist/SHA256SUMS`（`sha256sum -c` 兼容）+ `dist/index.json`（数组：id/name/version/packs/file/sha256/bytes/source）。
+
+## 8. eac-plugin-suite 安装即完整（0.2.2，未发布）
+
+不在启用后下载基线。Git 和单文件 Release 直接携带相同 suite/assets/payload 资源；无运行时依赖、安装时下载脚本或 LFS 指针；prepack 只执行本地完整性门禁。pnpm 11 默认阻止 tarball URL 子依赖，本方案不关闭此安全策略。
+
+每个大资源按 40 MiB 分块，manifest 固定分块与完整文件大小/摘要。启用后验证本地分块并拼接大文件至 DSH_HOME 持久化缓存；没有 downloading 状态，不会从旧缓存遮蔽缺失的随包文件。子插件安装前重新检查本地资源，避免 file: 依赖随整合包卸载失效。
+
+构建顺序：repack → ensure-bundles → verify → suite sync（生成完整分块 payload）→ build-resources --verify → 双入口安装验收。payload 必须提交实际文件，dist/staging 不提交。完整资源尚未生成前不得宣称交付完成。
+
+Git 仓库体积约增加整套资源字节量；更新二进制也增加历史体积。拆分只解决单文件大小，不减少下载量。完整资源不豁免宿主兼容性守卫，不证明传递依赖全离线可用。
+
+发布/推送单独授权。历史轻量补齐验收及已撤回的资源依赖夹具不构成本方案全量通过证据。
+
+本地全量验收已通过：72 项 / 77 个实际随包文件，Git 与 Release 资源摘要一致，官方 Desktop 本地真实 Git 安装及四个子插件安装成功。详见 `FULL-GIT-INSTALL-TEST.md`；本次通过 Git 交付完整资源，远端安装由用户另行手动验收；不创建 Release。
+
+## 0.2.3 安装阶段资源依赖（2026-10-05）
+
+目录中的 `file:dist/...` 是固定基线的逻辑键，不要求 dist 随入口存在。Git 入口通过必选、精确版本 `eac-plugin-suite-assets@0.2.3` 级联安装纯数据包；Host 按包 metadata 正常解析依赖，在摘要校验后使用资源包内 payload，并持久化子插件 tarball。完整 Release 用 npm `bundleDependencies` 内置同一依赖。
+
+payload、preview、Prompt 与 gallery 不再进入主 Git；`.cache/resource-package/package/` 是生成 staging，不是已发布生产 registry 的证明。启用不下载基线；缺依赖、错版本与损坏明确失败。0.2.2 的直接内置方案与更早补下载方案仅保留为历史证据。当前验收与发布阻塞见 `CASCADE-INSTALL-TEST-2026-10-05.md`。
