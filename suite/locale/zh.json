@@ -1,10 +1,10 @@
 {
   "meta": {
-    "title": "DSH 插件整合包",
+    "title": "eac-plugin-suite · 插件整合包",
     "description": "一键安装与更新 EAC / AIO 全量插件整合包，附皮肤馆与在线渠道"
   },
   "tab": "整合包",
-  "subtitle": "EAC / AIO 全量插件整合包 · 离线一键安装 · 在线渠道更新",
+  "subtitle": "EAC / AIO 插件整合包 · 安装阶段级联取得完整资源 · 本地校验",
   "refresh": "刷新",
   "refreshTip": "重新读取整合包状态",
   "loading": "正在读取整合包目录…",
@@ -13,7 +13,7 @@
   "retry": "重试",
   "emptyCatalog": "整合包目录为空：请使用随包发布的完整版本。",
   "empty.title": "这个包暂无可安装的插件",
-  "empty.hint": "目录为空通常意味着使用的是精简构建：请换用随包发布的完整版本。",
+  "empty.hint": "目录缺失，请重新安装 eac-plugin-suite。",
   "nav.overview": "概览",
   "nav.gallery": "皮肤馆",
   "nav.plugins": "插件管理",
@@ -131,5 +131,13 @@
   "noSelection": "请先勾选要处理的插件",
   "needRestart": "版本替换需重启应用后完全生效",
   "gallery.compat": "RC2 适配状态（真机实测）",
-  "gallery.unsafe": "RC2 崩溃"
+  "gallery.unsafe": "RC2 崩溃",
+  "resources.title": "完整安装资产",
+  "resources.checking": "正在校验本地资产…",
+  "resources.ready": "完整资产已就绪",
+  "resources.failed": "本地资产校验失败",
+  "resources.cancelled": "本地校验已停止",
+  "resources.idle": "等待本地校验",
+  "resources.hint": "完整资产由安装阶段的必选资源依赖提供。缺失或损坏请重新安装整合包及依赖；不会自动启用插件。",
+  "resources.retry": "重新校验"
 }

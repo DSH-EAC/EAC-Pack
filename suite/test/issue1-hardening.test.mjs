@@ -1,3 +1,4 @@
+process.env.DSH_SUITE_NO_RESOURCES = '1'
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
@@ -167,17 +168,17 @@ test('enable endpoint refuses compat and kernelProvided entries', async () => {
   try {
     const handler = registered[0].handler
     const res1 = makeRes()
-    await handler(makeReq('http://localhost/api/plugin-suite/enable', 'POST', JSON.stringify({ id: 'side-session', enabled: true })), res1)
+    await handler(makeReq('http://localhost/api/eac-plugin-suite/enable', 'POST', JSON.stringify({ id: 'side-session', enabled: true })), res1)
     assert.equal(res1.statusCode, 409)
     assert.ok(/settingsScope/.test(JSON.parse(res1.body).error))
 
     const res2 = makeRes()
-    await handler(makeReq('http://localhost/api/plugin-suite/enable', 'POST', JSON.stringify({ id: 'plugin-manager', enabled: true })), res2)
+    await handler(makeReq('http://localhost/api/eac-plugin-suite/enable', 'POST', JSON.stringify({ id: 'plugin-manager', enabled: true })), res2)
     assert.equal(res2.statusCode, 409)
     assert.ok(/built into the kernel|kernel/i.test(JSON.parse(res2.body).error))
 
     const res3 = makeRes()
-    await handler(makeReq('http://localhost/api/plugin-suite/enable', 'POST', JSON.stringify({ id: 'plain', enabled: true })), res3)
+    await handler(makeReq('http://localhost/api/eac-plugin-suite/enable', 'POST', JSON.stringify({ id: 'plain', enabled: true })), res3)
     assert.equal(res3.statusCode, 200)
     assert.deepEqual(pm.enabledCalls, [['dsh-plain-plugin', true]])
   } finally {
@@ -286,7 +287,7 @@ function handlerOf(registered) {
   const handler = registered[0].handler
   return {
     async runInstall(res) {
-      return handler(makeReq('http://localhost/api/plugin-suite/install', 'POST', JSON.stringify({ pack: 'eac' })), res)
+      return handler(makeReq('http://localhost/api/eac-plugin-suite/install', 'POST', JSON.stringify({ pack: 'eac' })), res)
     },
   }
 }

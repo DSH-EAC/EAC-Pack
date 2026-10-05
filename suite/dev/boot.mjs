@@ -79,10 +79,16 @@ window.EventSource = MockEventSource
 store.subscribe((e) => MockEventSource.broadcast(e))
 
 // ---------------------------------------------------------------------------
-// fetch shim — intercepts /api/plugin-suite/*, passes everything else through.
+// fetch shim — intercepts /api/eac-plugin-suite/*, passes everything else through.
 // ---------------------------------------------------------------------------
 const realFetch = window.fetch?.bind(window)
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+let resourcePhase = params.get('resources') ?? 'ready'
+if (!['checking', 'ready', 'failed', 'cancelled', 'idle'].includes(resourcePhase)) resourcePhase = 'checking'
+const resourceStatus = () => {
+  const ready = resourcePhase === 'ready'
+  return { state: resourcePhase, total: 72, completed: ready ? 72 : 18, totalBytes: 302031150, receivedBytes: ready ? 302031150 : 85000000, error: resourcePhase === 'failed' ? 'simulated installed resource integrity mismatch' : null }
+}
 const jsonResp = (status, payload) =>
   Promise.resolve(
     new Response(JSON.stringify(payload), {
@@ -93,18 +99,22 @@ const jsonResp = (status, payload) =>
 
 window.fetch = async (input, init = {}) => {
   const url = String(input)
-  if (!url.startsWith('/api/plugin-suite')) {
+  if (!url.startsWith('/api/eac-plugin-suite')) {
     if (!realFetch) throw new Error('[dev] no backing fetch for ' + url)
     return realFetch(input, init)
   }
-  const route = url.slice('/api/plugin-suite'.length).split('?')[0] || '/'
+  const route = url.slice('/api/eac-plugin-suite'.length).split('?')[0] || '/'
   const method = (init.method ?? 'GET').toUpperCase()
 
   if (method === 'GET' && route === '/status') {
     if (scenario.mode === 'error') return jsonResp(502, { error: 'simulated: suite backend offline (ECONNREFUSED)' })
     if (scenario.mode === 'loading') await sleep(10 * 60 * 1000) // hold the skeleton for screenshots
     if (scenario.mode === 'empty') return jsonResp(200, store.emptyStatus())
-    return jsonResp(200, store.status())
+    return jsonResp(200, { ...store.status(), suiteVersion: '0.2.2', resources: resourceStatus() })
+  }
+  if (method === 'POST' && route === '/resources/retry') {
+    resourcePhase = 'checking'
+    return jsonResp(202, resourceStatus())
   }
   if (method === 'GET' && route === '/events-ring') return jsonResp(200, { events: store.ring() })
   if (method === 'POST' && (route === '/install' || route === '/update' || route === '/uninstall')) {
@@ -369,7 +379,7 @@ function buildPanel() {
   panel.innerHTML = ''
   const title = document.createElement('span')
   title.className = 'dp-title'
-  title.textContent = `dsh-plugin-suite dev · scripted: fail=${SCRIPTED.fail} exempt=${SCRIPTED.exempt} warn=${SCRIPTED.warn}`
+  title.textContent = `eac-plugin-suite dev · scripted: fail=${SCRIPTED.fail} exempt=${SCRIPTED.exempt} warn=${SCRIPTED.warn}`
   panel.appendChild(title)
 
   for (const group of GROUPS) {
@@ -413,7 +423,7 @@ applyTheme()
 buildPanel()
 
 await loadScript('/client.js')
-const mod = modules.get('dsh-plugin-suite')
+const mod = modules.get('eac-plugin-suite')
 if (!mod || typeof mod.apply !== 'function') {
   appEl.textContent = '[dev] client bundle loaded but exports no apply()'
 } else {
@@ -424,5 +434,5 @@ if (!mod || typeof mod.apply !== 'function') {
   }
 }
 // dev probe: inspect the mock translator from the console / agent-browser eval
-window.__DEV_T = ctx.locale.bind('settings.pluginSuite')
+window.__DEV_T = ctx.locale.bind('settings.eacPluginSuite')
 renderApp()

@@ -4,16 +4,16 @@
  *
  * 职责（v0.2.0 资产线 T4）：
  *   1. prompts：从 .cache/skin-prompts-src（DSH-EAC/dsh-skin-prompt-packages 浅克隆）
- *      读 skin-prompts/packages/<id>/{manifest.json,prompt.md} → suite/assets/prompts/<id>/。
+ *      读 skin-prompts/packages/<id>/{manifest.json,prompt.md} → .cache/asset-input/prompts/<id>/。
  *   2. previews：为 catalog/skins.json（builtin）+ catalog/community.json（community）
- *      每套皮肤落到 suite/assets/previews/<id>/{light,dark}.png。多级兜底：
+ *      每套皮肤落到 .cache/asset-input/previews/<id>/{light,dark}.png。多级兜底：
  *        builtin  → ① .cache/aio-src（= DSH-EAC/DSH-Desktop-EAC@aio-v1 本地克隆）
  *                   ② raw.githubusercontent.com 同分支
  *                   ③ 本机 AIO 离线包（AIO_OFFLINE 环境变量或默认 D:/DSHEAC AIO）
  *                   ④ 640x360 渐变占位 PNG
  *        community→ 已缓存上游 tgz（.cache/community-tgz、.cache/npm-tarballs）内
  *                   preview/screenshots png → raw.githubusercontent 固定 revision → 占位
- *   3. gallery.json：严格按 docs/API-v2.md §2 schema 生成 suite/assets/gallery.json。
+ *   3. gallery.json：严格按 docs/API-v2.md §2 schema 生成 .cache/asset-input/gallery.json。
  *
  * 占位 PNG：node:zlib 手写 PNG 编码（IHDR/IDAT/IEND + CRC32），零第三方依赖。
  * 幂等：目标文件已存在则跳过（--force 重取）；gallery.json 每次全量重写。
@@ -28,7 +28,7 @@ import zlib from 'node:zlib';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const CACHE = path.join(ROOT, '.cache');
-const SUITE_ASSETS = path.join(ROOT, 'suite', 'assets');
+const SUITE_ASSETS = path.join(CACHE, 'asset-input');
 const PROMPTS_OUT = path.join(SUITE_ASSETS, 'prompts');
 const PREVIEWS_OUT = path.join(SUITE_ASSETS, 'previews');
 const PROMPTS_SRC = path.join(CACHE, 'skin-prompts-src', 'skin-prompts', 'packages');

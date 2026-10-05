@@ -1,18 +1,17 @@
-# build artifacts
+# build artifacts and full baseline data (never committed)
 dist/
 suite/assets/dist/
+suite/assets/payload/
+suite/assets/previews/
+suite/assets/prompts/
+suite/assets/gallery.json
+suite/assets/payload-build-*/
 suite/*.tgz
 *.tgz
-
-# deps
-node_modules/
-
-# dev preview (generated vendor bundle: suite/dev/build-deps.mjs)
-suite/dev/vendor/
-
-# caches
-.cache/
-
-# local reports of real-machine runs (kept as untracked working notes)
-reports/local/
 dist-artifacts-*.tar.gz
+
+# dependencies, generated preview bundles and local evidence
+node_modules/
+suite/dev/vendor/
+.cache/
+reports/local/

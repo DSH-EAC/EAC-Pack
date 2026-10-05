@@ -1,0 +1,51 @@
+{
+  "name": "eac-plugin-suite",
+  "version": "0.2.3",
+  "private": true,
+  "type": "module",
+  "description": "EAC/AIO 插件整合包 — one-click install and update for the full EAC and AIO plugin suites on DeepSeek Harness desktop.",
+  "main": "./suite/index.js",
+  "exports": {
+    ".": "./suite/index.js",
+    "./client": "./suite/client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./suite/locale/*.json",
+    "./catalog/*.json": "./suite/catalog/*.json"
+  },
+  "files": [
+    "suite/package.json",
+    "suite/index.js",
+    "suite/resources.mjs",
+    "suite/client.js",
+    "suite/cordis.patch.yml",
+    "suite/locale",
+    "suite/catalog",
+    "suite/assets/bootstrap.json",
+    "suite/icon.svg",
+    "suite/LICENSE",
+    "README.md",
+    "suite/scripts/verify-package.mjs",
+    "suite/asset-package.mjs"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./suite/cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": []
+    }
+  },
+  "scripts": {
+    "test": "node --test suite/test/*.test.mjs",
+    "prepack": "node suite/scripts/verify-package.mjs"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "eac-plugin-suite-assets": "0.2.3"
+  }
+}

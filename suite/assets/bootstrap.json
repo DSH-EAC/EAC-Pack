@@ -1,0 +1,1668 @@
+{
+  "schemaVersion": 1,
+  "resourceVersion": "0.2.3",
+  "assetPackage": {
+    "name": "eac-plugin-suite-assets",
+    "version": "0.2.3"
+  },
+  "extraFiles": [
+    {
+      "file": "gallery.json",
+      "bytes": 20906,
+      "sha256": "b65f8100d82f32a5f51f38bd245d13b9415b861ad28712b0862c4ecad338bde0"
+    },
+    {
+      "file": "previews/blue-fantasy/dark.png",
+      "bytes": 2135863,
+      "sha256": "2db1d964ca8b61b45097b8d6022e4a2e3cc3830f8b9d3abf997cbb186b642f33"
+    },
+    {
+      "file": "previews/blue-fantasy/light.png",
+      "bytes": 2716030,
+      "sha256": "100b14a00d65990371f25a122e8e840e187bd526581c868858d203e1764243d7"
+    },
+    {
+      "file": "previews/deep-whale-day-night/dark.png",
+      "bytes": 1984956,
+      "sha256": "8bc5c844223a532e6b9c821d5ca8f70ff506db6a6dca073cf8a33ce9a87ae972"
+    },
+    {
+      "file": "previews/deep-whale-day-night/light.png",
+      "bytes": 2259565,
+      "sha256": "9e842ec80f90a48f438fcf254de416c08c8d72105a89a33a76edce4e4108bb51"
+    },
+    {
+      "file": "previews/deep-whale-manager/dark.png",
+      "bytes": 9289,
+      "sha256": "383d0f153b07d2ea63a574de859f472c66023d8256f1388830203e91cd314e18"
+    },
+    {
+      "file": "previews/deep-whale-manager/light.png",
+      "bytes": 9289,
+      "sha256": "383d0f153b07d2ea63a574de859f472c66023d8256f1388830203e91cd314e18"
+    },
+    {
+      "file": "previews/dragon-heir/dark.png",
+      "bytes": 3389729,
+      "sha256": "2f9278f8198dad08e792c2487178b25da9e405d36301b9e77fd85fe5b36e039c"
+    },
+    {
+      "file": "previews/dragon-heir/light.png",
+      "bytes": 3987214,
+      "sha256": "d202a391aee65c17dd58950b4201606e3ecad6ab9a0e6a869392474c370816f4"
+    },
+    {
+      "file": "previews/endfield/dark.png",
+      "bytes": 9578,
+      "sha256": "bc7b78ab0878396ccdc1a7ca899f7b088c2995d47aadfc735a777a2bd6da567f"
+    },
+    {
+      "file": "previews/endfield/light.png",
+      "bytes": 9578,
+      "sha256": "bc7b78ab0878396ccdc1a7ca899f7b088c2995d47aadfc735a777a2bd6da567f"
+    },
+    {
+      "file": "previews/liang/dark.png",
+      "bytes": 903442,
+      "sha256": "1e9bccbd1473364bcdaa142ebc5f5f5f78cdef9ae2b5182526b743e893495108"
+    },
+    {
+      "file": "previews/liang/light.png",
+      "bytes": 903442,
+      "sha256": "1e9bccbd1473364bcdaa142ebc5f5f5f78cdef9ae2b5182526b743e893495108"
+    },
+    {
+      "file": "previews/maid-atelier/dark.png",
+      "bytes": 8214,
+      "sha256": "fbb5b15abf8410660ac36ee97add9f753522afcbd27f23fb6171ddba392df59e"
+    },
+    {
+      "file": "previews/maid-atelier/light.png",
+      "bytes": 8214,
+      "sha256": "fbb5b15abf8410660ac36ee97add9f753522afcbd27f23fb6171ddba392df59e"
+    },
+    {
+      "file": "previews/miku/dark.png",
+      "bytes": 937319,
+      "sha256": "e31f91b2de73dcb9ba1025538440a519e956f6601271b752b7f9447406a71d3d"
+    },
+    {
+      "file": "previews/miku/light.png",
+      "bytes": 740715,
+      "sha256": "e20ee63655807bca917297449bcc13264b020f6f511f9e38191f35ecd1bb28ca"
+    },
+    {
+      "file": "previews/minecraft/dark.png",
+      "bytes": 274406,
+      "sha256": "99827797621c7120f5f018ff0fd35101327b64e5ce8da984372a99add03477a7"
+    },
+    {
+      "file": "previews/minecraft/light.png",
+      "bytes": 371737,
+      "sha256": "04001a4694d2a069985d3c4d6ee34f4be22858664b1a1553772be69c2a6ae28c"
+    },
+    {
+      "file": "previews/orca-link/dark.png",
+      "bytes": 2159169,
+      "sha256": "ecb08a1f8026a2b2befca65cc4f20acc3f696f466b129e39e1edf494f9aded8a"
+    },
+    {
+      "file": "previews/orca-link/light.png",
+      "bytes": 1936165,
+      "sha256": "2fe3943e5d16c295b39f6bd0d7757f3bd2868d4b6ecee40ce0a3dd380e663aed"
+    },
+    {
+      "file": "previews/qq98/dark.png",
+      "bytes": 426465,
+      "sha256": "688bd201b128e0f6f8d2ac72912d3b7de0a90777462446abd1c5e878f7d9ebba"
+    },
+    {
+      "file": "previews/qq98/light.png",
+      "bytes": 448335,
+      "sha256": "61d3924ce5a142b884e55d162b3117be057d0dfd22678c1688926ecedcead744"
+    },
+    {
+      "file": "previews/ths/dark.png",
+      "bytes": 356966,
+      "sha256": "d94de9f057a4fdf1d5f2088cd5fe2b354c90fb3a30bbb2c050a21d42a783b6bb"
+    },
+    {
+      "file": "previews/ths/light.png",
+      "bytes": 375570,
+      "sha256": "a89717025d35e87af05b771fdc9369b89c3fa18e1c1e5ebe5c6ea27c580e8b9d"
+    },
+    {
+      "file": "previews/trading/dark.png",
+      "bytes": 339343,
+      "sha256": "36ce4a96d2c92588c654815798da30ab104a4a2b9b926b696de34f0056752be6"
+    },
+    {
+      "file": "previews/trading/light.png",
+      "bytes": 367695,
+      "sha256": "5d39809cd6d923f043b9ff57b41f90ea7e0288fe626d318acb794b280cea6f60"
+    },
+    {
+      "file": "previews/whale-song/dark.png",
+      "bytes": 1903608,
+      "sha256": "4bb6efd96420b2ad2a24305131ec93ba491e3d5a8948373b8979703769572a07"
+    },
+    {
+      "file": "previews/whale-song/light.png",
+      "bytes": 2814803,
+      "sha256": "b7b5733f209a2e4c1d380a0a8ec88ecc29d5140f90d1469451a58dffe72f0bad"
+    },
+    {
+      "file": "previews/xp/dark.png",
+      "bytes": 286601,
+      "sha256": "26f856e19a03153f4276794ba549a6193bfc012a14deb1efc5b4dd83ff8aba41"
+    },
+    {
+      "file": "previews/xp/light.png",
+      "bytes": 320280,
+      "sha256": "fe6c40241a76af4b00a5adbb2688c117b6e4930d592242d5d40f359f80cf946e"
+    },
+    {
+      "file": "prompts/blue-fantasy/manifest.json",
+      "bytes": 1450,
+      "sha256": "bea10b51688968512dab25c90ca40c8969329ad7e16d1ed5f2f5f5bbb6b53c1b"
+    },
+    {
+      "file": "prompts/blue-fantasy/prompt.md",
+      "bytes": 2009,
+      "sha256": "a5275ad5690b98b887e17bcf4f31dd3e69fa354c5b2da2316c60ddb040583610"
+    },
+    {
+      "file": "prompts/dragon-heir/manifest.json",
+      "bytes": 1415,
+      "sha256": "16a1dac6f6ca3fd00879810e6117843d9a8745776b420b45f715de73f4ac07fa"
+    },
+    {
+      "file": "prompts/dragon-heir/prompt.md",
+      "bytes": 2073,
+      "sha256": "3ea5d444c8a2b49300c06f38561caf6f27a2f7712f66be6c355b032b9dd080ee"
+    },
+    {
+      "file": "prompts/maid-atelier/manifest.json",
+      "bytes": 1471,
+      "sha256": "b4d3d6258c95655424d0f448107e093465bf1354280a82066eece2624cca5343"
+    },
+    {
+      "file": "prompts/maid-atelier/prompt.md",
+      "bytes": 2231,
+      "sha256": "1adb09dbe10c5d9c99290636017a987dc4dc783b8c10ac76bfd403c58e799e8d"
+    },
+    {
+      "file": "prompts/miku/manifest.json",
+      "bytes": 1569,
+      "sha256": "fa14d4284ae4e625387f7a24e443e7e0a4a7e86c3b578cecac844a1d86e920e1"
+    },
+    {
+      "file": "prompts/miku/prompt.md",
+      "bytes": 5073,
+      "sha256": "25a10a324812bff85ea8a583f2d2a9f27d3ca12de8c5b37f7f85c3f6e7a1fb1d"
+    },
+    {
+      "file": "prompts/minecraft/manifest.json",
+      "bytes": 1417,
+      "sha256": "7538395438e09f849ea18a03ca4a6fa005894ef23c3d154ed7b1f52176b5f0e2"
+    },
+    {
+      "file": "prompts/minecraft/prompt.md",
+      "bytes": 2080,
+      "sha256": "9e205a12a88f569c5bc262f96ab57cdc65c146a06a83e25ca232d35810fbd5a2"
+    },
+    {
+      "file": "prompts/qq98/manifest.json",
+      "bytes": 1355,
+      "sha256": "965c9f4418fe9408a7829bbb3813664b0fd54eaeb9d7db68233cb16b29598176"
+    },
+    {
+      "file": "prompts/qq98/prompt.md",
+      "bytes": 1942,
+      "sha256": "c9831c6e4a807118fcb9ab5f65f717ecc07218033cc46d49a778d362a275b7f1"
+    },
+    {
+      "file": "prompts/ths/manifest.json",
+      "bytes": 1342,
+      "sha256": "515747e33a35a03927cb45a7ba94c44ec4bd481007d3a5b6097f4033e118cd4e"
+    },
+    {
+      "file": "prompts/ths/prompt.md",
+      "bytes": 2022,
+      "sha256": "1ec6540a0e3dd7776aa23167860a2830d5b1bcdff6cf01b9ee7e834f2bd9fc52"
+    },
+    {
+      "file": "prompts/trading/manifest.json",
+      "bytes": 1386,
+      "sha256": "e6936c6514dfeb4a5bfbffc788ae16b99609dfd26a6a494c50095a163c8dcd9f"
+    },
+    {
+      "file": "prompts/trading/prompt.md",
+      "bytes": 2090,
+      "sha256": "0d7176e2649aab0c7460cf2e70f8e7f6b19d72e8211405f5c72cd57f6bfc2b01"
+    },
+    {
+      "file": "prompts/whale-song/manifest.json",
+      "bytes": 1388,
+      "sha256": "e1eae427111cf643931cd9120fb13f097c96df2d785b55ca7b170dd250eedd00"
+    },
+    {
+      "file": "prompts/whale-song/prompt.md",
+      "bytes": 1919,
+      "sha256": "835111fcb782fad1d7d7b27ac83d864f391f72e4edd3be4f2b5441c539c009ee"
+    },
+    {
+      "file": "prompts/xp/manifest.json",
+      "bytes": 1346,
+      "sha256": "2441596bd60fc2e658f9390847b792093cb07c6f95ee48ecb3bece5b840f0ca3"
+    },
+    {
+      "file": "prompts/xp/prompt.md",
+      "bytes": 2059,
+      "sha256": "f438a163e535339f975151a40fb64d459518c235bf9bbbaabe91f73c0b9f83d0"
+    }
+  ],
+  "items": [
+    {
+      "id": "balance",
+      "name": "@deepseek-ai/dsh-balance",
+      "version": "0.1.0",
+      "packs": [
+        "aio",
+        "eac"
+      ],
+      "file": "@deepseek-ai_dsh-balance-0.1.0.tgz",
+      "sha256": "70f177d47b7bbd94499c88580eff73dc23ecbe9c232c95f64f4108e0a176b00c",
+      "bytes": 7266,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@deepseek-ai_dsh-balance-0.1.0.tgz",
+          "bytes": 7266,
+          "sha256": "70f177d47b7bbd94499c88580eff73dc23ecbe9c232c95f64f4108e0a176b00c"
+        }
+      ]
+    },
+    {
+      "id": "client-file-changes",
+      "name": "@deepseek-ai/dsh-client-file-changes",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "@deepseek-ai_dsh-client-file-changes-0.1.0.tgz",
+      "sha256": "0bc22e34fe5b012132c85792de886fe5abe3d54ed00719e922b441c533e3e6d3",
+      "bytes": 11379,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@deepseek-ai_dsh-client-file-changes-0.1.0.tgz",
+          "bytes": 11379,
+          "sha256": "0bc22e34fe5b012132c85792de886fe5abe3d54ed00719e922b441c533e3e6d3"
+        }
+      ]
+    },
+    {
+      "id": "conversation-tweaks",
+      "name": "@deepseek-ai/dsh-conversation-tweaks",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "@deepseek-ai_dsh-conversation-tweaks-0.1.0.tgz",
+      "sha256": "87cee7d32124ee15cc7671d3843ab3c415b7310fe58cff7db32da6e9a97ae78f",
+      "bytes": 4704,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@deepseek-ai_dsh-conversation-tweaks-0.1.0.tgz",
+          "bytes": 4704,
+          "sha256": "87cee7d32124ee15cc7671d3843ab3c415b7310fe58cff7db32da6e9a97ae78f"
+        }
+      ]
+    },
+    {
+      "id": "easy-setup",
+      "name": "@deepseek-ai/dsh-easy-setup",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "@deepseek-ai_dsh-easy-setup-0.1.0.tgz",
+      "sha256": "991bde7b0ed52f1f0302574035153c41a67a33043a347ed222be542064efc82e",
+      "bytes": 17495,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@deepseek-ai_dsh-easy-setup-0.1.0.tgz",
+          "bytes": 17495,
+          "sha256": "991bde7b0ed52f1f0302574035153c41a67a33043a347ed222be542064efc82e"
+        }
+      ]
+    },
+    {
+      "id": "file-changes",
+      "name": "@deepseek-ai/dsh-file-changes",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "@deepseek-ai_dsh-file-changes-0.1.0.tgz",
+      "sha256": "652511fdab93ee381faccf2d5a18efffd97414ebde00be7c6bf35276098ae293",
+      "bytes": 6834,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@deepseek-ai_dsh-file-changes-0.1.0.tgz",
+          "bytes": 6834,
+          "sha256": "652511fdab93ee381faccf2d5a18efffd97414ebde00be7c6bf35276098ae293"
+        }
+      ]
+    },
+    {
+      "id": "float-window",
+      "name": "@deepseek-ai/dsh-float-window",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "@deepseek-ai_dsh-float-window-0.1.0.tgz",
+      "sha256": "8c3a997db460309ee0666fb051aebff469f085da2e81851800c7af8d0b6e18aa",
+      "bytes": 6203,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@deepseek-ai_dsh-float-window-0.1.0.tgz",
+          "bytes": 6203,
+          "sha256": "8c3a997db460309ee0666fb051aebff469f085da2e81851800c7af8d0b6e18aa"
+        }
+      ]
+    },
+    {
+      "id": "openclaw-bridge",
+      "name": "@deepseek-ai/dsh-openclaw-bridge",
+      "version": "0.7.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "@deepseek-ai_dsh-openclaw-bridge-0.7.0.tgz",
+      "sha256": "9e12764355cd10549392245a71dad8aac51a8516a97ab512e01addbf699b5442",
+      "bytes": 43462,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@deepseek-ai_dsh-openclaw-bridge-0.7.0.tgz",
+          "bytes": 43462,
+          "sha256": "9e12764355cd10549392245a71dad8aac51a8516a97ab512e01addbf699b5442"
+        }
+      ]
+    },
+    {
+      "id": "plugin-manager",
+      "name": "@deepseek-ai/dsh-plugin-manager",
+      "version": "0.1.0",
+      "packs": [
+        "aio",
+        "eac"
+      ],
+      "file": "@deepseek-ai_dsh-plugin-manager-0.1.0.tgz",
+      "sha256": "66c749cbcc57e53ad090c097cf4e76caf26371379522e1ab0f2cf0404157e6ca",
+      "bytes": 7936,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@deepseek-ai_dsh-plugin-manager-0.1.0.tgz",
+          "bytes": 7936,
+          "sha256": "66c749cbcc57e53ad090c097cf4e76caf26371379522e1ab0f2cf0404157e6ca"
+        }
+      ]
+    },
+    {
+      "id": "prompt-custom",
+      "name": "@deepseek-ai/dsh-prompt-custom",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "@deepseek-ai_dsh-prompt-custom-0.1.0.tgz",
+      "sha256": "e5d4e9e26f018b16044ab91c9e3de9bcee567602def55eb003122f78fe74ca7d",
+      "bytes": 6265,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@deepseek-ai_dsh-prompt-custom-0.1.0.tgz",
+          "bytes": 6265,
+          "sha256": "e5d4e9e26f018b16044ab91c9e3de9bcee567602def55eb003122f78fe74ca7d"
+        }
+      ]
+    },
+    {
+      "id": "skin-switch",
+      "name": "@deepseek-ai/dsh-skin-switch",
+      "version": "0.1.0",
+      "packs": [
+        "aio",
+        "eac"
+      ],
+      "file": "@deepseek-ai_dsh-skin-switch-0.1.0.tgz",
+      "sha256": "ab0c8ced5adaf3609244fd87c3e42336f48d3b9e1516468296c9717fe2fdaec9",
+      "bytes": 12616,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@deepseek-ai_dsh-skin-switch-0.1.0.tgz",
+          "bytes": 12616,
+          "sha256": "ab0c8ced5adaf3609244fd87c3e42336f48d3b9e1516468296c9717fe2fdaec9"
+        }
+      ]
+    },
+    {
+      "id": "terminal",
+      "name": "@deepseek-ai/dsh-terminal",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "@deepseek-ai_dsh-terminal-0.1.0.tgz",
+      "sha256": "5fc4632789f2543eb8d42f3ff9571bddceadcd546660234af96b9646ff35f9d2",
+      "bytes": 11792,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@deepseek-ai_dsh-terminal-0.1.0.tgz",
+          "bytes": 11792,
+          "sha256": "5fc4632789f2543eb8d42f3ff9571bddceadcd546660234af96b9646ff35f9d2"
+        }
+      ]
+    },
+    {
+      "id": "deep-whale-day-night",
+      "name": "@dsh-external/dsh-client-ui-skin-deep-whale-day-night",
+      "version": "0.1.12",
+      "packs": [
+        "skins"
+      ],
+      "file": "@dsh-external_dsh-client-ui-skin-deep-whale-day-night-0.1.12.tgz",
+      "sha256": "3266ccc7b6628fa51160cecf12741dc029e2f9cc5cf41bd233b9782ac8ca4802",
+      "bytes": 7907871,
+      "source": "github-tgz",
+      "parts": [
+        {
+          "file": "@dsh-external_dsh-client-ui-skin-deep-whale-day-night-0.1.12.tgz",
+          "bytes": 7907871,
+          "sha256": "3266ccc7b6628fa51160cecf12741dc029e2f9cc5cf41bd233b9782ac8ca4802"
+        }
+      ]
+    },
+    {
+      "id": "side-session",
+      "name": "@dsh-external/dsh-side-session",
+      "version": "0.2.8",
+      "packs": [
+        "eac"
+      ],
+      "file": "@dsh-external_dsh-side-session-0.2.8.tgz",
+      "sha256": "3fc8badb3752405d38510b071faf40231c071ea2b8fc13a639e477c50f131d7e",
+      "bytes": 37604,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@dsh-external_dsh-side-session-0.2.8.tgz",
+          "bytes": 37604,
+          "sha256": "3fc8badb3752405d38510b071faf40231c071ea2b8fc13a639e477c50f131d7e"
+        }
+      ]
+    },
+    {
+      "id": "client-ui-custom",
+      "name": "@ha-na-bi/dsh-client-ui-custom",
+      "version": "0.1.0-rc.6",
+      "packs": [
+        "aio"
+      ],
+      "file": "@ha-na-bi_dsh-client-ui-custom-0.1.0-rc.6.tgz",
+      "sha256": "cd4881340acfd8f5ce506e29f57d0e9605478c488be55c4f6fb2ebfb5b891e1c",
+      "bytes": 95915,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@ha-na-bi_dsh-client-ui-custom-0.1.0-rc.6.tgz",
+          "bytes": 95915,
+          "sha256": "cd4881340acfd8f5ce506e29f57d0e9605478c488be55c4f6fb2ebfb5b891e1c"
+        }
+      ]
+    },
+    {
+      "id": "blue-fantasy",
+      "name": "@linxin666/dsh-client-ui-skin-blue-fantasy",
+      "version": "0.2.0",
+      "packs": [
+        "skins"
+      ],
+      "file": "@linxin666_dsh-client-ui-skin-blue-fantasy-0.2.0.tgz",
+      "sha256": "0df7848e4c592d71a28cd60fae5c14512c22f95fc6e44855c1fd1c434648132e",
+      "bytes": 5315941,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@linxin666_dsh-client-ui-skin-blue-fantasy-0.2.0.tgz",
+          "bytes": 5315941,
+          "sha256": "0df7848e4c592d71a28cd60fae5c14512c22f95fc6e44855c1fd1c434648132e"
+        }
+      ]
+    },
+    {
+      "id": "dragon-heir",
+      "name": "@linxin666/dsh-client-ui-skin-dragon-heir",
+      "version": "0.1.11",
+      "packs": [
+        "skins"
+      ],
+      "file": "@linxin666_dsh-client-ui-skin-dragon-heir-0.1.11.tgz",
+      "sha256": "ee49a187c52351a86d82ce75fc4f3c5d53c231aa6ee7bedc621d84a66ed52dac",
+      "bytes": 7720153,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@linxin666_dsh-client-ui-skin-dragon-heir-0.1.11.tgz",
+          "bytes": 7720153,
+          "sha256": "ee49a187c52351a86d82ce75fc4f3c5d53c231aa6ee7bedc621d84a66ed52dac"
+        }
+      ]
+    },
+    {
+      "id": "miku",
+      "name": "@linxin666/dsh-client-ui-skin-miku",
+      "version": "0.1.11",
+      "packs": [
+        "skins"
+      ],
+      "file": "@linxin666_dsh-client-ui-skin-miku-0.1.11.tgz",
+      "sha256": "1ce6fa1da905d4892fa73aeadc9154c3543886bd0d2791389acb6ce14c584b89",
+      "bytes": 1792335,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@linxin666_dsh-client-ui-skin-miku-0.1.11.tgz",
+          "bytes": 1792335,
+          "sha256": "1ce6fa1da905d4892fa73aeadc9154c3543886bd0d2791389acb6ce14c584b89"
+        }
+      ]
+    },
+    {
+      "id": "minecraft",
+      "name": "@linxin666/dsh-client-ui-skin-minecraft",
+      "version": "0.1.11",
+      "packs": [
+        "skins"
+      ],
+      "file": "@linxin666_dsh-client-ui-skin-minecraft-0.1.11.tgz",
+      "sha256": "bda8eb0544ad0999af75080f4daf88b5559d496fd2a1e2abc780181639c8f47c",
+      "bytes": 644158,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@linxin666_dsh-client-ui-skin-minecraft-0.1.11.tgz",
+          "bytes": 644158,
+          "sha256": "bda8eb0544ad0999af75080f4daf88b5559d496fd2a1e2abc780181639c8f47c"
+        }
+      ]
+    },
+    {
+      "id": "qq98",
+      "name": "@linxin666/dsh-client-ui-skin-qq98",
+      "version": "0.1.11",
+      "packs": [
+        "skins"
+      ],
+      "file": "@linxin666_dsh-client-ui-skin-qq98-0.1.11.tgz",
+      "sha256": "0cf05a5cdd431908bb8ef3ffc3db7523edf673662f90612181164a63bae1dce0",
+      "bytes": 861171,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@linxin666_dsh-client-ui-skin-qq98-0.1.11.tgz",
+          "bytes": 861171,
+          "sha256": "0cf05a5cdd431908bb8ef3ffc3db7523edf673662f90612181164a63bae1dce0"
+        }
+      ]
+    },
+    {
+      "id": "ths",
+      "name": "@linxin666/dsh-client-ui-skin-ths",
+      "version": "0.1.11",
+      "packs": [
+        "skins"
+      ],
+      "file": "@linxin666_dsh-client-ui-skin-ths-0.1.11.tgz",
+      "sha256": "830b50188c7321e4bf468e209a9df8db720f7ba680760c8108c1aef1f14ba680",
+      "bytes": 710780,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@linxin666_dsh-client-ui-skin-ths-0.1.11.tgz",
+          "bytes": 710780,
+          "sha256": "830b50188c7321e4bf468e209a9df8db720f7ba680760c8108c1aef1f14ba680"
+        }
+      ]
+    },
+    {
+      "id": "trading",
+      "name": "@linxin666/dsh-client-ui-skin-trading",
+      "version": "0.1.11",
+      "packs": [
+        "skins"
+      ],
+      "file": "@linxin666_dsh-client-ui-skin-trading-0.1.11.tgz",
+      "sha256": "83e7825d9da164cf6c0bf08997db14eec9dfcb573a7a522bc803bd872ed2f0a0",
+      "bytes": 715434,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@linxin666_dsh-client-ui-skin-trading-0.1.11.tgz",
+          "bytes": 715434,
+          "sha256": "83e7825d9da164cf6c0bf08997db14eec9dfcb573a7a522bc803bd872ed2f0a0"
+        }
+      ]
+    },
+    {
+      "id": "whale-song",
+      "name": "@linxin666/dsh-client-ui-skin-whale-song",
+      "version": "0.1.11",
+      "packs": [
+        "skins"
+      ],
+      "file": "@linxin666_dsh-client-ui-skin-whale-song-0.1.11.tgz",
+      "sha256": "78ebde375f50f19ed480d96d83f883a69e435c265792a066811dd128b5eaba2f",
+      "bytes": 5060856,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@linxin666_dsh-client-ui-skin-whale-song-0.1.11.tgz",
+          "bytes": 5060856,
+          "sha256": "78ebde375f50f19ed480d96d83f883a69e435c265792a066811dd128b5eaba2f"
+        }
+      ]
+    },
+    {
+      "id": "xp",
+      "name": "@linxin666/dsh-client-ui-skin-xp",
+      "version": "0.1.11",
+      "packs": [
+        "skins"
+      ],
+      "file": "@linxin666_dsh-client-ui-skin-xp-0.1.11.tgz",
+      "sha256": "71a4c2b013802b587022b9b2b6297e6f2078ac592cf7b1a5cbaaee96f464127b",
+      "bytes": 598346,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@linxin666_dsh-client-ui-skin-xp-0.1.11.tgz",
+          "bytes": 598346,
+          "sha256": "71a4c2b013802b587022b9b2b6297e6f2078ac592cf7b1a5cbaaee96f464127b"
+        }
+      ]
+    },
+    {
+      "id": "visualize",
+      "name": "@nagi-ovo/dsh-visualize",
+      "version": "0.1.4",
+      "packs": [
+        "aio"
+      ],
+      "file": "@nagi-ovo_dsh-visualize-0.1.4.tgz",
+      "sha256": "3d5b8cf5b1bf198111a1e69ace6ad249a324d8a64e8ed574cbbe8bbf132983e4",
+      "bytes": 964128,
+      "source": "github",
+      "parts": [
+        {
+          "file": "@nagi-ovo_dsh-visualize-0.1.4.tgz",
+          "bytes": 964128,
+          "sha256": "3d5b8cf5b1bf198111a1e69ace6ad249a324d8a64e8ed574cbbe8bbf132983e4"
+        }
+      ]
+    },
+    {
+      "id": "agent-teams",
+      "name": "@nanmicoder/dsh-agent-teams",
+      "version": "0.1.13-eac.3",
+      "packs": [
+        "eac"
+      ],
+      "file": "@nanmicoder_dsh-agent-teams-0.1.13-eac.3.tgz",
+      "sha256": "76631f392e8d335aa99293576dcb3a13f62b3c7737ab834676bafd2ca65fabc5",
+      "bytes": 1809882,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "@nanmicoder_dsh-agent-teams-0.1.13-eac.3.tgz",
+          "bytes": 1809882,
+          "sha256": "76631f392e8d335aa99293576dcb3a13f62b3c7737ab834676bafd2ca65fabc5"
+        }
+      ]
+    },
+    {
+      "id": "deep-whale-manager",
+      "name": "@smalltailqwq/dsh-client-ui-skin-deep-whale-manager",
+      "version": "0.1.6",
+      "packs": [
+        "skins"
+      ],
+      "file": "@smalltailqwq_dsh-client-ui-skin-deep-whale-manager-0.1.6.tgz",
+      "sha256": "5c368c6b3b0ab81826510c8591ee9f89b9708ec8133d5ebd0c47be789103826b",
+      "bytes": 63278,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@smalltailqwq_dsh-client-ui-skin-deep-whale-manager-0.1.6.tgz",
+          "bytes": 63278,
+          "sha256": "5c368c6b3b0ab81826510c8591ee9f89b9708ec8133d5ebd0c47be789103826b"
+        }
+      ]
+    },
+    {
+      "id": "maid-atelier",
+      "name": "@smalltailqwq/dsh-client-ui-skin-maid-atelier",
+      "version": "0.1.7",
+      "packs": [
+        "skins"
+      ],
+      "file": "@smalltailqwq_dsh-client-ui-skin-maid-atelier-0.1.7.tgz",
+      "sha256": "416a7c7603498c6f69edc24809236a2efac162007e091e584432c2b747746c8d",
+      "bytes": 7101649,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@smalltailqwq_dsh-client-ui-skin-maid-atelier-0.1.7.tgz",
+          "bytes": 7101649,
+          "sha256": "416a7c7603498c6f69edc24809236a2efac162007e091e584432c2b747746c8d"
+        }
+      ]
+    },
+    {
+      "id": "orca-link",
+      "name": "@smalltailqwq/dsh-client-ui-skin-orca-link",
+      "version": "0.1.7",
+      "packs": [
+        "skins"
+      ],
+      "file": "@smalltailqwq_dsh-client-ui-skin-orca-link-0.1.7.tgz",
+      "sha256": "a0d44cd9cf9ad3b346ca3f9dd99f55b708d13ea14c9b86a4ce333f487bb41293",
+      "bytes": 5646766,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@smalltailqwq_dsh-client-ui-skin-orca-link-0.1.7.tgz",
+          "bytes": 5646766,
+          "sha256": "a0d44cd9cf9ad3b346ca3f9dd99f55b708d13ea14c9b86a4ce333f487bb41293"
+        }
+      ]
+    },
+    {
+      "id": "navbar",
+      "name": "@vlln/dsh-navbar",
+      "version": "0.4.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "@vlln_dsh-navbar-0.4.0.tgz",
+      "sha256": "16cfb013b4db97e061375d9e481ae75885cf95f13bb7ea361b4c04c46d9590c6",
+      "bytes": 14462,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "@vlln_dsh-navbar-0.4.0.tgz",
+          "bytes": 14462,
+          "sha256": "16cfb013b4db97e061375d9e481ae75885cf95f13bb7ea361b4c04c46d9590c6"
+        }
+      ]
+    },
+    {
+      "id": "computer-user",
+      "name": "computer-user",
+      "version": "0.3.6",
+      "packs": [
+        "eac"
+      ],
+      "file": "computer-user-0.3.6.tgz",
+      "sha256": "5d5ef7e332dfdf54361811e603f7d8f7af818aae0b720b0982edcc99a08bb955",
+      "bytes": 40528,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "computer-user-0.3.6.tgz",
+          "bytes": 40528,
+          "sha256": "5d5ef7e332dfdf54361811e603f7d8f7af818aae0b720b0982edcc99a08bb955"
+        }
+      ]
+    },
+    {
+      "id": "aio-ui-compat",
+      "name": "dsh-aio-ui-compat",
+      "version": "1.0.0",
+      "packs": [
+        "aio"
+      ],
+      "file": "dsh-aio-ui-compat-1.0.0.tgz",
+      "sha256": "9df4247b06bf70f9cce2f36625ae7e91f0ec77123d60203b11178e0ac2f59e94",
+      "bytes": 6451,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-aio-ui-compat-1.0.0.tgz",
+          "bytes": 6451,
+          "sha256": "9df4247b06bf70f9cce2f36625ae7e91f0ec77123d60203b11178e0ac2f59e94"
+        }
+      ]
+    },
+    {
+      "id": "auto-compact",
+      "name": "dsh-auto-compact",
+      "version": "0.1.0",
+      "packs": [
+        "aio"
+      ],
+      "file": "dsh-auto-compact-0.1.0.tgz",
+      "sha256": "2b2c80d21d8d35b2897a8f72e5ca2506459f9d95dc660a06fe5a14b919d9b17e",
+      "bytes": 5865,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-auto-compact-0.1.0.tgz",
+          "bytes": 5865,
+          "sha256": "2b2c80d21d8d35b2897a8f72e5ca2506459f9d95dc660a06fe5a14b919d9b17e"
+        }
+      ]
+    },
+    {
+      "id": "better-sidebar",
+      "name": "dsh-better-sidebar",
+      "version": "0.15.3-eac.1",
+      "packs": [
+        "aio",
+        "eac"
+      ],
+      "file": "dsh-better-sidebar-0.15.3-eac.1.tgz",
+      "sha256": "95e5fc933189765088dca83bd6589e22eaa494a9c9d25277ca43355856197fad",
+      "bytes": 2473554,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-better-sidebar-0.15.3-eac.1.tgz",
+          "bytes": 2473554,
+          "sha256": "95e5fc933189765088dca83bd6589e22eaa494a9c9d25277ca43355856197fad"
+        }
+      ]
+    },
+    {
+      "id": "change-review",
+      "name": "dsh-change-review",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-change-review-0.1.0.tgz",
+      "sha256": "eef441621bd8b8c15dee3706a046c861d29dd40f77d78fb5e387067721c71ef4",
+      "bytes": 6452,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-change-review-0.1.0.tgz",
+          "bytes": 6452,
+          "sha256": "eef441621bd8b8c15dee3706a046c861d29dd40f77d78fb5e387067721c71ef4"
+        }
+      ]
+    },
+    {
+      "id": "liang",
+      "name": "dsh-client-liang-intensity-skin",
+      "version": "0.1.7",
+      "packs": [
+        "skins"
+      ],
+      "file": "dsh-client-liang-intensity-skin-0.1.7.tgz",
+      "sha256": "c7cf46ccad31d0d1eb5024f8234ee8ca40df1c97af7d156a6ed2aceccdcc3eca",
+      "bytes": 1312885,
+      "source": "github-tgz",
+      "parts": [
+        {
+          "file": "dsh-client-liang-intensity-skin-0.1.7.tgz",
+          "bytes": 1312885,
+          "sha256": "c7cf46ccad31d0d1eb5024f8234ee8ca40df1c97af7d156a6ed2aceccdcc3eca"
+        }
+      ]
+    },
+    {
+      "id": "compact",
+      "name": "dsh-compact",
+      "version": "1.0.1",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-compact-1.0.1.tgz",
+      "sha256": "d08df7a3cf88dadf08069a6f021a36665ae7540a04e8cab4dfd16cfd3d0ea553",
+      "bytes": 14663,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-compact-1.0.1.tgz",
+          "bytes": 14663,
+          "sha256": "d08df7a3cf88dadf08069a6f021a36665ae7540a04e8cab4dfd16cfd3d0ea553"
+        }
+      ]
+    },
+    {
+      "id": "composer-dynamic-island",
+      "name": "dsh-composer-dynamic-island",
+      "version": "2.1.0",
+      "packs": [
+        "aio",
+        "eac"
+      ],
+      "file": "dsh-composer-dynamic-island-2.1.0.tgz",
+      "sha256": "7095e75b4e297d74772deae3ec526592373607c3a50a3db5732438335d9b1a3c",
+      "bytes": 18512,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-composer-dynamic-island-2.1.0.tgz",
+          "bytes": 18512,
+          "sha256": "7095e75b4e297d74772deae3ec526592373607c3a50a3db5732438335d9b1a3c"
+        }
+      ]
+    },
+    {
+      "id": "dafeiyu",
+      "name": "dsh-dafeiyu",
+      "version": "0.1.14",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-dafeiyu-0.1.14.tgz",
+      "sha256": "e9f506542488b6cc0aad5999315af54551b182214d6cfcce0d284e912d2489e2",
+      "bytes": 167827628,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "dsh-dafeiyu-0.1.14.tgz.chunk-000.bin",
+          "bytes": 41943040,
+          "sha256": "9b5664dc7a6cbc66db5ff6c38543b0d0fe5ad8933410950d8a4820637f9d9479"
+        },
+        {
+          "file": "dsh-dafeiyu-0.1.14.tgz.chunk-001.bin",
+          "bytes": 41943040,
+          "sha256": "e60bd29d507d4a1018d4282548b1f7bd422ce5b5f58dce74248431e21c98cc8e"
+        },
+        {
+          "file": "dsh-dafeiyu-0.1.14.tgz.chunk-002.bin",
+          "bytes": 41943040,
+          "sha256": "43c74d3cceedeadfedf880b61dfec1aa4e33dafd8d1933ce6b3d76669447f5a3"
+        },
+        {
+          "file": "dsh-dafeiyu-0.1.14.tgz.chunk-003.bin",
+          "bytes": 41943040,
+          "sha256": "28db092978bfa90f3127cda6afd3f5316b159654039e967cd0daabc2e2f64eb9"
+        },
+        {
+          "file": "dsh-dafeiyu-0.1.14.tgz.chunk-004.bin",
+          "bytes": 55468,
+          "sha256": "574f73b7c2e8829c199d844f402a74ff7c8807b26096594cb51ed539d2d89b97"
+        }
+      ]
+    },
+    {
+      "id": "dock-settings",
+      "name": "dsh-dock-settings",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-dock-settings-0.1.0.tgz",
+      "sha256": "e3059cea7737a18b52cb66f465aae247ac6988df5e1c682dd2a79ea378085147",
+      "bytes": 13645,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-dock-settings-0.1.0.tgz",
+          "bytes": 13645,
+          "sha256": "e3059cea7737a18b52cb66f465aae247ac6988df5e1c682dd2a79ea378085147"
+        }
+      ]
+    },
+    {
+      "id": "drag-and-drop",
+      "name": "dsh-drag-and-drop",
+      "version": "0.1.6",
+      "packs": [
+        "aio"
+      ],
+      "file": "dsh-drag-and-drop-0.1.6.tgz",
+      "sha256": "860969dd04153227e17f8154efe545c10391481c173f31057f28e6b1eec77e52",
+      "bytes": 54052,
+      "source": "github",
+      "parts": [
+        {
+          "file": "dsh-drag-and-drop-0.1.6.tgz",
+          "bytes": 54052,
+          "sha256": "860969dd04153227e17f8154efe545c10391481c173f31057f28e6b1eec77e52"
+        }
+      ]
+    },
+    {
+      "id": "eac-core-bridge",
+      "name": "dsh-eac-core-bridge",
+      "version": "1.0.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-eac-core-bridge-1.0.0.tgz",
+      "sha256": "fc57cd13a57edb1343a0a4597c6c49ebd36cf8de5befa48c7fb5523931344df7",
+      "bytes": 4464,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-eac-core-bridge-1.0.0.tgz",
+          "bytes": 4464,
+          "sha256": "fc57cd13a57edb1343a0a4597c6c49ebd36cf8de5befa48c7fb5523931344df7"
+        }
+      ]
+    },
+    {
+      "id": "eac-locale-compat",
+      "name": "dsh-eac-locale-compat",
+      "version": "1.0.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-eac-locale-compat-1.0.0.tgz",
+      "sha256": "b9bde1bb6c09a306f50e795b295f822bd4f23bf3fbeba22323e409d87617aa7a",
+      "bytes": 16555,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-eac-locale-compat-1.0.0.tgz",
+          "bytes": 16555,
+          "sha256": "b9bde1bb6c09a306f50e795b295f822bd4f23bf3fbeba22323e409d87617aa7a"
+        }
+      ]
+    },
+    {
+      "id": "feature-toggles",
+      "name": "dsh-feature-toggles",
+      "version": "0.1.1",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-feature-toggles-0.1.1.tgz",
+      "sha256": "afa31e0980acb25a77cf32b566f4799036325b4e63d32343ade4028e0ca77050",
+      "bytes": 4022,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-feature-toggles-0.1.1.tgz",
+          "bytes": 4022,
+          "sha256": "afa31e0980acb25a77cf32b566f4799036325b4e63d32343ade4028e0ca77050"
+        }
+      ]
+    },
+    {
+      "id": "file-drop-eac",
+      "name": "dsh-file-drop-eac",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-file-drop-eac-0.1.0.tgz",
+      "sha256": "d7e7949721576d6786bcc23ba71ac9f3dc77c6fdd3130a437d4f5ed6fa774d5c",
+      "bytes": 8062,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-file-drop-eac-0.1.0.tgz",
+          "bytes": 8062,
+          "sha256": "d7e7949721576d6786bcc23ba71ac9f3dc77c6fdd3130a437d4f5ed6fa774d5c"
+        }
+      ]
+    },
+    {
+      "id": "find-plugin",
+      "name": "dsh-find-plugin",
+      "version": "0.4.0",
+      "packs": [
+        "aio"
+      ],
+      "file": "dsh-find-plugin-0.4.0.tgz",
+      "sha256": "0ee79eacb5b02010fb19b37a27f3972fc4359653105f37517c6afce6cc771df0",
+      "bytes": 45273,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "dsh-find-plugin-0.4.0.tgz",
+          "bytes": 45273,
+          "sha256": "0ee79eacb5b02010fb19b37a27f3972fc4359653105f37517c6afce6cc771df0"
+        }
+      ]
+    },
+    {
+      "id": "font-custom",
+      "name": "dsh-font-custom",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-font-custom-0.1.0.tgz",
+      "sha256": "debd4e1cbc710195456ca8aea70c12e60f3bff955aa2785f3de238ca85c94e2b",
+      "bytes": 8774,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-font-custom-0.1.0.tgz",
+          "bytes": 8774,
+          "sha256": "debd4e1cbc710195456ca8aea70c12e60f3bff955aa2785f3de238ca85c94e2b"
+        }
+      ]
+    },
+    {
+      "id": "image-paste",
+      "name": "dsh-image-paste",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-image-paste-0.1.0.tgz",
+      "sha256": "330e3e9fbfe65abdb821101b609e8cd3214fcc9fe3fd0ce1c425772e13aae5d4",
+      "bytes": 4486,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-image-paste-0.1.0.tgz",
+          "bytes": 4486,
+          "sha256": "330e3e9fbfe65abdb821101b609e8cd3214fcc9fe3fd0ce1c425772e13aae5d4"
+        }
+      ]
+    },
+    {
+      "id": "meme",
+      "name": "dsh-meme",
+      "version": "0.1.44",
+      "packs": [
+        "aio"
+      ],
+      "file": "dsh-meme-0.1.44.tgz",
+      "sha256": "daaf02ef2635040e6bb87577c27afd11773a5da348047cc0a21614bba174e76f",
+      "bytes": 4395454,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "dsh-meme-0.1.44.tgz",
+          "bytes": 4395454,
+          "sha256": "daaf02ef2635040e6bb87577c27afd11773a5da348047cc0a21614bba174e76f"
+        }
+      ]
+    },
+    {
+      "id": "message-rewind",
+      "name": "dsh-message-rewind",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-message-rewind-0.1.0.tgz",
+      "sha256": "f2a5a5d968a1a8500840fde9453b2e1d85b969648811a3935cad199bd1b65468",
+      "bytes": 8558,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-message-rewind-0.1.0.tgz",
+          "bytes": 8558,
+          "sha256": "f2a5a5d968a1a8500840fde9453b2e1d85b969648811a3935cad199bd1b65468"
+        }
+      ]
+    },
+    {
+      "id": "offpeak",
+      "name": "dsh-offpeak",
+      "version": "9.9.9",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-offpeak-9.9.9.tgz",
+      "sha256": "a54923bcc094c88a5d3ad7fcc913b1e6c7e96e9dfb71d72997f168c0ac152694",
+      "bytes": 22034,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-offpeak-9.9.9.tgz",
+          "bytes": 22034,
+          "sha256": "a54923bcc094c88a5d3ad7fcc913b1e6c7e96e9dfb71d72997f168c0ac152694"
+        }
+      ]
+    },
+    {
+      "id": "pet",
+      "name": "dsh-pet",
+      "version": "0.3.1",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-pet-0.3.1.tgz",
+      "sha256": "5f0da7c67649de77f2f952f05719a62ec3dd9fcb0d3c1ea65708e1dbb4486ad1",
+      "bytes": 62222749,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "dsh-pet-0.3.1.tgz.chunk-000.bin",
+          "bytes": 41943040,
+          "sha256": "5a5ec1937256c4619738d6a23da44b6f38211ad2463353e5b6bdb3c82f781cbc"
+        },
+        {
+          "file": "dsh-pet-0.3.1.tgz.chunk-001.bin",
+          "bytes": 20279709,
+          "sha256": "f6d0e8074a3ffb813741c88e18cbd1ea0800c991e8a4e9eb9646414e3fbd8fc4"
+        }
+      ]
+    },
+    {
+      "id": "pet-settings",
+      "name": "dsh-pet-settings",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-pet-settings-0.1.0.tgz",
+      "sha256": "6e2db0dd44773798236d45cff9eb4e9df074206d2b7b11189818384b844a0923",
+      "bytes": 4234,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-pet-settings-0.1.0.tgz",
+          "bytes": 4234,
+          "sha256": "6e2db0dd44773798236d45cff9eb4e9df074206d2b7b11189818384b844a0923"
+        }
+      ]
+    },
+    {
+      "id": "phone",
+      "name": "dsh-phone",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-phone-0.1.0.tgz",
+      "sha256": "592c84bb8b934b10da9841be40821e2e57caccb907528c316f5e0959bc85e4e3",
+      "bytes": 19239,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-phone-0.1.0.tgz",
+          "bytes": 19239,
+          "sha256": "592c84bb8b934b10da9841be40821e2e57caccb907528c316f5e0959bc85e4e3"
+        }
+      ]
+    },
+    {
+      "id": "plugin-shield",
+      "name": "dsh-plugin-shield",
+      "version": "0.1.0",
+      "packs": [
+        "aio",
+        "eac"
+      ],
+      "file": "dsh-plugin-shield-0.1.0.tgz",
+      "sha256": "4b113bbc18131a5ac0d8ac2411a95bd01707dfa59ff408dbc1129a7f99056cd5",
+      "bytes": 5824,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-plugin-shield-0.1.0.tgz",
+          "bytes": 5824,
+          "sha256": "4b113bbc18131a5ac0d8ac2411a95bd01707dfa59ff408dbc1129a7f99056cd5"
+        }
+      ]
+    },
+    {
+      "id": "wallpaper-engine",
+      "name": "dsh-plugin-wallpaper-engine",
+      "version": "0.6.7",
+      "packs": [
+        "aio"
+      ],
+      "file": "dsh-plugin-wallpaper-engine-0.6.7.tgz",
+      "sha256": "e7050458718567f941400448df8a264a85ec9ccdac5c13696aa1e7c5518a3a66",
+      "bytes": 794049,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "dsh-plugin-wallpaper-engine-0.6.7.tgz",
+          "bytes": 794049,
+          "sha256": "e7050458718567f941400448df8a264a85ec9ccdac5c13696aa1e7c5518a3a66"
+        }
+      ]
+    },
+    {
+      "id": "plugin-wizard",
+      "name": "dsh-plugin-wizard",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-plugin-wizard-0.1.0.tgz",
+      "sha256": "8e1d08a7421699d8f48e6daf153b8372cbc84aed3ddb9008e96db751496cc855",
+      "bytes": 2875,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-plugin-wizard-0.1.0.tgz",
+          "bytes": 2875,
+          "sha256": "8e1d08a7421699d8f48e6daf153b8372cbc84aed3ddb9008e96db751496cc855"
+        }
+      ]
+    },
+    {
+      "id": "raw-html",
+      "name": "dsh-raw-html",
+      "version": "0.6.2",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-raw-html-0.6.2.tgz",
+      "sha256": "a320245871e4b471da2c0397e1051518ab57100c5c75b841a83c682bc3d36e19",
+      "bytes": 9104769,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-raw-html-0.6.2.tgz",
+          "bytes": 9104769,
+          "sha256": "a320245871e4b471da2c0397e1051518ab57100c5c75b841a83c682bc3d36e19"
+        }
+      ]
+    },
+    {
+      "id": "session-manager",
+      "name": "dsh-session-manager",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-session-manager-0.1.0.tgz",
+      "sha256": "f9b588bca237f56f5e8989d6da7e3fd598724fad18a12c9c2f8c8707768a458c",
+      "bytes": 12462,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "dsh-session-manager-0.1.0.tgz",
+          "bytes": 12462,
+          "sha256": "f9b588bca237f56f5e8989d6da7e3fd598724fad18a12c9c2f8c8707768a458c"
+        }
+      ]
+    },
+    {
+      "id": "settings-groups",
+      "name": "dsh-settings-groups",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-settings-groups-0.1.0.tgz",
+      "sha256": "142467399fd5cb136acf728f2e67f08a86814ebf0eccc0840c7b31a1b4fc1a5e",
+      "bytes": 5042,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-settings-groups-0.1.0.tgz",
+          "bytes": 5042,
+          "sha256": "142467399fd5cb136acf728f2e67f08a86814ebf0eccc0840c7b31a1b4fc1a5e"
+        }
+      ]
+    },
+    {
+      "id": "settings-scroll-fix",
+      "name": "dsh-settings-scroll-fix",
+      "version": "2.0.2",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-settings-scroll-fix-2.0.2.tgz",
+      "sha256": "39711cadbe8143803ac4b18d6e248793ead1bae06463e8279fe1cb66a759b847",
+      "bytes": 9772,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-settings-scroll-fix-2.0.2.tgz",
+          "bytes": 9772,
+          "sha256": "39711cadbe8143803ac4b18d6e248793ead1bae06463e8279fe1cb66a759b847"
+        }
+      ]
+    },
+    {
+      "id": "soul-md",
+      "name": "dsh-soul-md",
+      "version": "0.9.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-soul-md-0.9.0.tgz",
+      "sha256": "34e7b8ffb1e8111b50243ff50dc8943918da83607f343dd17fc749a7f5cd9c3b",
+      "bytes": 30798,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "dsh-soul-md-0.9.0.tgz",
+          "bytes": 30798,
+          "sha256": "34e7b8ffb1e8111b50243ff50dc8943918da83607f343dd17fc749a7f5cd9c3b"
+        }
+      ]
+    },
+    {
+      "id": "status-rotator",
+      "name": "dsh-status-rotator",
+      "version": "0.33.1",
+      "packs": [
+        "aio"
+      ],
+      "file": "dsh-status-rotator-0.33.1.tgz",
+      "sha256": "c2ba248e4b9b1d04654109f505c4dad922bdf4ab844ee04df60c5e62f4ce37c3",
+      "bytes": 332532,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "dsh-status-rotator-0.33.1.tgz",
+          "bytes": 332532,
+          "sha256": "c2ba248e4b9b1d04654109f505c4dad922bdf4ab844ee04df60c5e62f4ce37c3"
+        }
+      ]
+    },
+    {
+      "id": "endfield",
+      "name": "dsh-theme-endfield",
+      "version": "1.1.5",
+      "packs": [
+        "skins"
+      ],
+      "file": "dsh-theme-endfield-1.1.5.tgz",
+      "sha256": "0d63e00fb2259a31ae4706f3258799fcc29c9c48f62704207548ee1532f266cb",
+      "bytes": 554493,
+      "source": "github-repo",
+      "parts": [
+        {
+          "file": "dsh-theme-endfield-1.1.5.tgz",
+          "bytes": 554493,
+          "sha256": "0d63e00fb2259a31ae4706f3258799fcc29c9c48f62704207548ee1532f266cb"
+        }
+      ]
+    },
+    {
+      "id": "think-zh-expand-eac",
+      "name": "dsh-think-zh-expand-eac",
+      "version": "1.0.1",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-think-zh-expand-eac-1.0.1.tgz",
+      "sha256": "9fe8c329fe2714d1d744b0b8e278e5d5c29cfe874a3af3aa77fb57bf60a89b66",
+      "bytes": 13626,
+      "source": "github",
+      "parts": [
+        {
+          "file": "dsh-think-zh-expand-eac-1.0.1.tgz",
+          "bytes": 13626,
+          "sha256": "9fe8c329fe2714d1d744b0b8e278e5d5c29cfe874a3af3aa77fb57bf60a89b66"
+        }
+      ]
+    },
+    {
+      "id": "undo-savepoint",
+      "name": "dsh-undo-savepoint",
+      "version": "0.3.4",
+      "packs": [
+        "aio",
+        "eac"
+      ],
+      "file": "dsh-undo-savepoint-0.3.4.tgz",
+      "sha256": "798b1ef39e8fc04e50ca0d3da335246d471aab59977ac60c2315ccc56e250d5a",
+      "bytes": 42722,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-undo-savepoint-0.3.4.tgz",
+          "bytes": 42722,
+          "sha256": "798b1ef39e8fc04e50ca0d3da335246d471aab59977ac60c2315ccc56e250d5a"
+        }
+      ]
+    },
+    {
+      "id": "unified-market",
+      "name": "dsh-unified-market",
+      "version": "0.4.1",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-unified-market-0.4.1.tgz",
+      "sha256": "21d0c6d52e37a828a6371df09f9cd1146cf8dbb8f50346136410fbfd20da7c27",
+      "bytes": 111762,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "dsh-unified-market-0.4.1.tgz",
+          "bytes": 111762,
+          "sha256": "21d0c6d52e37a828a6371df09f9cd1146cf8dbb8f50346136410fbfd20da7c27"
+        }
+      ]
+    },
+    {
+      "id": "viewport-lock",
+      "name": "dsh-viewport-lock",
+      "version": "1.0.1",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-viewport-lock-1.0.1.tgz",
+      "sha256": "62236a06952427d7f6e9a3f0d9bce20f82108e32b27dd9eba4360fd27163e874",
+      "bytes": 4879,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-viewport-lock-1.0.1.tgz",
+          "bytes": 4879,
+          "sha256": "62236a06952427d7f6e9a3f0d9bce20f82108e32b27dd9eba4360fd27163e874"
+        }
+      ]
+    },
+    {
+      "id": "web-mobile-fix",
+      "name": "dsh-web-mobile-fix",
+      "version": "1.0.6",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-web-mobile-fix-1.0.6.tgz",
+      "sha256": "2692b0a3e4ca4823db092def3100cad34f0a68fd89b05421f19591be3fce6321",
+      "bytes": 7206,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "dsh-web-mobile-fix-1.0.6.tgz",
+          "bytes": 7206,
+          "sha256": "2692b0a3e4ca4823db092def3100cad34f0a68fd89b05421f19591be3fce6321"
+        }
+      ]
+    },
+    {
+      "id": "webui-prompt-optimizer",
+      "name": "dsh-webui-prompt-optimizer",
+      "version": "0.1.0",
+      "packs": [
+        "eac"
+      ],
+      "file": "dsh-webui-prompt-optimizer-0.1.0.tgz",
+      "sha256": "ffbeaffe931964b04f0881a08ccd7cd01c34679197e01760fbcaed90d444a1b3",
+      "bytes": 36625,
+      "source": "eac-tag",
+      "parts": [
+        {
+          "file": "dsh-webui-prompt-optimizer-0.1.0.tgz",
+          "bytes": 36625,
+          "sha256": "ffbeaffe931964b04f0881a08ccd7cd01c34679197e01760fbcaed90d444a1b3"
+        }
+      ]
+    },
+    {
+      "id": "whale-widget",
+      "name": "dsh-whale-widget",
+      "version": "0.3.17",
+      "packs": [
+        "aio",
+        "eac"
+      ],
+      "file": "dsh-whale-widget-0.3.17.tgz",
+      "sha256": "15361ed9ea00d9d1d744c102845aa26dbaa735f20d8d52be7e4c3f39e215699d",
+      "bytes": 4888040,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "dsh-whale-widget-0.3.17.tgz",
+          "bytes": 4888040,
+          "sha256": "15361ed9ea00d9d1d744c102845aa26dbaa735f20d8d52be7e4c3f39e215699d"
+        }
+      ]
+    },
+    {
+      "id": "meow-smooth",
+      "name": "meow-smooth",
+      "version": "0.8.1",
+      "packs": [
+        "eac"
+      ],
+      "file": "meow-smooth-0.8.1.tgz",
+      "sha256": "e29ba9e7302a5aefdd57e1294325b5c68d3ed2e6aa364fba1d85fd9cfe4b9a86",
+      "bytes": 209101,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "meow-smooth-0.8.1.tgz",
+          "bytes": 209101,
+          "sha256": "e29ba9e7302a5aefdd57e1294325b5c68d3ed2e6aa364fba1d85fd9cfe4b9a86"
+        }
+      ]
+    },
+    {
+      "id": "picturereader",
+      "name": "picturereader",
+      "version": "3.3.1",
+      "packs": [
+        "eac"
+      ],
+      "file": "picturereader-3.3.1.tgz",
+      "sha256": "6db6246aba1cdaa5a426df6353c6bbc983549d531b99ae012897dfdc5bcf0157",
+      "bytes": 133657,
+      "source": "npm",
+      "parts": [
+        {
+          "file": "picturereader-3.3.1.tgz",
+          "bytes": 133657,
+          "sha256": "6db6246aba1cdaa5a426df6353c6bbc983549d531b99ae012897dfdc5bcf0157"
+        }
+      ]
+    }
+  ]
+}

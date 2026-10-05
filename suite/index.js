@@ -1,5 +1,5 @@
 /**
- * dsh-plugin-suite — Host half.
+ * eac-plugin-suite — Host half.
  *
  * One plugin that carries the whole EAC/AIO plugin suite: a built-in catalog
  * (EAC 41 active plugins, AIO 9 + third-party runtime bundles, 10 optional
@@ -12,12 +12,12 @@
  *   `dsh plugin` CLI use. Install/remove/enable all go through it, so every
  *   operation inherits the kernel's own pre-checks, snapshot and rollback.
  * - `webServer` (optional, lazy) — mounts the JSON API the settings tab reads
- *   at `/api/plugin-suite/*` plus an SSE stream for install progress.
+ *   at `/api/eac-plugin-suite/*` plus an SSE stream for install progress.
  *
  * Everything else is deliberately self-contained: the catalog ships inside the
- * package (`catalog/*.json`, repacked tarballs under `assets/dist/`), snapshots
- * land under `$DSH_HOME/plugin-suite/`, and no network call is ever required —
- * a catalog entry without a local tarball falls back to its registry spec.
+ * package (`catalog/*.json`, repacked tarballs in the required registry data dependency), snapshots
+ * land under `$DSH_HOME/eac-plugin-suite/`. Git installs acquire the required data dependency; complete Releases bundle it;
+ * startup verifies local assets without downloading them.
  *
  * @module index.js
  */
@@ -29,8 +29,10 @@ import crypto from 'node:crypto'
 import { Readable } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
 import { fileURLToPath } from 'node:url'
+import { ResourceManager } from './resources.mjs'
+import { resolveAssetPackage, readVerifiedAsset, verifyAssetPackage } from './asset-package.mjs'
 
-export const name = 'plugin-suite'
+export const name = 'eac-plugin-suite'
 
 /** Nothing required at start: services resolve lazily so a missing one
  *  degrades a feature instead of failing the whole plugin. */
@@ -41,7 +43,11 @@ const PKG_DIR = fileURLToPath(new URL('./', import.meta.url))
 
 /** Plugin data dir resolved lazily (DSH_HOME must be read at call time). */
 function dataDir() {
-  return path.join(resolveDshHome(), 'plugin-suite')
+  const dir = path.join(resolveDshHome(), 'eac-plugin-suite')
+  const legacy = path.join(resolveDshHome(), 'plugin-suite')
+  // Keep the old data intact; new code writes only to its own directory.
+  if (!fs.existsSync(dir) && fs.existsSync(legacy)) fs.cpSync(legacy, dir, { recursive: true, dereference: false })
+  return dir
 }
 function snapshotDir() {
   return path.join(dataDir(), 'snapshots')
@@ -180,6 +186,14 @@ function pmCall(pm, method, ...args) {
     throw new Error(`pluginManager.${method} is unavailable on this kernel`)
   }
   return pm[method](...args)
+}
+
+function assertManagementResult(result) {
+  if (result?.application !== 'failed' && !result?.error) return result
+  const detail = result.error?.diagnostic ?? result.packageResult?.output ?? ''
+  const error = new Error([result.error?.code ?? 'operation-error', detail].filter(Boolean).join(': '))
+  error.management = result.error
+  throw error
 }
 
 function normalizeBundle(b) {
@@ -465,9 +479,10 @@ function installSkipReason(entry, job) {
 async function runStep(job, entry) {
   const pm = job.pm ?? state.pm
   emit({ type: 'step-start', jobId: job.id, id: entry.id, name: entry.name, version: entry.version })
+  let assetFailure = false
   try {
     if (job.type === 'uninstall') {
-      await pmCall(pm, 'removeBundle', entry.name)
+      assertManagementResult(await pmCall(pm, 'removeBundle', entry.name))
     } else {
       const skip = installSkipReason(entry, job)
       if (skip) {
@@ -475,9 +490,18 @@ async function runStep(job, entry) {
         appendJobLog(job.id, `skip ${entry.name}: ${skip.reason}`)
         return { id: entry.id, ok: true, skipped: skip.reason }
       }
-      if (job.type === 'channel-update' && entry.channelItem) {
-        emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: `fetching ${entry.channelItem.file} from channel` })
-        entry.cacheFile = await downloadItem(entry.channelItem, job.id)
+      try {
+        if (job.type === 'channel-update' && entry.channelItem) {
+          emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: `fetching ${entry.channelItem.file} from channel` })
+          entry.cacheFile = await downloadItem(entry.channelItem, job.id)
+        }
+        if (job.type !== 'channel-update' && state.resources) {
+          emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: 'checking pinned resource' })
+          entry.cacheFile = await state.resources.ensure(entry)
+        }
+      } catch (err) {
+        assetFailure = true
+        throw err
       }
       const target = resolveTarget(entry, state.distIndex)
       const options = {}
@@ -496,6 +520,7 @@ async function runStep(job, entry) {
         emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: `approving build scripts: ${pending.join(', ')}` })
         result = await pmCall(pm, 'installBundle', target, { ...options, approvedBuilds: pending })
       }
+      assertManagementResult(result)
       if ((job.type === 'update' || job.type === 'channel-update') && typeof entry.defaultEnabled === 'boolean') {
         const current = job.enabledMap?.get(entry.name)
         await syncEnabled(pm, entry, typeof current === 'boolean' ? current : entry.defaultEnabled !== false, job.id)
@@ -508,7 +533,7 @@ async function runStep(job, entry) {
     // Incompatible peer on this kernel: grant an exact-version exemption
     // (acceptRisk) and retry once — matches the kernel's own escape hatch.
     const message = String(err?.message ?? err)
-    if (job.type !== 'uninstall' && job.exempt !== false && /incompat|peer|version/i.test(message)) {
+    if (!assetFailure && job.type !== 'uninstall' && job.exempt !== false && /incompat|peer|version/i.test(message)) {
       const runtime = (message.match(/\d+\.\d+\.\d+-(?:rc|alpha|beta)[.\w]*/) ?? [SUITE_RUNTIME])[0]
       try {
         emit({ type: 'step-warn', jobId: job.id, id: entry.id, message: `granting version exemption for ${entry.name}@${entry.version} on ${runtime}` })
@@ -523,7 +548,7 @@ async function runStep(job, entry) {
                     ? job.enabledMap.get(entry.name)
                     : entry.defaultEnabled !== false,
               }
-        await pmCall(pm, 'installBundle', target, options)
+        assertManagementResult(await pmCall(pm, 'installBundle', target, options))
         emit({ type: 'step-ok', jobId: job.id, id: entry.id, message: 'installed with version exemption' })
         appendJobLog(job.id, `ok(exempt) ${entry.name}@${entry.version}`)
         return { id: entry.id, ok: true, exempt: true }
@@ -751,6 +776,7 @@ async function buildStatus() {
   for (const pack of PACK_IDS) packs[pack] = project(catalog.packs[pack])
   return {
     suiteVersion: SUITE_VERSION,
+    resources: state.resources?.snapshot() ?? null,
     packs,
     retired: catalog.retired,
     bundles,
@@ -765,10 +791,10 @@ async function buildStatus() {
 const CHANNEL_INDEX_URLS = [
   // jsDelivr first: it serves the same repo file and is reachable from more
   // networks (raw.githubusercontent TLS fails on some CN setups).
-  'https://cdn.jsdelivr.net/gh/zouyuxuan122/EAC-Plugin-Integration-Pack@main/channel/channel.json',
-  'https://raw.githubusercontent.com/zouyuxuan122/EAC-Plugin-Integration-Pack/main/channel/channel.json',
+  'https://cdn.jsdelivr.net/gh/DSH-EAC/EAC-Pack@main/channel/channel.json',
+  'https://raw.githubusercontent.com/DSH-EAC/EAC-Pack/main/channel/channel.json',
 ]
-const CHANNEL_ASSET_BASE = 'https://github.com/zouyuxuan122/EAC-Plugin-Integration-Pack/releases/download/channel'
+const CHANNEL_ASSET_BASE = 'https://github.com/DSH-EAC/EAC-Pack/releases/download/channel'
 const PROBE_TIMEOUT_MS = 8000
 const DOWNLOAD_TIMEOUT_MS = 10 * 60 * 1000
 const DOWNLOAD_PROGRESS_TICK = 256 * 1024
@@ -1020,7 +1046,7 @@ async function buildChannelStatus() {
       version: suite.version,
       file: suite.file ?? null,
       sha256: suite.sha256 ?? null,
-      downloadUrl: suite.file ? assetUrl(suite.file) : null,
+      downloadUrl: suite.downloadUrl ?? (suite.file ? `https://github.com/DSH-EAC/EAC-Pack/releases/download/v${suite.version}/${suite.file}` : null),
     }
   }
   return status
@@ -1104,23 +1130,25 @@ async function autoCheck() {
 
 function loadGallery() {
   if (state.gallery !== undefined) return state.gallery
-  state.gallery = readJson(path.join(PKG_DIR, 'assets', 'gallery.json'))
+  state.gallery = JSON.parse(readVerifiedAsset(assetDirectory(), resourceManifest(), 'gallery.json').toString('utf8'))
   return state.gallery
 }
 
 function loadPrompt(id) {
   const safe = String(id ?? '').replace(/[^a-z0-9-]/g, '')
-  const dir = path.join(PKG_DIR, 'assets', 'prompts', safe)
-  return { id: safe, manifest: readJson(path.join(dir, 'manifest.json')), prompt: readFileOrNull(path.join(dir, 'prompt.md')) }
+  const assets = assetDirectory(), manifest = resourceManifest()
+  const read = file => manifest.extraFiles.some(i => i.file === file) ? readVerifiedAsset(assets, manifest, file).toString('utf8') : null
+  const metadata = read(`prompts/${safe}/manifest.json`)
+  return { id: safe, manifest: metadata ? JSON.parse(metadata) : null, prompt: read(`prompts/${safe}/prompt.md`) }
 }
 
 function servePreview(res, id, theme) {
-  const file = path.join(PKG_DIR, 'assets', 'previews', id, `${theme}.png`)
+  const file = `previews/${id}/${theme}.png`
   // Buffer + single res.end(): the dsh-app fetch bridge captures the body from
   // res.end (streamed pipes never reach it and surface as empty/failed fetches).
   let data
   try {
-    data = fs.readFileSync(file)
+    data = readVerifiedAsset(assetDirectory(), resourceManifest(), file)
   } catch {
     return json(res, 404, { error: 'preview not found' })
   }
@@ -1134,7 +1162,34 @@ function servePreview(res, id, theme) {
 // HTTP API (mounted lazily on webServer)
 // ---------------------------------------------------------------------------
 
-const SUITE_VERSION = readJson(path.join(PKG_DIR, 'package.json'))?.version ?? ''
+// Git packages keep their manifest at the root; Release packages are flat.
+const PACKAGE_INFO = readJson(path.join(PKG_DIR, 'package.json')) ?? readJson(path.join(PKG_DIR, '..', 'package.json'))
+const SUITE_VERSION = PACKAGE_INFO?.version ?? ''
+
+function resourceManifest() { return readJson(path.join(PKG_DIR, 'assets', 'bootstrap.json')) }
+function assetDirectory(pkgDir = PKG_DIR, manifest = resourceManifest()) { return resolveAssetPackage(pkgDir, manifest) }
+function resourceDirectory(pkgDir = PKG_DIR, manifest = resourceManifest()) { return path.join(assetDirectory(pkgDir, manifest), 'payload') }
+
+function createResources(manifest = resourceManifest()) {
+  let assets, resolutionError
+  try { assets = assetDirectory(PKG_DIR, manifest) } catch (error) { resolutionError = error }
+  return new ResourceManager({
+    manifest,
+    cacheDir: path.join(dataDir(), 'resources'),
+    bundledDir: assets ? path.join(assets, 'payload') : '',
+    validateInstall() { if (resolutionError) throw resolutionError; verifyAssetPackage(assets, manifest) },
+    onProgress: resources => emit({ type: 'resources', resources }),
+  })
+}
+
+function completeResources() {
+  if (!state.resources) return null
+  const manager = state.resources
+  return manager.hydrate().catch(err => {
+    trace('resources-error', String(err?.message ?? err))
+    return manager.snapshot()
+  })
+}
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -1162,7 +1217,7 @@ function json(res, status, payload) {
 function createApiHandler(ctx) {
   return async function handler(req, res) {
     const url = new URL(req.url ?? '/', 'http://localhost')
-    const routePath = url.pathname.replace(/^\/api\/plugin-suite/, '').replace(/\/+$/, '') || '/'
+    const routePath = url.pathname.replace(/^\/api\/eac-plugin-suite/, '').replace(/\/+$/, '') || '/'
     const method = String(req.method ?? 'GET').toUpperCase()
     try {
       if (routePath === '/events' && method === 'GET') return sse(req, res)
@@ -1187,11 +1242,16 @@ function createApiHandler(ctx) {
       if (previewMatch && method === 'GET') return servePreview(res, previewMatch[1], previewMatch[2])
       if (method === 'POST') {
         const body = await readBody(req)
+        if (routePath === '/resources/retry') {
+          if (!state.resources) return json(res, 409, { error: 'local resource verification unavailable' })
+          completeResources()
+          return json(res, 202, state.resources.snapshot())
+        }
         if (routePath === '/install') {
           const job = { id: `job-${Date.now()}`, type: 'install', pm: state.pm, pack: body.pack ?? null, ids: body.ids ?? null, setEnabled: body.setEnabled !== false, force: body.force === true }
           if (!job.pack && !job.ids?.length) return json(res, 400, { error: 'pack or ids required' })
           enqueue(job)
-          return json(res, 202, { jobId: job.id, poll: '/api/plugin-suite/events', note: 'a profile snapshot is taken automatically when the job starts' })
+          return json(res, 202, { jobId: job.id, poll: '/api/eac-plugin-suite/events', note: 'a profile snapshot is taken automatically when the job starts' })
         }
         if (routePath === '/update') {
           const job = { id: `job-${Date.now()}`, type: 'update', pm: state.pm, pack: body.pack ?? null, ids: body.ids ?? null }
@@ -1310,9 +1370,18 @@ export function apply(ctx, config) {
   trace('apply-start')
   try {
     state.ctx = ctx
+    state.gallery = undefined
     state.catalog = loadCatalog()
     state.distIndex = loadDistIndex()
     state.channelCfg = loadChannelConfig()
+    state.resources?.dispose()
+    state.resources = null
+    if (process.env.DSH_SUITE_NO_RESOURCES !== '1') {
+      const resources = createResources()
+      state.resources = resources
+      ctx.effect?.(() => () => resources.dispose(), 'eac-plugin-suite: resource lifecycle')
+      completeResources()
+    }
     rescheduleAutoCheck()
 
     // Boot self-heal runs BEFORE any service dependency: a plugin-manager
@@ -1322,33 +1391,33 @@ export function apply(ctx, config) {
     // guards (dependencies / dsh.profile.bundles / pnpm-lock) need no kernel.
     sweepGhosts('boot')
       .then((removed) => {
-        if (removed.length) logger.info?.(`[plugin-suite] ghost sweep removed: ${removed.join(', ')}`)
+        if (removed.length) logger.info?.(`[eac-plugin-suite] ghost sweep removed: ${removed.join(', ')}`)
       })
       .catch((err) => trace('ghost-sweep-boot-error', String(err?.stack ?? err)))
     retireKernelProvided('boot')
       .then((removed) => {
-        if (removed.length) logger.info?.(`[plugin-suite] retired kernel-provided duplicates: ${removed.join(', ')}`)
+        if (removed.length) logger.info?.(`[eac-plugin-suite] retired kernel-provided duplicates: ${removed.join(', ')}`)
       })
       .catch((err) => trace('retire-boot-error', String(err?.stack ?? err)))
 
     const counts = Object.entries(state.catalog.packs)
       .map(([pack, list]) => `${pack}=${list.length}`)
       .join(' ')
-    logger.info?.(`[plugin-suite] catalog loaded (${counts}), dist tarballs: ${state.distIndex.length}`)
+    logger.info?.(`[eac-plugin-suite] catalog loaded (${counts}), dist tarballs: ${state.distIndex.length}`)
 
     // pluginManager resolves lazily: the installer API reports a clear error
     // until the service shows up instead of failing the plugin start.
     ctx.inject?.(['pluginManager'], (scoped) => {
       state.pm = scoped.pluginManager
       trace('pluginManager', state.pm ? 'resolved' : 'null')
-      logger.info?.('[plugin-suite] pluginManager service bound')
+      logger.info?.('[eac-plugin-suite] pluginManager service bound')
       // pm is bound: run a second sweep pass that also honors the listBundles
       // guard. The retire of kernel-provided duplicates already ran offline at
       // apply-start (it must not wait for this binding — see its doc).
       if (state.pm) {
         sweepGhosts('boot-pm')
           .then((removed) => {
-            if (removed.length) logger.info?.(`[plugin-suite] ghost sweep (pm pass) removed: ${removed.join(', ')}`)
+            if (removed.length) logger.info?.(`[eac-plugin-suite] ghost sweep (pm pass) removed: ${removed.join(', ')}`)
           })
           .catch(() => { /* trace already recorded inside */ })
       }
@@ -1365,25 +1434,32 @@ export function apply(ctx, config) {
       const effect = scoped.effect ?? ctx.effect
       effect?.(() => {
         try {
-          const dispose = server.register({ kind: 'prefix', path: '/api/plugin-suite', handler: createApiHandler(ctx) })
-          trace('webServer', 'mounted /api/plugin-suite')
-          logger.info?.('[plugin-suite] API mounted at /api/plugin-suite')
+          const dispose = server.register({ kind: 'prefix', path: '/api/eac-plugin-suite', handler: createApiHandler(ctx) })
+          trace('webServer', 'mounted /api/eac-plugin-suite')
+          logger.info?.('[eac-plugin-suite] API mounted at /api/eac-plugin-suite')
           return typeof dispose === 'function' ? dispose : undefined
         } catch (err) {
           trace('webServer-register-error', String(err?.stack ?? err))
           return undefined
         }
-      }, 'plugin-suite: api routes')
+      }, 'eac-plugin-suite: api routes')
     })
   } catch (err) {
     trace('apply-error', String(err?.stack ?? err))
-    logger.warn?.(`[plugin-suite] apply failed: ${String(err?.message ?? err)}`)
+    logger.warn?.(`[eac-plugin-suite] apply failed: ${String(err?.message ?? err)}`)
   }
 }
 
 /** Test hooks — the channel engine is unit-tested with a mocked fetch. */
 export const __test = {
   state,
+  resourceDirectory,
+  assetDirectory,
+  createResources,
+  completeResources,
+  dataDir,
+  resolveTarget,
+  assertManagementResult,
   cmpVersions,
   parseVersion,
   loadCatalog,

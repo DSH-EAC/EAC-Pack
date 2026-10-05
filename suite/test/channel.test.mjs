@@ -1,3 +1,4 @@
+process.env.DSH_SUITE_NO_RESOURCES = '1'
 import { test, beforeEach } from 'node:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
@@ -99,7 +100,7 @@ function manifestFixture(overrides = {}) {
     items: [
       { id: 'miku', name: SKIN_NAME, version: '9.9.9', packs: ['skins'], file: `${SKIN_NAME.replace(/\//g, '_')}-9.9.9.tgz`, sha256: TARBALL_SHA, bytes: TARBALL.length, source: 'npm' },
     ],
-    suite: { version: '0.2.0', file: 'dsh-plugin-suite-0.2.0.tgz', sha256: 'ab'.repeat(32), bytes: 1 },
+    suite: { version: '0.2.0', file: 'eac-plugin-suite-0.2.0.tgz', sha256: 'ab'.repeat(32), bytes: 1 },
     ...overrides,
   }
 }
@@ -151,7 +152,7 @@ test('probeChannel goes online on the first healthy source and persists state', 
   const manifest = await __test.probeChannel()
   assert.equal(manifest.channelVersion, 2)
   assert.equal(state.channelCfg.channelState, 'online')
-  const persisted = JSON.parse(fs.readFileSync(path.join(home, 'plugin-suite', 'config.json'), 'utf8'))
+  const persisted = JSON.parse(fs.readFileSync(path.join(home, 'eac-plugin-suite', 'config.json'), 'utf8'))
   assert.equal(persisted.channelState, 'online')
   assert.equal(persisted.channel.channelVersion, 2)
   delete process.env.DSH_HOME
@@ -205,19 +206,19 @@ test('channel apply downloads, verifies sha256 and preserves disabled state', as
   state.catalog = __test.loadCatalog()
 
   const checkRes = makeRes()
-  await registered[0].handler(makeReq('http://localhost/api/plugin-suite/channel/check', 'POST', '{}'), checkRes)
+  await registered[0].handler(makeReq('http://localhost/api/eac-plugin-suite/channel/check', 'POST', '{}'), checkRes)
   assert.equal(JSON.parse(checkRes.body).state, 'online')
 
   const applyRes = makeRes()
-  await registered[0].handler(makeReq('http://localhost/api/plugin-suite/channel/apply', 'POST', JSON.stringify({ ids: ['miku'] })), applyRes)
+  await registered[0].handler(makeReq('http://localhost/api/eac-plugin-suite/channel/apply', 'POST', JSON.stringify({ ids: ['miku'] })), applyRes)
   assert.equal(applyRes.statusCode, 202)
   const jobId = JSON.parse(applyRes.body).jobId
-  await new Promise((r) => setTimeout(r, 50))
+  await state.queueTail
 
   assert.equal(pm.installs.length, 1)
   const target = pm.installs[0].target
   assert.ok(fs.existsSync(target), 'downloaded tarball exists in cache')
-  assert.ok(target.includes(path.join('plugin-suite', 'cache')), 'tarball lands in the cache dir')
+  assert.ok(target.includes(path.join('eac-plugin-suite', 'cache')), 'tarball lands in the cache dir')
   assert.equal(fs.readFileSync(target, 'utf8'), TARBALL.toString())
   assert.equal(pm.installs[0].options.enabled, false, 'disabled skin stays disabled after update')
 
@@ -245,7 +246,7 @@ test('downloadItem retries once and throws on persistent sha256 mismatch', async
 test('cached tarball with matching hash skips the download', async () => {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), 'suite-chan-'))
   process.env.DSH_HOME = home
-  const cache = path.join(home, 'plugin-suite', 'cache')
+  const cache = path.join(home, 'eac-plugin-suite', 'cache')
   fs.mkdirSync(cache, { recursive: true })
   const file = path.join(cache, manifestFixture().items[0].file)
   fs.writeFileSync(file, TARBALL)
@@ -268,7 +269,7 @@ test('channel/apply without a loaded channel answers 409', async () => {
   const { ctx, registered } = mockCtx({ pluginManager: pm })
   apply(ctx, {})
   const res = makeRes()
-  await registered[0].handler(makeReq('http://localhost/api/plugin-suite/channel/apply', 'POST', JSON.stringify({ ids: ['miku'] })), res)
+  await registered[0].handler(makeReq('http://localhost/api/eac-plugin-suite/channel/apply', 'POST', JSON.stringify({ ids: ['miku'] })), res)
   assert.equal(res.statusCode, 409)
   delete process.env.DSH_HOME
 })
@@ -286,11 +287,11 @@ test('channel update verification retries a silently dropped install', async () 
   apply(ctx, {})
   state.catalog = __test.loadCatalog()
 
-  await registered[0].handler(makeReq('http://localhost/api/plugin-suite/channel/check', 'POST', '{}'), makeRes())
+  await registered[0].handler(makeReq('http://localhost/api/eac-plugin-suite/channel/check', 'POST', '{}'), makeRes())
   const applyRes = makeRes()
-  await registered[0].handler(makeReq('http://localhost/api/plugin-suite/channel/apply', 'POST', JSON.stringify({ ids: ['miku'] })), applyRes)
+  await registered[0].handler(makeReq('http://localhost/api/eac-plugin-suite/channel/apply', 'POST', JSON.stringify({ ids: ['miku'] })), applyRes)
   assert.equal(applyRes.statusCode, 202)
-  await new Promise((r) => setTimeout(r, 50))
+  await state.queueTail
 
   assert.equal(pm.installs.length, 2, 'dropped install is retried exactly once')
   const warn = state.events.find((e) => e.type === 'step-warn' && /did not persist/.test(e.message ?? ''))

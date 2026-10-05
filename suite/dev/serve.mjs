@@ -8,7 +8,7 @@
  * dev/boot.mjs, dev/vendor/…) so the preview exercises the exact client file
  * that ships — no build step, no copy.
  *
- * Also answers GET /api/plugin-suite/asset/previews/<id>/<theme>.png with a
+ * Also answers GET /api/eac-plugin-suite/asset/previews/<id>/<theme>.png with a
  * generated SVG placeholder: <img> loads bypass the boot.mjs fetch shim, so
  * the server itself must stand in for the host half's asset route (404 for
  * skins whose gallery entry has no previews).
@@ -38,7 +38,7 @@ if (!fs.existsSync(path.join(here, 'vendor', 'react.iife.js'))) {
   console.warn('[serve] dev/vendor/react.iife.js is missing — run: npm i -D react react-dom esbuild --prefix suite && node suite/dev/build-deps.mjs')
 }
 
-const ASSET_RE = /^\/api\/plugin-suite\/asset\/previews\/([^/]+)\/(light|dark)\.(?:png|svg)$/
+const ASSET_RE = /^\/api\/eac-plugin-suite\/asset\/previews\/([^/]+)\/(light|dark)\.(?:png|svg)$/
 
 const server = http.createServer((req, res) => {
   try {

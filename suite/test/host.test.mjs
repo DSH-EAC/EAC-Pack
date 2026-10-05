@@ -1,3 +1,4 @@
+process.env.DSH_SUITE_NO_RESOURCES = '1'
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
@@ -84,11 +85,11 @@ test('apply mounts the API and catalog endpoint serves packaged catalog', async 
   const { ctx, registered } = mockCtx({ pluginManager: pm })
   apply(ctx, {})
   assert.equal(registered.length, 1)
-  assert.equal(registered[0].path, '/api/plugin-suite')
+  assert.equal(registered[0].path, '/api/eac-plugin-suite')
 
   const handler = registered[0].handler
   const res = makeRes()
-  await handler(makeReq('http://localhost/api/plugin-suite/catalog'), res)
+  await handler(makeReq('http://localhost/api/eac-plugin-suite/catalog'), res)
   const payload = JSON.parse(res.body)
   assert.equal(res.statusCode, 200)
   assert.ok(payload.packs, 'catalog response exposes packs')
@@ -108,13 +109,13 @@ test('install job runs serially, emits events and takes a snapshot', async () =>
   //  resolved from whatever catalog exists — assert against the engine, not the data)
 
   const res = makeRes()
-  await handler(makeReq('http://localhost/api/plugin-suite/install', 'POST', JSON.stringify({ pack: 'eac', ids: ['__nothing__'] })), res)
+  await handler(makeReq('http://localhost/api/eac-plugin-suite/install', 'POST', JSON.stringify({ pack: 'eac', ids: ['__nothing__'] })), res)
   assert.equal(res.statusCode, 202)
   // give the queue a tick
   await new Promise((r) => setTimeout(r, 20))
 
   const snapRes = makeRes()
-  await handler(makeReq('http://localhost/api/plugin-suite/snapshots'), snapRes)
+  await handler(makeReq('http://localhost/api/eac-plugin-suite/snapshots'), snapRes)
   const snapshots = JSON.parse(snapRes.body).snapshots
   assert.ok(Array.isArray(snapshots), 'snapshots endpoint responds')
   delete process.env.DSH_HOME
@@ -129,7 +130,7 @@ test('version compare is prerelease-aware', async () => {
   apply(ctx, {})
   const handler = registered[0].handler
   const res = makeRes()
-  await handler(makeReq('http://localhost/api/plugin-suite/status'), res)
+  await handler(makeReq('http://localhost/api/eac-plugin-suite/status'), res)
   const payload = JSON.parse(res.body)
   assert.equal(res.statusCode, 200)
   assert.ok(payload.bundles.length >= 1)

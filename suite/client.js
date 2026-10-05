@@ -1,7 +1,7 @@
 /**
- * dsh-plugin-suite — browser half (v0.2.0 UI refresh).
+ * eac-plugin-suite — browser half (v0.2.0 UI refresh).
  *
- * Contributes one settings tab (`settings.plugins.tab` id `plugin-suite`):
+ * Contributes one settings tab (`settings.plugins.tab` id `eac-plugin-suite`):
  *
  *   top bar      title + version badge | channel pill + check-updates button
  *   segmented    概览 / 皮肤馆 / 插件管理 / 更新中心 (sliding indicator,
@@ -17,7 +17,7 @@
  *   progress     sticky live job panel with morphing bar, expandable log and
  *                a stroke-drawn ✓ on completion
  *
- * Data comes from this plugin's same-origin `/api/plugin-suite/*` routes
+ * Data comes from this plugin's same-origin `/api/eac-plugin-suite/*` routes
  * (API-v2), which the Host half mounts on the shared web server. Hand-written
  * ModuleLoader bundle: no build step, the only dependency is the `react` the
  * shell already provides. All colour comes from theme variables so the page
@@ -25,25 +25,33 @@
  * prefers-reduced-motion.
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-plugin-suite',
+  id: 'eac-plugin-suite',
   factory: require => {
     const module = { exports: {} }
     const exports = module.exports
     const React = require('react')
     const { createElement: h, Fragment, useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } = React
 
-    const NS = 'settings.pluginSuite'
+    const NS = 'settings.eacPluginSuite'
     const inject = ['slots', 'locale']
-    const API = '/api/plugin-suite'
+    const API = '/api/eac-plugin-suite'
     const EASE = 'cubic-bezier(0.16,1,0.3,1)'
 
     // ── copy ──────────────────────────────────────────────────────────────────
     const DICT = {
       zh: {
-        'meta.title': 'DSH 插件整合包',
+        'resources.title': "完整安装资产",
+        'resources.checking': "正在校验本地资产…",
+        'resources.ready': "完整资产已就绪",
+        'resources.failed': "本地资产校验失败",
+        'resources.cancelled': "本地校验已停止",
+        'resources.idle': "等待本地校验",
+        'resources.hint': "完整资产由安装阶段的必选资源依赖提供。缺失或损坏请重新安装整合包及依赖；不会自动启用插件。",
+        'resources.retry': "重新校验",
+        'meta.title': 'eac-plugin-suite · 插件整合包',
         'meta.description': '一键安装与更新 EAC / AIO 全量插件整合包，附皮肤馆与在线渠道',
         tab: '整合包',
-        subtitle: 'EAC / AIO 全量插件整合包 · 离线一键安装 · 在线渠道更新',
+        subtitle: 'EAC / AIO 插件整合包 · 安装阶段级联取得完整资源 · 本地校验',
         refresh: '刷新',
         refreshTip: '重新读取整合包状态',
         loading: '正在读取整合包目录…',
@@ -52,7 +60,7 @@ window.__ModuleLoader__.load({
         retry: '重试',
         emptyCatalog: '整合包目录为空：请使用随包发布的完整版本。',
         'empty.title': '这个包暂无可安装的插件',
-        'empty.hint': '目录为空通常意味着使用的是精简构建：请换用随包发布的完整版本。',
+        'empty.hint': '目录缺失，请重新安装 eac-plugin-suite。',
 
         'nav.overview': '概览',
         'nav.gallery': '皮肤馆',
@@ -188,10 +196,18 @@ window.__ModuleLoader__.load({
         needRestart: '版本替换需重启应用后完全生效',
       },
       en: {
-        'meta.title': 'DSH Plugin Suite',
+        'resources.title': "Complete installed assets",
+        'resources.checking': "Verifying installed assets…",
+        'resources.ready': "Complete assets are ready",
+        'resources.failed': "Local asset verification failed",
+        'resources.cancelled': "Local verification stopped",
+        'resources.idle': "Waiting for local verification",
+        'resources.hint': "Baseline assets are installed as a required dependency. Missing or damaged files require reinstalling the suite and its dependency; plugins are not enabled automatically.",
+        'resources.retry': "Verify again",
+        'meta.title': 'eac-plugin-suite',
         'meta.description': 'One-click install and update for the EAC / AIO plugin suites, with a skin gallery and online channel',
         tab: 'Suite',
-        subtitle: 'Full EAC / AIO plugin suites · offline one-click install · online channel updates',
+        subtitle: 'EAC / AIO plugin suites · complete assets installed as a required dependency · local verification',
         refresh: 'Refresh',
         refreshTip: 'Re-read suite state',
         loading: 'Loading suite catalog…',
@@ -200,7 +216,7 @@ window.__ModuleLoader__.load({
         retry: 'Retry',
         emptyCatalog: 'Suite catalog is empty: use the full release build.',
         'empty.title': 'Nothing to install in this pack',
-        'empty.hint': 'An empty catalog usually means a slim build: use the full release package.',
+        'empty.hint': 'Catalog missing: reinstall eac-plugin-suite.',
 
         'nav.overview': 'Overview',
         'nav.gallery': 'Skin Gallery',
@@ -394,6 +410,7 @@ window.__ModuleLoader__.load({
 
 /* ── notice ─────────────────────────────────────────────── */
 .suite-notice { display: flex; align-items: center; gap: 8px; border-radius: 8px; padding: 6px 10px; font-size: 12px; margin: 0 0 10px; animation: suite-rise 220ms ease both; }
+.suite-resources { display: block; background: var(--dsw-alias-bg-layer-2); padding: 10px 12px; }
 .suite-notice.warn { color: var(--dsw-alias-state-warning-primary); background: color-mix(in srgb, var(--dsw-alias-state-warning-primary) 10%, transparent); }
 .suite-notice.err { color: var(--dsw-alias-state-error-primary); background: color-mix(in srgb, var(--dsw-alias-state-error-primary) 10%, transparent); }
 
@@ -1375,6 +1392,25 @@ window.__ModuleLoader__.load({
       )
     }
 
+    function ResourcesPanel({ resources, t, onRetry }) {
+      if (!resources) return null
+      const failed = resources.state === 'failed' || resources.state === 'cancelled'
+      const percent = resources.totalBytes ? Math.min(100, Math.round(resources.receivedBytes / resources.totalBytes * 100)) : 0
+      const mb = bytes => (Number(bytes ?? 0) / 1000000).toFixed(1)
+      return h('section', { className: 'suite-notice suite-resources ' + (failed ? 'warn' : ''), 'data-testid': 'resources' },
+        h('div', { role: 'status', 'aria-live': 'polite' },
+          h('strong', null, t('resources.' + resources.state)),
+          ' · ' + resources.completed + '/' + resources.total + ' · ' + mb(resources.receivedBytes) + '/' + mb(resources.totalBytes) + ' MB'),
+        resources.state !== 'ready' && h('progress', {
+          value: percent, max: 100, 'aria-label': t('resources.title'),
+          style: { display: 'block', width: '100%', margin: '8px 0', accentColor: 'var(--dsw-alias-brand-primary)' },
+        }),
+        resources.state !== 'ready' && h('div', null, t('resources.hint')),
+        failed && h('div', { style: { overflowWrap: 'anywhere', marginTop: 6 } }, resources.error),
+        failed && h('button', { type: 'button', className: 'suite-btn sm', style: { marginTop: 8 }, onClick: onRetry }, t('resources.retry')),
+      )
+    }
+
     // ── root tab ──────────────────────────────────────────────────────────────
     const TABS = [
       { id: 'overview', label: 'nav.overview' },
@@ -1467,7 +1503,9 @@ window.__ModuleLoader__.load({
         const onEvent = (msg) => {
           let e
           try { e = JSON.parse(msg.data) } catch { return }
-          if (e.type === 'job-start') {
+          if (e.type === 'resources') {
+            setState(s => ({ ...s, data: { ...(s.data ?? {}), resources: e.resources } }))
+          } else if (e.type === 'job-start') {
             seen.clear()
             setJob({ type: e.jobType, pack: e.pack, total: e.total, done: 0, pct: 0, snapshot: e.snapshot })
             setEvents(prev => [...prev, e])
@@ -1668,6 +1706,12 @@ window.__ModuleLoader__.load({
               }, h(Icon.refresh)),
               h('button', { type: 'button', className: 'suite-btn', onClick: checkChannel, disabled: busy || channel.phase === 'checking' },
                 channel.phase === 'checking' ? tr('channel.checking') : tr('channel.checkNow')))),
+          h(ResourcesPanel, { resources: data?.resources, t: tr, onRetry: async () => {
+            try {
+              const resources = await api('/resources/retry', POST_JSON({}))
+              setState(s => ({ ...s, data: { ...s.data, resources } }))
+            } catch (err) { setNotice({ kind: 'err', text: String(err.message ?? err) }) }
+          } }),
           h(ProgressPanel, { events, job, t: tr, open: logOpen, onToggle: () => setLogOpen(o => !o) }),
           notice && h('div', { className: 'suite-notice ' + notice.kind }, notice.text),
           h(SegNav, { tabs: TABS, active: tab, onChange: setTab, t: tr }),
@@ -1747,11 +1791,11 @@ window.__ModuleLoader__.load({
       // apply their own `fmt(tr(key), vars)`; with vars, translate first (some
       // shells interpolate themselves) and fmt afterwards (raw-template shells).
       SuiteTab._t = (x, vars) => (vars === undefined ? t(x) : fmt(t(x, vars), vars))
-      ctx.effect?.(() => ctx.locale?.register?.(NS, { zh: DICT.zh, en: DICT.en }), 'plugin-suite: dictionaries')
+      ctx.effect?.(() => ctx.locale?.register?.(NS, { zh: DICT.zh, en: DICT.en }), 'eac-plugin-suite: dictionaries')
 
       ctx.slots?.inject?.('settings.plugins.tab', () => ctx.slots.register({
         name: 'settings.plugins.tab',
-        id: 'plugin-suite',
+        id: 'eac-plugin-suite',
         order: 5,
         label: () => t('tab'),
         locale: NS,
@@ -1760,7 +1804,7 @@ window.__ModuleLoader__.load({
 
     exports.apply = apply
     exports.inject = inject
-    exports.name = 'plugin-suite'
+    exports.name = 'eac-plugin-suite'
     return module.exports
   },
 })

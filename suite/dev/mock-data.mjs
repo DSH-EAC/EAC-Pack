@@ -1,5 +1,5 @@
 /**
- * dev-only mock of the host half's `/api/plugin-suite/*` backend.
+ * dev-only mock of the host half's `/api/eac-plugin-suite/*` backend.
  *
  * Mirrors index.js shapes: /status projection, an event ring, and a serial job
  * engine that walks entries step by step. The simulation deliberately includes
@@ -477,10 +477,10 @@ export function createSuiteStore() {
     const suiteUpdate = online && state.channelHasUpdates
       ? {
           version: '0.2.1',
-          file: 'dsh-plugin-suite-0.2.1.tgz',
+          file: 'eac-plugin-suite-0.2.1.tgz',
           sha256: 'f'.repeat(64),
           bytes: 125909484,
-          downloadUrl: 'https://github.com/zouyuxuan122/EAC-Plugin-Integration-Pack/releases/download/channel/dsh-plugin-suite-0.2.1.tgz',
+          downloadUrl: 'https://github.com/DSH-EAC/EAC-Pack/releases/download/channel/eac-plugin-suite-0.2.1.tgz',
         }
       : null
     return {
