@@ -1,4 +1,6 @@
-# eac-plugin-suite — EAC/AIO 插件整合包
+<h1 align="center">
+  <img src="docs/assets/EAC-Pack.svg" alt="eac-plugin-suite — EAC/AIO 插件整合包" width="808" />
+</h1>
 
 为官方 DeepSeek Harness Desktop 提供目录、批量安装、更新与移除管理，以及皮肤预览和 Prompt。包名、API 与数据目录统一为 `eac-plugin-suite`；Git 仓库仍为 `DSH-EAC/EAC-Pack`。
 
