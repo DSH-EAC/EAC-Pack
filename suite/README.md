@@ -2,6 +2,8 @@
 
 为官方 DeepSeek Harness Desktop 提供目录、批量安装、更新与移除管理，以及皮肤预览和 Prompt。包名、API 与数据目录统一为 `eac-plugin-suite`；Git 仓库仍为 `DSH-EAC/EAC-Pack`。
 
+**交接状态（2026-10-05）：本次推送仅交接源码，资源依赖尚未公开发布，暂不可作为正式 Git 安装入口。接手步骤及必须另行移交的资源见 `docs/HANDOFF-CASCADE-INSTALL-2026-10-05.md`。**
+
 ## 0.2.3：安装阶段级联取得完整资源
 
 Git 仅保留组合包入口、host/client、目录与固定摘要清单。必选依赖 **`eac-plugin-suite-assets@0.2.3`** 提供全部 72 个基线子插件 tarball、30 张皮肤预览和 10 组 Prompt；不是 optional/peer，也不是启用后下载。

@@ -4,7 +4,7 @@
 
 本地实现及官方 Desktop 验收通过：Git 轻入口通过必选精确 registry 依赖安装完整基线，启用后只做本地校验。完整单文件 Release 使用标准 bundleDependencies 内置相同资源包，独立空 store 的离线安装通过。
 
-**生产交付尚未完成。** 本机 `npm whoami --registry=https://registry.npmjs.org/` 返回 ENEEDAUTH；公开查询 `eac-plugin-suite-assets@0.2.3` 返回 E404。未获得发布凭据前，不推送一个依赖不存在版本的 Git 入口。远程 Git 安装按用户要求留待手动测试；这不豁免资源包先发布的前提。
+**生产交付尚未完成。** 本机 `npm whoami --registry=https://registry.npmjs.org/` 返回 ENEEDAUTH；公开查询 `eac-plugin-suite-assets@0.2.3` 返回 E404。此前为正式交付设置“资源先发布、入口后推送”门禁。2026-10-05 用户改为先推送源码交接，由他人完成资源发布；此次推送不代表生产安装可用，见 HANDOFF-CASCADE-INSTALL-2026-10-05.md。远程 Git 安装按用户要求留待手动测试；这不豁免资源包先发布的前提。
 
 ## 实现
 
@@ -73,4 +73,4 @@ Ignored `.cache/cascade/artifacts/`：
 
 2026-10-05 已从核对的远端基线 15672c64bf02f9a4b4464e2bb57fb7931a968e0b 重新组织本地未推送提交；原 912edd5 及直接内置方案保留在本地 backup/pre-cascade-20261005，不是 main 的祖先，也不会推送备份 ref。代码提交为 3f4e1b9；代码阶段树为 12,486,761 bytes，加入文本验收文档后略增。未强推或改写远端。
 
-用户并行的 EAC-SKIN-LOADER-GOAL-PLAN.md 和 EAC-PLUGIN-SUITE-MODIFICATION-REPORT.md 与启动时 SHA256 一致，仍保持 untracked，不纳入本轮提交。生产资源发布未满足之前，main 的本地提交仅为待交付状态，不能宣称远端 Git 已可安装。
+用户并行的 EAC-SKIN-LOADER-GOAL-PLAN.md 和 EAC-PLUGIN-SUITE-MODIFICATION-REPORT.md 与启动时 SHA256 一致；此前未纳入级联实现提交，随后用户明确授权在交接提交中一并收录，正文不改。生产资源发布未满足之前，main 的本地提交仅为待交付状态，不能宣称远端 Git 已可安装。
