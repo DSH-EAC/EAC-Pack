@@ -187,7 +187,7 @@ test('enable endpoint refuses compat and kernelProvided entries', async () => {
   }
 })
 
-test('sweepGhosts removes undeclared residue and honors all four declaration guards', async () => {
+test('sweepGhosts removes undeclared residue and honors all five declaration guards', async () => {
   const home = tempHome()
   const nm = path.join(home, 'profiles', 'desktop', 'node_modules')
   const ghostPkg = path.join(nm, '@deepseek-ai', 'dsh-plugin-manager')
@@ -244,6 +244,63 @@ test('sweepGhosts keeps packages reported by listBundles', async () => {
     delete process.env.DSH_HOME
     __test.state.catalog = null
     __test.state.pm = null
+  }
+})
+
+test('sweepGhosts keeps desktop built-ins declared by .dsh-builtin-plugins.json', async () => {
+  const home = tempHome()
+  const nm = path.join(home, 'profiles', 'desktop', 'node_modules')
+  // Mirrors a real full install: the shell copies the built-ins into the
+  // profile on every boot and lists them only in its own marker file, so they
+  // satisfy none of the manifest guards and used to be swept on every boot.
+  const builtinScoped = path.join(nm, '@deepseek-ai', 'dsh-file-changes')
+  const builtinPlain = path.join(nm, 'dsh-compact')
+  fs.mkdirSync(builtinScoped, { recursive: true })
+  fs.writeFileSync(path.join(builtinScoped, 'package.json'), '{"name":"@deepseek-ai/dsh-file-changes","version":"1.0.0"}')
+  fs.mkdirSync(builtinPlain, { recursive: true })
+  fs.writeFileSync(path.join(builtinPlain, 'package.json'), '{"name":"dsh-compact","version":"1.0.1"}')
+  const profile = path.join(home, 'profiles', 'desktop')
+  fs.writeFileSync(
+    path.join(profile, '.dsh-builtin-plugins.json'),
+    JSON.stringify({
+      names: ['@deepseek-ai/dsh-file-changes', 'dsh-compact'],
+      updatedAt: '2026-10-04T17:40:35.330Z',
+    }),
+  )
+  __test.state.catalog = catalogWith(
+    { id: 'file-changes', name: '@deepseek-ai/dsh-file-changes', version: '1.0.0' },
+    { id: 'compact', name: 'dsh-compact', version: '1.0.1' },
+  )
+  try {
+    const removed = await __test.sweepGhosts('test')
+    assert.deepEqual(removed, [], 'built-in plugins are never swept')
+    assert.equal(fs.existsSync(builtinScoped), true, 'scoped built-in directory stays')
+    assert.equal(fs.existsSync(builtinPlain), true, 'plain built-in directory stays')
+  } finally {
+    delete process.env.DSH_HOME
+    __test.state.catalog = null
+  }
+})
+
+test('sweepGhosts still removes residue when the built-in marker is absent or malformed', async () => {
+  // Guards the issue #1 self-healing path: the new guard must not become a
+  // blanket exemption, and a broken marker must degrade to the old behaviour.
+  for (const marker of [undefined, 'not json at all', '{"names":"dsh-compact"}', '{"other":[]}']) {
+    const home = tempHome()
+    const nm = path.join(home, 'profiles', 'desktop', 'node_modules')
+    const ghost = path.join(nm, 'dsh-compact')
+    fs.mkdirSync(ghost, { recursive: true })
+    const profile = path.join(home, 'profiles', 'desktop')
+    if (marker !== undefined) fs.writeFileSync(path.join(profile, '.dsh-builtin-plugins.json'), marker)
+    __test.state.catalog = catalogWith({ id: 'compact', name: 'dsh-compact', version: '1.0.1' })
+    try {
+      const removed = await __test.sweepGhosts('test')
+      assert.deepEqual(removed, ['dsh-compact'], `residue still removed (marker: ${String(marker)})`)
+      assert.equal(fs.existsSync(ghost), false)
+    } finally {
+      delete process.env.DSH_HOME
+      __test.state.catalog = null
+    }
   }
 })
 

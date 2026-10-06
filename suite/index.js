@@ -419,8 +419,9 @@ async function executeJob(job) {
   const ok = results.filter((r) => r.ok).length
   // Ghost sweep: install jobs must never leave undeclared residue behind —
   // a package directory in <profile>/node_modules that is in no manifest
-  // (dependencies, dsh.profile.bundles, pnpm-lock, listBundles) shadows the
-  // kernel's own copy of the same name (issue #1 defect 2).
+  // (dependencies, dsh.profile.bundles, pnpm-lock, listBundles, or the shell's
+  // .dsh-builtin-plugins.json marker) shadows the kernel's own copy of the
+  // same name (issue #1 defect 2).
   try {
     const removed = await sweepGhosts(`post-${job.type}`, job.id)
     if (removed.length) {
@@ -569,10 +570,32 @@ async function runStep(job, entry) {
 const SUITE_RUNTIME = '0.2.0-rc.2'
 
 /**
+ * Names of the desktop-side built-in plugins, taken from the marker the EAC
+ * desktop shell writes into the profile (`.dsh-builtin-plugins.json`).
+ *
+ * The shell copies those packages into `<profile>/node_modules` on every boot
+ * (companion sync) and deliberately keeps them out of the profile manifests,
+ * so they satisfy none of the declaration guards below. Without this guard the
+ * sweep would treat them as residue and delete them on every boot, which
+ * silently drops the whole built-in plugin set.
+ *
+ * Fails safe: a missing or malformed marker yields an empty set, which is
+ * exactly the previous behaviour (such packages get swept) rather than a
+ * blanket exemption.
+ */
+function readBuiltinPluginNames(profile) {
+  const marker = readJson(path.join(profile, '.dsh-builtin-plugins.json'))
+  const names = marker?.names
+  if (!Array.isArray(names)) return new Set()
+  return new Set(names.filter((name) => typeof name === 'string' && name))
+}
+
+/**
  * Remove "ghost" packages from `<profile>/node_modules`: directories (or
  * links) named after a catalog entry that appear in NO manifest — not in the
  * profile's package.json dependencies, not in `dsh.profile.bundles`, not in
- * pnpm-lock.yaml, and not reported by listBundles.
+ * pnpm-lock.yaml, not reported by listBundles, and not declared as a desktop
+ * built-in plugin by the shell's marker file.
  *
  * Such residue is exactly how issue #1 defect 2 poisoned profiles: the
  * repackaged `@deepseek-ai/dsh-plugin-manager@0.1.0` was left on disk without
@@ -597,6 +620,7 @@ async function sweepGhosts(reason = 'boot', jobId = null) {
   const bundleList = pkg?.dsh?.profile?.bundles ?? []
   const declaredBundles = new Set(Array.isArray(bundleList) ? bundleList : [])
   const lockText = readFileOrNull(path.join(profile, 'pnpm-lock.yaml')) ?? ''
+  const builtinNames = readBuiltinPluginNames(profile)
   let installed = new Set()
   try {
     for (const bundle of await pmCall(state.pm, 'listBundles')) {
@@ -620,6 +644,7 @@ async function sweepGhosts(reason = 'boot', jobId = null) {
       [declaredBundles.has(name), 'dsh.profile.bundles'],
       [lockText.includes(`${name}@`), 'pnpm-lock.yaml'],
       [installed.has(name), 'listBundles'],
+      [builtinNames.has(name), '.dsh-builtin-plugins.json'],
     ].filter(([hit]) => hit)
     if (guards.length) {
       trace('ghost-sweep-keep', `${name} declared via ${guards.map(([, via]) => via).join('+')} (${reason})`)
