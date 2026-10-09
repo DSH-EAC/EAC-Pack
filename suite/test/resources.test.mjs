@@ -119,7 +119,11 @@ test('Git and Release pin the same required registry resource dependency without
   const suite = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url)))
   assert.equal(root.name, 'eac-plugin-suite'); assert.equal(root.name, suite.name); assert.equal(root.version, suite.version)
   assert.deepEqual(root.dependencies, suite.dependencies)
-  assert.equal(root.dependencies['eac-plugin-suite-assets'], '0.2.3')
+  // The assets dependency tracks the suite version (cascade identity rule enforced by
+  // scripts/build-resources.mjs). Assert the invariant, not a literal: the previous
+  // hard-coded '0.2.3' went stale the moment the suite was bumped to 0.2.4 and made
+  // this gate fail for a reason unrelated to what it is meant to protect.
+  assert.equal(root.dependencies['eac-plugin-suite-assets'], root.version)
   assert.ok(!root.files.includes('suite/assets/payload'))
   assert.ok(!suite.files.includes('assets/previews'))
   for (const phase of ['preinstall', 'install', 'postinstall', 'prepare']) assert.equal(root.scripts[phase], undefined)

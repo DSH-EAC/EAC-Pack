@@ -1,0 +1,109 @@
+diff --git a/lib/client.js b/lib/client.js
+index 59cb6c8..f91fb84 100644
+--- a/lib/client.js
++++ b/lib/client.js
+@@ -126,7 +126,55 @@
+     if (head && head.parentElement) head.parentElement.removeChild(head);
+   }
+ 
+-  function headEl(sectionEl, count, expanded, onToggle) {
++  // 真正的「行」是 slot wrapper 的子元素，而不是 wrapper 自身。
++  //
++  // 内核（dsh-client-ui-settings-general 的 GeneralSection）把**所有**通用设置行
++  // 渲染在同一个 slot 容器里：
++  //     div.OQWF0W_section
++  //     └─ div[data-slot="settings.general.item"]   ← display:contents，不是行
++  //        ├─ div ...row  权限
++  //        ├─ div ...row  语言
++  //        └─ ...共 12 行
++  // 旧实现用 querySelectorAll('[data-slot="settings.general.item"]') 取到的就是这个
++  // 容器本身（实测 itemCount=1），于是把整页当成一行：标题读到第一行「权限」→ 判为
++  // 高级 → 默认收起时给容器设 display:none → **整页空白**，折叠头还显示「(1)」。
++  // 容器是 display:contents，其子元素本就是 section 这个 flex 容器的直接参与者，
++  // 因此在子行上设 order/display 即可正确分组，无需搬动 React 行节点。
++  function generalSlotWrappers(sectionEl) {
++    return Array.prototype.slice.call(
++      sectionEl.querySelectorAll('[data-slot="settings.general.item"]'));
++  }
++
++  // 折叠头必须与行处在**同一个 flex 容器**里，order 才生效。该容器是 slot wrapper
++  // 的父元素（内核为 div.OQWF0W_section{display:flex;flex-direction:column}），
++  // 不是 [data-slot="settings.section"] 本身 —— 后者只是 slot 挂载点。
++  function rowsContainerOf(sectionEl) {
++    var wrappers = generalSlotWrappers(sectionEl);
++    for (var i = 0; i < wrappers.length; i++) {
++      if (wrappers[i].parentElement) return wrappers[i].parentElement;
++    }
++    return sectionEl;
++  }
++
++  function generalRows(sectionEl) {
++    var wrappers = generalSlotWrappers(sectionEl);
++    var rows = [];
++    for (var i = 0; i < wrappers.length; i++) {
++      var wrapper = wrappers[i];
++      // 兜底：清掉旧版误留在容器上的内联 display（否则整页仍然不可见）。
++      if (wrapper.style && wrapper.style.display === 'none') wrapper.style.display = '';
++      var kids = wrapper.children;
++      if (kids && kids.length) {
++        for (var j = 0; j < kids.length; j++) rows.push(kids[j]);
++      } else {
++        // 单行 slot（无子元素）时容器自身就是行。
++        rows.push(wrapper);
++      }
++    }
++    return rows;
++  }
++
++  function headEl(sectionEl, parentEl, count, expanded, onToggle) {
+     var existing = sectionEl.querySelector('.' + HEAD_CLASS);
+     if (existing) return existing;
+     var head = document.createElement('button');
+@@ -139,7 +187,7 @@
+       'background:transparent;color:var(--dsw-alias-label-secondary);font-family:inherit;' +
+       'font-size:13px;line-height:20px;text-align:left;';
+     head.addEventListener('click', function () { onToggle(); });
+-    sectionEl.appendChild(head);
++    parentEl.appendChild(head);
+     return head;
+   }
+ 
+@@ -149,7 +197,7 @@
+   }
+ 
+   function applySection(sectionEl, cfg, keywords) {
+-    var items = Array.prototype.slice.call(sectionEl.querySelectorAll('[data-slot="settings.general.item"]'));
++    var items = generalRows(sectionEl);
+     var titles = items.map(itemTitleOf);
+     var parts = window.__dshSettingsGroupsCore.partitionItems(titles, keywords);
+     for (var i = 0; i < items.length; i++) {
+@@ -163,14 +211,13 @@
+     var advancedSet = {};
+     for (var k = 0; k < parts.advanced.length; k++) advancedSet[parts.advanced[k]] = true;
+     for (var j = 0; j < items.length; j++) {
+-      if (advancedSet[j]) {
+-        if (items[j].parentElement === sectionEl) items[j].style.order = '2';
+-        if (!cfg.expanded) items[j].style.display = 'none';
+-      } else {
+-        if (items[j].parentElement === sectionEl) items[j].style.order = '0';
+-      }
++      // 行与折叠头同处一个 flex column 容器，order 生效：
++      // 基础行 0 → 折叠头 1 → 高级行 2。
++      items[j].style.order = advancedSet[j] ? '2' : '0';
++      if (advancedSet[j] && !cfg.expanded) items[j].style.display = 'none';
+     }
+-    var head = headEl(sectionEl, parts.advanced.length, cfg.expanded, function () {
++    var container = rowsContainerOf(sectionEl);
++    var head = headEl(sectionEl, container, parts.advanced.length, cfg.expanded, function () {
+       cfg.expanded = !cfg.expanded;
+       try { localStorage.setItem(window.__dshSettingsGroupsCore.STORAGE_KEY, window.__dshSettingsGroupsCore.serialize(cfg)); } catch (e) {}
+       applySection(sectionEl, cfg, keywords);
+@@ -192,7 +239,7 @@
+   }
+ 
+   function sectionFingerprintOf(sectionEl) {
+-    var items = sectionEl.querySelectorAll('[data-slot="settings.general.item"]');
++    var items = generalRows(sectionEl);
+     var parts = [];
+     for (var i = 0; i < items.length; i++) parts.push(itemTitleOf(items[i]));
+     return parts.join('\u0001');

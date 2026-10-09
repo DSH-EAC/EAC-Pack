@@ -1,6 +1,6 @@
 {
   "name": "eac-plugin-suite",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private": true,
   "type": "module",
   "description": "EAC/AIO 插件整合包 — one-click install and update for the full EAC and AIO plugin suites on DeepSeek Harness desktop.",
@@ -46,6 +46,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "eac-plugin-suite-assets": "0.2.3"
+    "eac-plugin-suite-assets": "0.2.4"
   }
 }
