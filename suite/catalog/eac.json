@@ -212,7 +212,7 @@
     "descEn": "Quick setup: one-click vision provider/model pick, visual soul.md editor, one-click migration of skills+MCP+memory from Codex/Claude Code.",
     "license": "MIT",
     "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC (tag v5.3.6)",
-    "notes": "D8 实测：依赖 EAC 分叉版专有服务 settingsScope，官方 RC2 不提供，启用会阻塞 web boot（应用拒绝启动）。0.2.1 起整合包直接拦截其安装与启用（compat=eac-fork，issue #1 缺陷1）；重打包内含 disabled:true 硬钉补丁，即使被手工加回 dsh.profile.bundles 也不会阻塞启动。如确需在 EAC 内核使用，走 /install、/enable 的 force 参数。"
+    "notes": "D8 实测：依赖 EAC 分叉版专有服务 settingsScope，官方 RC2 不提供（全树 0 命中）。D11 复测（2026-10-08，放开 disabled 行重启）：实例仍正常 READY，未阻塞 web boot —— 官方内核上表现为「pending / 功能不可用」，不是启动阻断。0.2.1 起整合包直接拦截其安装与启用（compat=eac-fork，issue #1 缺陷1）；重打包内含 disabled:true 硬钉补丁，即使被手工加回 dsh.profile.bundles 也不会阻塞启动。如确需在 EAC 内核使用，走 /install、/enable 的 force 参数。"
   },
   {
     "id": "eac-locale-compat",
@@ -595,7 +595,7 @@
     "descEn": "Floating side-session panel that imports current conversation context for throwaway follow-ups without polluting the main session.",
     "license": "MIT",
     "upstream": "https://github.com/myYangyunfan/dsh_desktop",
-    "notes": "D8 实测：同 easy-setup，等待 settingsScope 服务，官方 RC2 上阻塞 web boot。0.2.1 起整合包直接拦截其安装与启用（compat=eac-fork，issue #1 缺陷1）；其 bundle 补丁已固定 disabled:true，即使被手工加回 dsh.profile.bundles 也不会阻塞启动。如确需在 EAC 内核使用，走 /install、/enable 的 force 参数。"
+    "notes": "D8 实测：同 easy-setup，等待 settingsScope 服务（官方 RC2 全树 0 命中）。D11 复测（2026-10-08，放开 disabled 行重启）：实例仍正常 READY，未阻塞 web boot —— 表现为「pending / 功能不可用」，不是启动阻断。0.2.1 起整合包直接拦截其安装与启用（compat=eac-fork，issue #1 缺陷1）；其 bundle 补丁已固定 disabled:true，即使被手工加回 dsh.profile.bundles 也不会阻塞启动。如确需在 EAC 内核使用，走 /install、/enable 的 force 参数。"
   },
   {
     "id": "phone",
@@ -693,25 +693,6 @@
     "license": "MIT",
     "upstream": "https://github.com/says693/dsh-composer-dynamic-island",
     "notes": "npm 无发布。AIO(aio-v1) 同版本 2.1.0 共享，版本以 EAC 包为准。"
-  },
-  {
-    "id": "plugin-wizard",
-    "name": "dsh-plugin-wizard",
-    "version": "0.1.0",
-    "source": "eac-tag",
-    "spec": "file:dist/dsh-plugin-wizard-0.1.0.tgz",
-    "packs": [
-      "eac"
-    ],
-    "tier": "core",
-    "defaultEnabled": true,
-    "titleZh": "插件选择向导",
-    "titleEn": "Plugin Wizard",
-    "descZh": "从设置页重新打开首次启动的内置插件选择向导，按需启用/停用；依赖壳层 IPC（onboard:*）。",
-    "descEn": "Reopen the first-run bundled-plugin selection wizard from settings; depends on shell IPC (onboard:*).",
-    "license": "MIT",
-    "upstream": "https://github.com/DSH-EAC/DSH-Desktop-EAC (tag v5.3.6)",
-    "notes": "EAC 自研，npm 无发布。"
   },
   {
     "id": "undo-savepoint",
@@ -922,5 +903,24 @@
     "license": "MIT",
     "upstream": "https://github.com/jing-hy/dsh-think-zh-expand-eac",
     "notes": "EAC 主线清单内但从未进入 EAC 仓库任何 tag（v5.3.6/v6.0.0-beta.1 注册表均无）；仅以 EAC 作者独立 GitHub 仓库分发。实测 main HEAD 版本 1.0.1（背景清单写 1.0.0）。"
+  },
+  {
+    "id": "our-free-model",
+    "name": "dsh-our-free-model",
+    "version": "2.0.0",
+    "source": "github-repo",
+    "spec": "file:dist/dsh-our-free-model-2.0.0.tgz",
+    "packs": [
+      "eac"
+    ],
+    "tier": "heavy",
+    "defaultEnabled": true,
+    "titleZh": "免费模型（Our Free Model）",
+    "titleEn": "Our Free Model",
+    "descZh": "免登录、免注册、免 API Key 直接使用前沿模型（含 DeepSeek V4.1 Flash、Kimi K3）；2.0 起集成 Jet Hub 十三个账号渠道（CodeArts、CodeBuddy、WorkBuddy、LobsterAI、Qoder、TRAE、Cline、Loomy、Raccoon、MiniMax、ZCode、Gemini），提供账号池、积分领取、本地 OpenAI 网关与局域网转发、数据看板与运行日志，并保留匿名免费通道。",
+    "descEn": "Use frontier models (including DeepSeek V4.1 Flash and Kimi K3) without login, signup or API keys; 2.0 folds in Jet Hub with thirteen account channels (CodeArts, CodeBuddy, WorkBuddy, LobsterAI, Qoder, TRAE, Cline, Loomy, Raccoon, MiniMax, ZCode, Gemini) plus an account pool, quota claiming, a local OpenAI gateway with LAN forwarding, dashboard and runtime logs, while keeping the anonymous free channel.",
+    "license": "MIT",
+    "upstream": "https://github.com/Ebony-Vinyl/dsh-our-free-model",
+    "notes": "本轮新增第 73 项资源；tgz 由插件仓库 main@012f965 本地 npm pack 产出（私有 ESM 包，npm 无发布），仅登记本地实测 bytes/sha256，不声称与任何既有归档字节等价。2026-10-08 裁决改判：由「预装 + 默认禁用 + config.distribution=managed」改为**默认启用**；同时撤销 config.distribution=managed —— 该字段原先冻结为「整合包接管其更新时机与发布字节」，但 overlay 行只在 defaultEnabled=false 时生成，启用后 config 无处承载，finalize 的 config 透传门禁（work/dist-tooling/patch-rows.mjs assertConfigPassthrough）会直接失败。故本轮按 Lead 裁决「保启用、舍弃 managed」执行：OFM 的应用内自升级与公告源恢复默认行为。分发范围仅 full（Desktop 预置层）与 Pack 套件，lite 不含。"
   }
 ]

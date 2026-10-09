@@ -129,6 +129,15 @@
       "evidence": "AIO 私有构建（UNLICENSED，分发风险最高项），唯一宿主 @dsh-external/dsh-webui 上游已死且退役，桥失去意义。随 webui 一并退役。",
       "titleZh": "WebUI Statem 桥",
       "titleEn": "WebUI Statem Bridge"
+    },
+    {
+      "id": "plugin-wizard",
+      "name": "dsh-plugin-wizard",
+      "retiredFrom": "eac-main",
+      "evidence": "实测（2026-10-08，CDP 读运行中实例真实 DOM）：设置页「选择向导」section 的按钮 disabled=true、opacity=0.5，提示文案为「此功能需要 Deepseek Harness EAC 桌面端运行（浏览器/CLI 模式下不可用）」——而用户就在桌面端，文案误导。根因是该插件按 window.dshDesktop.pluginWizard 决定按钮可用性，而该桥面被成文裁决退役（tauri-shell/sidecar/bridge.js：「plugin-wizard 明确不接入 —— 故 balance* 与 pluginWizard 为终态留空」，由 test/bridge-preload-parity.test.ts 的 STILL_RETIRED 锁定）；CDP 实测桥面键集 hasPluginWizard=false。且它要打开的 onboarding.html 也已随插件系统剥出（tauri-shell/stage-resources.mjs：「sdk-plugins / onboarding.html 随插件系统剥出（无插件可选则无向导）」），全 payload 内 onboarding.html 文件数 = 0。",
+      "reason": "EAC 侧契约不一致：Pack 仍分发该插件，而 Desktop 已退役其桥面与向导页 → 永久不可用控件 + 误导文案。2026-10-08 裁决「抛弃插件」，从 catalog 与 dist 移除，并同步从 full 预置层剔除。",
+      "titleZh": "插件选择向导",
+      "titleEn": "Plugin Wizard"
     }
   ]
 }

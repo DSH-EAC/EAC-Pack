@@ -23,6 +23,7 @@ import { execSync } from 'node:child_process';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { applySourcePatches } from './source-patches.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..', '..');
 const CATALOG_DIR = path.join(ROOT, 'catalog');
@@ -366,6 +367,11 @@ for (const entry of entries) {
   else if (entry.source === 'github-tgz') materializeGithubTgz(entry, staging);
   else die(`未知 source: ${entry.source}`);
 
+  // Tracked, fail-closed source patches (patches/source-patches.json).
+  // Replayed here so a rebuild cannot silently drop a local fix that exists
+  // only in dist/*.tgz. No-op for packages without a patch entry.
+  const appliedSourcePatches = applySourcePatches(entry, staging, log);
+
   const pkgFile = path.join(staging, 'package.json');
   // 定向覆写：补丁文件与 dsh.bundle.patch 声明要在 npm pack 前落盘
   const override = OVERRIDES[entry.name];
@@ -417,6 +423,12 @@ for (const entry of entries) {
     sha256: sha256(target),
     bytes,
     source: entry.source,
+    ...(appliedSourcePatches.length
+      ? {
+          locallyRepacked: true,
+          repackNote: appliedSourcePatches.map((p) => p.note).filter(Boolean).join(' '),
+        }
+      : {}),
   });
   log(`OK ${file} (${bytes} bytes)`);
   rmRf(staging);
