@@ -45,7 +45,7 @@ if (fs.existsSync(CHANNEL_FILE)) {
 }
 
 // ---- suite 本体信息（不允许发布占位摘要） ----
-const suiteCandidates = [path.join(ROOT, 'suite', SUITE_FILE), path.join(DIST, SUITE_FILE)];
+const suiteCandidates = [path.join(ROOT, '.cache', 'cascade', 'artifacts', 'release', SUITE_FILE)];
 const suiteTgz = suiteCandidates.find((p) => fs.existsSync(p));
 if (!suiteTgz) throw new Error(`Missing full Release package ${SUITE_FILE}; pack it before publishing the channel`);
 const suiteInfo = {
@@ -57,20 +57,20 @@ const suiteInfo = {
   bytes: fs.statSync(suiteTgz).size,
 };
 
-// ---- notes（v0.2.0） ----
+// ---- notes (current suite contract) ----
 const notesZh = [
-  'v0.2.1（issue #1 修复版）：修复官方内核上 2 处致命与 2 处一般缺陷。',
-  '致命1：easy-setup / side-session / client-ui-custom（需 EAC 分叉版 settingsScope 服务）安装被跳过、启用被拒绝，UI 红徽章「仅 EAC 内核」锁定；即使被手工加回 bundles 也不再阻塞启动（重打包内含 disabled 硬钉）。',
-  '致命2：内核自带包（dsh-plugin-manager / dsh-terminal 0.2.0-rc.2）不再被重打包副本遮蔽：安装跳过 + 启动自动清扫幽灵残留 + 已声明副本自动退役；重打包 plugin-manager 补 ./tools exports 兜底。受影响机器升级后首次启动即自愈。',
-  '缺陷3：dsh-compact 1.0.1 修复补丁形态（insert 双行：主行 + agent 引擎行），请求路径自动压缩真正挂载。',
-  '注意：dsh-compact 的 status/compact-now 端点与设置卡片依赖 EAC 分叉版服务，官方内核上不可用（无害）；skin-switch remote face 为上游已知问题。',
+  `v${SUITE_VERSION}：修复设置分组、余额设置与壁纸更新提示，使用已校验的完整资源基线。`,
+  '设置分组只折叠实际设置行，不再隐藏整个设置页面；移除已退役的余额价格设置入口，保留输入区余额显示。',
+  '提高壁纸更新提示按钮的对比度；移除已退役的 plugin-wizard；our-free-model 默认开启。',
+  '完整 Release 内置固定版本资源依赖；Git 安装仍须该资源版本已在生产 registry 发布并通过验证。',
+  '第三方资源保留原许可、署名和非商业等限制；资源齐全不代表所有子插件或其传递依赖离线可用。',
 ].join('\n');
 const notesEn = [
-  'v0.2.1 (issue #1 fixes): repairs 2 fatal and 2 moderate defects on the official kernel.',
-  'Fatal 1: easy-setup / side-session / client-ui-custom (EAC-fork-only settingsScope) are skipped at install and refused at enable, with a locked "EAC fork only" badge; hand-adding them back to bundles can no longer block boot (hard-disabled rows in the repacks).',
-  'Fatal 2: kernel-built-in packages (dsh-plugin-manager / dsh-terminal, 0.2.0-rc.2) are no longer shadowed: install skips, boot-time ghost sweep, offline retire of declared copies, and ./tools exports on the repack. Affected hosts self-heal on the first start after upgrading.',
-  'Defect 3: dsh-compact 1.0.1 fixes the patch form (two insert rows: main + agent engine), so request-path compaction actually mounts.',
-  'Note: dsh-compact status/compact-now endpoints and its settings card need EAC-fork services and stay unavailable (harmless) on the official kernel; skin-switch remote face mount remains a known upstream issue.',
+  `v${SUITE_VERSION}: fixes settings grouping, balance settings and wallpaper update notices with a verified resource baseline.`,
+  'Settings grouping collapses actual rows instead of the entire page; removes the retired balance pricing settings while preserving the composer balance display.',
+  'Improves wallpaper update button contrast; removes the retired plugin-wizard; our-free-model is enabled by default.',
+  'The full Release bundles the pinned resource dependency. Git installation still requires that resource version to be published and verified in the production registry.',
+  'Third-party licenses, attribution and non-commercial restrictions remain applicable. Complete resources do not imply that every plugin or transitive dependency works offline.',
 ].join('\n');
 
 // ---- channel.json ----
@@ -103,11 +103,13 @@ log(
 if (noUpload) {
   log('--no-upload：跳过 Release 发布');
 } else {
-  const assets = fs
-    .readdirSync(DIST)
-    .filter((f) => f.endsWith('.tgz') || f === 'SHA256SUMS')
-    .map((f) => path.join(DIST, f));
-  if (!assets.some((p) => path.basename(p) === 'SHA256SUMS')) assets.push(path.join(DIST, 'SHA256SUMS'));
+  const assets = index.map(({ file }) => {
+    if (path.basename(file) !== file || !file.endsWith('.tgz') || file === SUITE_FILE || file.startsWith('eac-plugin-suite-')) {
+      throw new Error(`Invalid plugin channel asset: ${file}`);
+    }
+    return path.join(DIST, file);
+  });
+  assets.push(path.join(DIST, 'SHA256SUMS'));
   const bytesTotal = assets.reduce((s, p) => s + fs.statSync(p).size, 0);
   log(`上传 ${assets.length} 个资产（${(bytesTotal / 1048576).toFixed(1)} MB）到 release "channel"…`);
   let exists = true;
@@ -138,12 +140,16 @@ if (noCommit) {
   log('--no-commit：跳过 git 提交');
 } else {
   const rel = (p) => path.relative(ROOT, p).replace(/\\/g, '/');
-  execFileSync('git', ['add', rel(CHANNEL_FILE), rel(path.join(CHANNEL, 'SHA256SUMS'))], { cwd: ROOT, stdio: 'pipe' });
-  const staged = execFileSync('git', ['diff', '--cached', '--name-only'], { cwd: ROOT, encoding: 'utf8' }).trim();
+  // Commit ONLY the two channel files. A bare `git commit` would also sweep in any
+  // unrelated staged work, and a --no-upload run still bumps channelVersion, so this
+  // must never publish a channel that was not explicitly intended.
+  const paths = [rel(CHANNEL_FILE), rel(path.join(CHANNEL, 'SHA256SUMS'))];
+  execFileSync('git', ['add', '--', ...paths], { cwd: ROOT, stdio: 'pipe' });
+  const staged = execFileSync('git', ['diff', '--cached', '--name-only', '--', ...paths], { cwd: ROOT, encoding: 'utf8' }).trim();
   if (staged) {
     execFileSync(
       'git',
-      ['commit', '-m', `chore(channel): publish online channel v${channelVersion} (suite ${SUITE_VERSION}, ${channel.items.length} items)`],
+      ['commit', '-m', `chore(channel): publish online channel v${channelVersion} (suite ${SUITE_VERSION}, ${channel.items.length} items)`, '--', ...paths],
       { cwd: ROOT, stdio: 'pipe' },
     );
     log(`git commit: ${staged.split('\n').join(', ')}`);
